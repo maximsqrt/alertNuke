@@ -1,0 +1,36 @@
+import 'dart:io';
+
+void main() {
+  stdout.write("Bitte geben Sie eine Zahl von 1 bis 7 ein: ");
+  String userInput = stdin.readLineSync();
+
+  int day = int.tryParse(userInput);
+
+  if (day != null && day >= 1 && day <= 7) {
+    switch (day) {
+      case 1:
+        print('Montag');
+        break;
+      case 2:
+        print('Dienstag');
+        break;
+      case 3:
+        print('Mittwoch');
+        break;
+      case 4:
+        print('Donnerstag');
+        break;
+      case 5:
+        print('Freitag');
+        break;
+      case 6:
+        print('Samstag');
+        break;
+      case 7:
+        print('Sonntag');
+        break;
+    }
+  } else {
+    print('Ungültige Eingabe. Bitte geben Sie eine Zahl zwischen 1 und 7 ein.');
+  }
+}
