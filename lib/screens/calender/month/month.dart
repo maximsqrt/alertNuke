@@ -14,6 +14,7 @@ class MonthCalendar extends StatefulWidget {
 class _MonthCalendarState extends State<MonthCalendar> {
   late PageController _pageController;
   DateTime now = DateTime.now();
+  int currentPage = 0;
 
   @override
   void initState() {
@@ -23,14 +24,14 @@ class _MonthCalendarState extends State<MonthCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    double aspectRatio =
+    double aspectRatio = 1.0;
         MediaQuery.of(context).size.width / 7 / 60; // Adjust as needed
 
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -43,10 +44,10 @@ class _MonthCalendarState extends State<MonthCalendar> {
         padding: const EdgeInsets.only(top: 100, left: 10, right: 10, bottom: 0),
         child: Column(
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               DateFormat('MMMM').format(DateTime(now.year, now.month, 1)),
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -54,7 +55,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
             ),
             Text(
               DateFormat('dd / MM / yy').format(now),
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -62,19 +63,19 @@ class _MonthCalendarState extends State<MonthCalendar> {
             ),
             Text(
               DateFormat('EEEE').format(now),
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
                 onPageChanged: (int page) {
                   setState(() {
-                    // This will trigger a rebuild when the page changes
+                    currentPage = page;
                   });
                 },
                 itemCount: 12, // Number of months
@@ -86,16 +87,16 @@ class _MonthCalendarState extends State<MonthCalendar> {
                 },
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
-              DateFormat('MMMM').format(DateTime(now.year, _pageController.page!.round() + 1, 1)),
-              style: TextStyle(
+              DateFormat('MMMM').format(DateTime(now.year, currentPage + 1, 1)),
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
             ),
-            LogoBottomNavigationBar(),
+            const LogoBottomNavigationBar(),
           ],
         ),
       ),
@@ -107,7 +108,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
       child: GridView.builder(
         padding: EdgeInsets.zero,
         itemCount: daysInMonth(month),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 7,
           mainAxisSpacing: 0,
           crossAxisSpacing: 0,
@@ -120,17 +121,17 @@ class _MonthCalendarState extends State<MonthCalendar> {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 0.80,
-                  color: Color.fromARGB(117, 127, 76, 229),
+                  color: const Color.fromARGB(117, 127, 76, 229),
                 ),
                 borderRadius: BorderRadius.circular(3.0),
               ),
               child: Center(
                 child: Text(
                   (index + 1).toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(188, 0, 0, 0),
+                    color: const Color.fromARGB(188, 0, 0, 0),
                   ),
                 ),
               ),

@@ -142,9 +142,12 @@ class YearCalendar extends StatelessWidget {
     );
   }
 
-  void navigateToMonthView(BuildContext context, int month) {
-    // Hier rufst du die gewünschte Monatsansicht auf
-    Navigator.push(context, MaterialPageRoute(builder: (context) => MonthCalendar(selectedMonth: month,)));
-    print('Navigating to Month View - $month');
-  }
+void navigateToMonthView(BuildContext context, int month) {
+  Navigator.of(context).push(MaterialPageRoute<void>(
+    builder: (BuildContext context) {
+      return MonthCalendar(selectedMonth: month);
+    },
+  ));
+  print('Navigating to Month View - $month');
+}
 }
