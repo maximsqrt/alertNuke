@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 void main() {
   
   runApp(  MaterialApp( //runapp ist in der Flutter Lib definiert
-    home: SignupScreen(), //hhier wird festgelegt welches widget 
+    home: LoginScreen(), //hhier wird festgelegt welches widget 
   ));
 }
 

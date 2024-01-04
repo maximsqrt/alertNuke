@@ -37,7 +37,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
             end: Alignment.bottomCenter,
             colors: [Color(0xFF6CA7BE), Color(0xFF2E0B4B)],
             tileMode: TileMode.repeated,
-            stops: [0.1, 0.7],
+            stops: [0.2, 0.7],
             transform: GradientRotation(45 * 3.1415926535897932 / 180),
           ),
         ),
@@ -112,7 +112,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
           crossAxisCount: 7,
           mainAxisSpacing: 0,
           crossAxisSpacing: 0,
-          childAspectRatio: 1,
+          childAspectRatio: .5,
         ),
         itemBuilder: (context, index) {
           return AspectRatio(
@@ -131,7 +131,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(188, 0, 0, 0),
+                    color: Color.fromARGB(187, 233, 220, 220),
                   ),
                 ),
               ),

@@ -46,8 +46,8 @@ class LogoWidget extends StatelessWidget {
 @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 28, // Passe die Breite nach Bedarf an
-      height: 28, // Passe die Höhe nach Bedarf an
+      width: 30, // Passe die Breite nach Bedarf an
+      height: 30, // Passe die Höhe nach Bedarf an
       child: Image.asset(
         imagePath,
         fit: BoxFit.contain,

@@ -1,31 +1,23 @@
-import 'package:alertnukeapp/screens/calender/month/month.dart';
+import 'package:alertnukeapp/screens/logo.dart';
 import 'package:flutter/material.dart';
+import 'package:alertnukeapp/screens/calender/month/month.dart';
 import 'package:alertnukeapp/screens/wrapper.dart';
 
-class YearCalendar extends StatelessWidget {
-  YearCalendar({Key? key});
+void main() {
+  runApp(MyApp());
+}
 
-  int daysInMonth(int month) {
-    var now = DateTime.now();
-    var firstDayThisMonth = DateTime(now.year, month, 1);
-    var firstDayNextMonth = DateTime(now.year, month + 1, 1);
-    return firstDayNextMonth.difference(firstDayThisMonth).inDays;
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: YearCalendar(),
+    );
   }
+}
 
-  final List<String> monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+class YearCalendar extends StatelessWidget {
+  const YearCalendar({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +38,8 @@ class YearCalendar extends StatelessWidget {
         padding: const EdgeInsets.only(top: 100, left: 10, right: 10, bottom: 0),
         child: Column(
           children: [
-            const Image(
-              image: AssetImage("assets/logo.png"),
-              width: 100,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
+             LogoImage(),
+            
             Expanded(
               child: GridView.builder(
                 itemCount: 12,
@@ -62,85 +49,89 @@ class YearCalendar extends StatelessWidget {
                   crossAxisSpacing: 5,
                 ),
                 itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      navigateToMonthView(context, index + 1);
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          monthNames[index],
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF568493),
-                              borderRadius: BorderRadius.circular(3.0),
-                            ),
-                            child: GridView.builder(
-                              padding: EdgeInsets.zero,
-                              itemCount: daysInMonth(index + 1),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 7,
-                                mainAxisSpacing: 0,
-                                crossAxisSpacing: 0,
-                                childAspectRatio: .9,
-                              ),
-                              itemBuilder: (context, index1) {
-                                return AspectRatio(
-                                  aspectRatio: 2,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: .80,
-                                        color: const Color.fromARGB(
-                                          117,
-                                          127,
-                                          76,
-                                          229,
-                                        ),
-                                      ),
-                                      borderRadius: BorderRadius.circular(3.0),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        (index1 + 1).toString(),
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.bold,
-                                          color:
-                                              Color.fromARGB(188, 0, 0, 0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
+                  return MonthGridItem(monthIndex: index + 1);
                 },
               ),
             ),
-           const LogoBottomNavigationBar(),
+            const LogoBottomNavigationBar(),
           ],
         ),
       ),
     );
   }
+}
+
+
+
+class MonthGridItem extends StatelessWidget {
+  final int monthIndex;
+
+  const MonthGridItem({required this.monthIndex});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => navigateToMonthView(context, monthIndex),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            monthNames[monthIndex - 1],
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF568493),
+                borderRadius: BorderRadius.circular(3.0),
+              ),
+              child: GridView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: daysInMonth(monthIndex),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 7,
+                  mainAxisSpacing: 0,
+                  crossAxisSpacing: 0,
+                  childAspectRatio: .95,
+                ),
+                itemBuilder: (context, index1) {
+                  return AspectRatio(
+                    aspectRatio: 2,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: .80,
+                          color: const Color.fromARGB(117, 127, 76, 229),
+                        ),
+                        borderRadius: BorderRadius.circular(3.0),
+                      ),
+                      child: Center(
+                        child: Text(
+                          (index1 + 1).toString(),
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(188, 0, 0, 0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        
+        ],
+      ),
+    );
+  }
+}
 
 void navigateToMonthView(BuildContext context, int month) {
   Navigator.of(context).push(MaterialPageRoute<void>(
@@ -150,4 +141,27 @@ void navigateToMonthView(BuildContext context, int month) {
   ));
   print('Navigating to Month View - $month');
 }
+
+
+
+int daysInMonth(int month) {
+  var now = DateTime.now();
+  var firstDayThisMonth = DateTime(now.year, month, 1);
+  var firstDayNextMonth = DateTime(now.year, month + 1, 1);
+  return firstDayNextMonth.difference(firstDayThisMonth).inDays;
 }
+
+final List<String> monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
