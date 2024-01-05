@@ -17,7 +17,7 @@ class _RootState extends State<Root> {
     Text("Chat"),
     Text("Socials"),
     Text("Icons"),
-    Text("Setting")
+    Text("Settings")
   ];
 
   void _onItemTapped(int index){
@@ -36,7 +36,7 @@ class _RootState extends State<Root> {
           label: '',
         ),
         BottomNavigationBarItem(
-          icon: LogoWidget(imagePath: 'assets/Chat.png'),
+          icon: LogoWidget(imagePath: 'assets/chat_360.png'),
           label: '',
         ),
         BottomNavigationBarItem(
@@ -44,11 +44,11 @@ class _RootState extends State<Root> {
           label: '',
         ),
         BottomNavigationBarItem(
-          icon: LogoWidget(imagePath: 'assets/Icons.png'),
+          icon: LogoWidget(imagePath: 'assets/bulb.png'),
           label: '',
         ),
         BottomNavigationBarItem(
-          icon: LogoWidget(imagePath: 'assets/Settings.png'),
+          icon: LogoWidget(imagePath: 'assets/setting.png'),
           label: '',
         ),
       ],
