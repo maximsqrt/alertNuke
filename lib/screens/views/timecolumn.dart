@@ -4,44 +4,41 @@ import 'package:intl/intl.dart';
 
 class TimeColumn extends StatelessWidget {
   final ScrollController timeController;
-  final DateTime now; // Hinzugefügt
+  final DateTime now;
 
-  TimeColumn({required this.timeController, required this.now}); // Konstruktorparameter hinzugefügt
+  TimeColumn({required this.timeController, required this.now});
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 10),
-          Text(
-            DateFormat('MMMM').format(DateTime(now.year, now.month, 1)),
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SizedBox(height: 10),
+        Text(
+          DateFormat('MMMM').format(DateTime(now.year, now.month, 1)),
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
-          Text(
-            DateFormat('dd / MM / yy').format(now),
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
+        ),
+        Text(
+          DateFormat('dd / MM / yy').format(now),
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
-          Text(
-            DateFormat('EEEE').format(now),
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
+        ),
+        Text(
+          DateFormat('EEEE').format(now),
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

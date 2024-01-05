@@ -52,7 +52,6 @@ const YearCalendar({Key? key}) : super(key: key);
 }
 
 
-
 class MonthGridItem extends StatelessWidget {
   final int monthIndex;
 
@@ -62,28 +61,33 @@ class MonthGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => navigateToMonthView(context, monthIndex),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Text(
-            monthNames[monthIndex - 1],
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+      child: Container(
+        // Adjust padding as needed
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(
+              monthNames[monthIndex - 1],
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          Expanded(
-            child: Container(
-              child: buildMonthPage(monthIndex,1, 10),
+            const SizedBox(height: 10),
+            Expanded(
+              child: Container(
+                child: buildMonthPage(monthIndex, 1, 10),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
+
 
 
 void navigateToMonthView(BuildContext context, int month) {
