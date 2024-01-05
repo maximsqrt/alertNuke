@@ -1,23 +1,14 @@
-import 'package:alertnukeapp/screens/logo.dart';
+// ignore_for_file: prefer_const_constructors
+
+import 'package:alertnukeapp/screens/calender/widgets/buildmonth.dart';
+import 'package:alertnukeapp/screens/views/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:alertnukeapp/screens/calender/month/month.dart';
 import 'package:alertnukeapp/screens/wrapper.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: YearCalendar(),
-    );
-  }
-}
 
 class YearCalendar extends StatelessWidget {
-  const YearCalendar({Key? key});
+const YearCalendar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +44,6 @@ class YearCalendar extends StatelessWidget {
                 },
               ),
             ),
-            const LogoBottomNavigationBar(),
           ],
         ),
       ),
@@ -66,7 +56,7 @@ class YearCalendar extends StatelessWidget {
 class MonthGridItem extends StatelessWidget {
   final int monthIndex;
 
-  const MonthGridItem({required this.monthIndex});
+  const MonthGridItem({Key? key, required this.monthIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -86,52 +76,15 @@ class MonthGridItem extends StatelessWidget {
           const SizedBox(height: 10),
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFF568493),
-                borderRadius: BorderRadius.circular(3.0),
-              ),
-              child: GridView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: daysInMonth(monthIndex),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 7,
-                  mainAxisSpacing: 0,
-                  crossAxisSpacing: 0,
-                  childAspectRatio: .95,
-                ),
-                itemBuilder: (context, index1) {
-                  return AspectRatio(
-                    aspectRatio: 2,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: .80,
-                          color: const Color.fromARGB(117, 127, 76, 229),
-                        ),
-                        borderRadius: BorderRadius.circular(3.0),
-                      ),
-                      child: Center(
-                        child: Text(
-                          (index1 + 1).toString(),
-                          style: const TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(188, 0, 0, 0),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+              child: buildMonthPage(monthIndex,1, 10),
             ),
           ),
-        
         ],
       ),
     );
   }
 }
+
 
 void navigateToMonthView(BuildContext context, int month) {
   Navigator.of(context).push(MaterialPageRoute<void>(

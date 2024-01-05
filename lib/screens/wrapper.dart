@@ -1,14 +1,36 @@
+import 'package:alertnukeapp/screens/calender/year/year.dart';
 import 'package:flutter/material.dart';
 
 
 
-class LogoBottomNavigationBar extends StatelessWidget {
-  const LogoBottomNavigationBar({super.key});
+class Root extends StatefulWidget {
+  const Root({super.key});
 
   @override
+  State<Root> createState() => _RootState();
+}
+
+class _RootState extends State<Root> {
+  int _selectedIndex = 0;
+  static const List<Widget> _widgetOptions = <Widget>[
+   YearCalendar(),
+    Text("Chat"),
+    Text("Socials"),
+    Text("Icons"),
+    Text("Setting")
+  ];
+
+  void _onItemTapped(int index){
+    setState(() {
+          _selectedIndex = index;
+        });
+  }
+  @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
+    return Scaffold(
+      body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
+      bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem>[
+       
         BottomNavigationBarItem(
           icon: LogoWidget(imagePath: 'assets/Month.png'),
           label: '',
@@ -30,13 +52,15 @@ class LogoBottomNavigationBar extends StatelessWidget {
           label: '',
         ),
       ],
-      selectedItemColor: const Color.fromARGB(255, 0, 0, 0),
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
+      ),
       
-      // Du kannst hier weitere benötigte Eigenschaften für BottomNavigationBar hinzufügen
-      // (z.B., currentIndex, onTap, ...)
     );
   }
 }
+
+
 
 class LogoWidget extends StatelessWidget {
   final String imagePath;

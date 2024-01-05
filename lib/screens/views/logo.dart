@@ -1,15 +1,17 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 class LogoImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        const Image(
+        Image(
           image: AssetImage("assets/logo.png"),
           width: 100,
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10),
       ],
     );
   }

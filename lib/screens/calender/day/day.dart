@@ -1,9 +1,14 @@
-import 'package:alertnukeapp/screens/logo.dart';
+// ignore_for_file: library_private_types_in_public_api
+
+import 'package:alertnukeapp/common/datetime.dart';
+import 'package:alertnukeapp/screens/views/timecolumn.dart';
+import 'package:alertnukeapp/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:alertnukeapp/screens/wrapper.dart';
-import 'package:intl/intl.dart';
 
 class DayCalendar extends StatefulWidget {
+  const DayCalendar({super.key});
+
   @override
   _DayCalendarState createState() => _DayCalendarState();
 }
@@ -18,12 +23,13 @@ class _DayCalendarState extends State<DayCalendar> {
   @override
   void initState() {
     super.initState();
-    weekNames = ['Time',current];
+    weekNames = ['Time', current];
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return 
+       Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
@@ -39,7 +45,6 @@ class _DayCalendarState extends State<DayCalendar> {
         padding: const EdgeInsets.only(top: 50, left: 10, right: 10, bottom: 0),
         child: Column(
           children: [
-            
             const SizedBox(height: 10),
             Expanded(
               child: CalendarRow(
@@ -47,90 +52,27 @@ class _DayCalendarState extends State<DayCalendar> {
                 dayController: _dayController,
               ),
             ),
-            LogoBottomNavigationBar(),
           ],
         ),
-      ),
-    );
+      );
+    
   }
 }
-
-
 
 class CalendarRow extends StatelessWidget {
   final ScrollController timeController;
   final ScrollController dayController;
 
-  CalendarRow({required this.timeController, required this.dayController});
+  CalendarRow({super.key, required this.timeController, required this.dayController});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
-        TimeColumn(timeController: timeController),
+        TimeColumn(timeController: timeController, now: DateTime.now(),),
         DayColumn(dayController: dayController),
       ],
-    );
-  }
-}
-
-class TimeColumn extends StatelessWidget {
-  final ScrollController timeController;
-
-  TimeColumn({required this.timeController});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            'Time',
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Expanded(
-            child: TimeContainer(timeController: timeController),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class DayColumn extends StatelessWidget {
-  final ScrollController dayController;
-
-  DayColumn({required this.dayController});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      flex: 6,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Text(
-            '${DateFormat('E dd/MM/yy').format(DateTime.now())}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Expanded(
-            child: DayContainer(dayController: dayController),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -138,7 +80,7 @@ class DayColumn extends StatelessWidget {
 class TimeContainer extends StatelessWidget {
   final ScrollController timeController;
 
-  TimeContainer({required this.timeController});
+  TimeContainer({super.key, required this.timeController});
 
   @override
   Widget build(BuildContext context) {
@@ -147,54 +89,64 @@ class TimeContainer extends StatelessWidget {
         color: Color.fromARGB(114, 171, 205, 239),
         borderRadius: BorderRadius.circular(3.0),
       ),
-      child: Align(
-        alignment: Alignment.topCenter,
-        child: ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: timeController,
-          itemCount: 24,
-          itemBuilder: (context, timeIndex) {
-            final totalMinutes = ((timeIndex * 60) + (6 * 60)) % (24 * 60);
-            final hour = totalMinutes ~/ 60;
-            final minute = totalMinutes % 60;
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 7.0),
-              child: Text(
-                '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
+      child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: timeController,
+        itemCount: 48,
+        padding: EdgeInsets.zero,
+        itemBuilder: (context, timeIndex) {
+          final totalMinutes = ((timeIndex * 30) + (6 * 60)) % (24 * 60);
+          final hour = totalMinutes ~/ 60;
+          final minute = totalMinutes % 60;
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 7.0),
+            child: Text(
+              '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
 }
 
-
 class DayContainer extends StatelessWidget {
   final ScrollController dayController;
 
-  DayContainer({required this.dayController});
+  DayContainer({super.key, required this.dayController});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF568493),
+        gradient: MonthColor.fancyLinearGradient(),
         borderRadius: BorderRadius.circular(3.0),
       ),
       child: ListView.builder(
         controller: dayController,
         itemCount: 48,
         itemBuilder: (context, dayIndex) {
-          
           return Container(); // Placeholder for your existing code
         },
       ),
     );
+  }
+}
+
+class DayView extends StatefulWidget {
+  const DayView({super.key});
+
+  @override
+  State<DayView> createState() => _DayViewState();
+}
+
+class _DayViewState extends State<DayView> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

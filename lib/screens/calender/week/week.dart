@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:alertnukeapp/screens/wrapper.dart';
 
-// Import statements for necessary Flutter packages
-import 'package:flutter/material.dart';
 
 // Main class for the WeekCalendar widget, a stateless widget representing a week calendar UI
 class WeekCalendar extends StatelessWidget {
@@ -16,9 +14,9 @@ class WeekCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Scaffold widget, providing basic material design structure
-    return Scaffold(
+    return 
       // Body of the scaffold, containing the main UI components
-      body: SingleChildScrollView(
+    SingleChildScrollView(
         // Container representing the entire screen
         child: Container(
           // Set the height and width of the container to match the screen dimensions
@@ -47,12 +45,10 @@ class WeekCalendar extends StatelessWidget {
               // WeekGrid, a widget displaying a grid of days in the week
               WeekGrid(dayNames: dayNames),
               // Replace LogoBottomNavigationBar with your appropriate widget.
-              const LogoBottomNavigationBar(),
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
