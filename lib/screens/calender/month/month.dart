@@ -50,7 +50,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
                 const EdgeInsets.only(top: 100, left: 10, right: 10, bottom: 0),
             child: Column(
               children: [
-                const SizedBox(height: 10),
+                const SizedBox(height: 100),
                 Expanded(
                   child: PageView.builder(
                     controller: _pageController,
@@ -82,7 +82,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
             ),
           ),
           Positioned(
-            top: 0,
+            top: 80,
             left: 0,
             right: 0,
             child: TimeColumn(
