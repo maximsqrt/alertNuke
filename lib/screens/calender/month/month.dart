@@ -1,17 +1,23 @@
 import 'package:alertnukeapp/screens/calender/widgets/buildmonth.dart';
+import 'package:alertnukeapp/screens/calender/year/year.dart';
 import 'package:alertnukeapp/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:alertnukeapp/screens/views/timecolumn.dart';
 
 class MonthCalendar extends StatefulWidget {
+  final int monthIndex;
   final int selectedMonth;
 
-  MonthCalendar({Key? key, required this.selectedMonth}) : super(key: key);
+  MonthCalendar({Key? key, required this.monthIndex})
+      : selectedMonth = monthIndex,
+        super(key: key);
 
   @override
   _MonthCalendarState createState() => _MonthCalendarState();
 }
+
+
 
 class _MonthCalendarState extends State<MonthCalendar> {
   late PageController _pageController;
@@ -21,9 +27,13 @@ class _MonthCalendarState extends State<MonthCalendar> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: widget.selectedMonth - 1);
+    currentPage = widget.monthIndex - 1; // Initialize currentPage to the selected month
+    _pageController = PageController(initialPage: currentPage);
     _timeController = TextEditingController();
   }
+
+  
+
 
   @override
   void dispose() {
@@ -62,20 +72,20 @@ class _MonthCalendarState extends State<MonthCalendar> {
                     itemCount: 12, // Number of months
                     itemBuilder: (BuildContext context, int index) {
                       // Calculate the month for the current page
-                      int month = index + 1;
+                      int monthIndex = index + 1;
 
-                      return buildMonthPage(20, 0.5, 20);
+                      return buildMonthPage(monthIndex, 0.5, 20);
                     },
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 110),
                 Text(
                   DateFormat('MMMM')
-                      .format(DateTime.now().add(Duration(days: 1))),
+                      .format(DateTime.now().add(Duration(days: 1 + currentPage * 30))),
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 30,
                   ),
                 ),
               ],

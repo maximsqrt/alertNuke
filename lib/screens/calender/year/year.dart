@@ -93,7 +93,7 @@ class MonthGridItem extends StatelessWidget {
 void navigateToMonthView(BuildContext context, int month) {
   Navigator.of(context).push(MaterialPageRoute<void>(
     builder: (BuildContext context) {
-      return MonthCalendar(selectedMonth: month);
+      return MonthCalendar(monthIndex: month);
     },
   ));
   print('Navigating to Month View - $month');

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:alertnukeapp/screens/calender/year/year.dart';
 import 'package:flutter/material.dart';
 
-Widget buildMonthPage(int month, double childAspectRatio, int fontSize) {
+Widget buildMonthPage(int monthIndex, double childAspectRatio, int fontSize) {
   int actualFontSize = fontSize;
   return Container(
     decoration: BoxDecoration(
@@ -13,7 +13,7 @@ Widget buildMonthPage(int month, double childAspectRatio, int fontSize) {
     ),
     child: GridView.builder(
       padding: EdgeInsets.zero,
-      itemCount: daysInMonth(month),
+      itemCount: daysInMonth(monthIndex),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 7,
         mainAxisSpacing: 0,
