@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 
 class Root extends StatefulWidget {
-  const Root({super.key});
+  const Root({Key? key}) : super(key: key);
 
   @override
   State<Root> createState() => _RootState();
@@ -28,44 +28,42 @@ class _RootState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
-      bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem>[
-       
-        BottomNavigationBarItem(
-          icon: LogoWidget(imagePath: 'assets/Month.png'),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: LogoWidget(imagePath: 'assets/chat_360.png'),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: LogoWidget(imagePath: 'assets/Socials.png'),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: LogoWidget(imagePath: 'assets/bulb.png'),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: LogoWidget(imagePath: 'assets/setting.png'),
-          label: '',
-        ),
-      ],
-      currentIndex: _selectedIndex,
-      onTap: _onItemTapped,
+      body: _widgetOptions.elementAt(_selectedIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: LogoWidget(imagePath: 'assets/Month.png'),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: LogoWidget(imagePath: 'assets/chat_360.png'),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: LogoWidget(imagePath: 'assets/Socials.png'),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: LogoWidget(imagePath: 'assets/bulb.png'),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: LogoWidget(imagePath: 'assets/setting.png'),
+            label: '',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
-      
     );
   }
 }
 
-
-
 class LogoWidget extends StatelessWidget {
   final String imagePath;
 
-  const LogoWidget({super.key, required this.imagePath});
+  const LogoWidget({Key? key, required this.imagePath}) : super(key: key);
+
 
 @override
   Widget build(BuildContext context) {

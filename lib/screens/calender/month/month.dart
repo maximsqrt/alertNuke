@@ -1,3 +1,4 @@
+// Importing necessary packages and files
 import 'package:alertnukeapp/screens/calender/widgets/buildmonth.dart';
 import 'package:alertnukeapp/screens/calender/year/year.dart';
 import 'package:alertnukeapp/themes/colors.dart';
@@ -5,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:alertnukeapp/screens/views/timecolumn.dart';
 
+// Defining a StatefulWidget for the MonthCalendar
 class MonthCalendar extends StatefulWidget {
+  // Constructor to initialize with the selected month index
   final int monthIndex;
   final int selectedMonth;
 
@@ -17,24 +20,22 @@ class MonthCalendar extends StatefulWidget {
   _MonthCalendarState createState() => _MonthCalendarState();
 }
 
-
-
+// State class for the MonthCalendar
 class _MonthCalendarState extends State<MonthCalendar> {
-  late PageController _pageController;
-  late TextEditingController _timeController;
-  int currentPage = 0;
+  late PageController _pageController;  // Controller for handling the page view
+  late TextEditingController _timeController;  // Controller for handling time input
+  int currentPage = 0;  // Variable to keep track of the current page (month)
 
+  // Initializing controllers and setting the initial page to the selected month
   @override
   void initState() {
     super.initState();
-    currentPage = widget.monthIndex - 1; // Initialize currentPage to the selected month
+    currentPage = widget.monthIndex - 1;
     _pageController = PageController(initialPage: currentPage);
     _timeController = TextEditingController();
   }
 
-  
-
-
+  // Disposing of controllers when the widget is disposed
   @override
   void dispose() {
     _pageController.dispose();
@@ -42,13 +43,16 @@ class _MonthCalendarState extends State<MonthCalendar> {
     super.dispose();
   }
 
+  // Building the UI for the MonthCalendar
   @override
   Widget build(BuildContext context) {
     ScrollController _scrollController = ScrollController();
 
+    // Scaffold widget for the overall structure of the screen
     return Scaffold(
       body: Stack(
         children: [
+          // Background container with gradient and styling
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
@@ -56,11 +60,11 @@ class _MonthCalendarState extends State<MonthCalendar> {
               gradient: JPfancyColor.jpFancyColor(),
               borderRadius: BorderRadius.circular(3.0),
             ),
-            padding:
-                const EdgeInsets.only(top: 100, left: 10, right: 10, bottom: 0),
+            padding: const EdgeInsets.only(top: 100, left: 10, right: 10, bottom: 0),
             child: Column(
               children: [
                 const SizedBox(height: 100),
+                // PageView for displaying months
                 Expanded(
                   child: PageView.builder(
                     controller: _pageController,
@@ -69,16 +73,18 @@ class _MonthCalendarState extends State<MonthCalendar> {
                         currentPage = page;
                       });
                     },
-                    itemCount: 12, // Number of months
+                    itemCount: 12,  // Number of months
                     itemBuilder: (BuildContext context, int index) {
                       // Calculate the month for the current page
                       int monthIndex = index + 1;
 
+                      // Build a month page using a custom function
                       return buildMonthPage(monthIndex, 0.5, 20);
                     },
                   ),
                 ),
                 const SizedBox(height: 110),
+                // Displaying the current month's name
                 Text(
                   DateFormat('MMMM')
                       .format(DateTime.now().add(Duration(days: 1 + currentPage * 30))),
@@ -91,6 +97,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
               ],
             ),
           ),
+          // Positioned widget for displaying the time column on top of the page
           Positioned(
             top: 80,
             left: 0,
