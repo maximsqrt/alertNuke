@@ -1,6 +1,7 @@
 // Importing necessary packages and files
 import 'package:alertnukeapp/screens/calender/widgets/buildmonth.dart';
 import 'package:alertnukeapp/screens/calender/year/year.dart';
+import 'package:alertnukeapp/screens/views/wrappermethod/wrappermethod.dart';
 import 'package:alertnukeapp/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -57,7 +58,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              gradient: JPfancyColor.jpFancyColor(),
+              color: BackgroundColor.primaryColor,
               borderRadius: BorderRadius.circular(3.0),
             ),
             padding: const EdgeInsets.only(top: 100, left: 10, right: 10, bottom: 0),
@@ -83,7 +84,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
                     },
                   ),
                 ),
-                const SizedBox(height: 110),
+                
                 // Displaying the current month's name
                 Text(
                   DateFormat('MMMM')
@@ -92,7 +93,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
-                  ),
+                 ),
                 ),
               ],
             ),
@@ -108,6 +109,12 @@ class _MonthCalendarState extends State<MonthCalendar> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar.build(
+        selectedIndex: 0, // Set the initial selected index as needed
+        onItemTapped: (index) {
+          // Handle bottom navigation item tap
+        },
       ),
     );
   }

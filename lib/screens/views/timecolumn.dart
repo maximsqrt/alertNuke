@@ -35,7 +35,7 @@ class TimeColumn extends StatelessWidget {
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 40,
           ),
         ),
       ],

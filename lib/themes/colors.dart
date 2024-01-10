@@ -34,3 +34,10 @@ class JPfancyColor {
     );
   }
 }
+// Background Month // Week // Day 
+class BackgroundColor { 
+
+
+
+  static const Color primaryColor = Color(0xFF250E22);
+}
