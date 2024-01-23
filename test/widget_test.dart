@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   testWidgets('Login Screen Test', (WidgetTester tester) async {
     // Build the login screen and trigger a frame.
-    await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
+    await tester.pumpWidget( MaterialApp(home: LoginScreen()));
 
     // Verify that the 'Login with Google' button is present.
     expect(find.text('Login with Google'), findsOneWidget);

@@ -2,9 +2,10 @@ import 'package:alertnukeapp/screens/calender/year/year.dart';
 import 'package:alertnukeapp/screens/signup/signup.dart';
 import 'package:flutter/material.dart';
 
-
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,91 +19,111 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              // Logo
-              Image.asset(
-                'assets/logo.png', // Pfad zum Logo-Bild
-                width: 200, // Größe des Logos
-                height: 200,
-              ),
-              const SizedBox(height: 20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                // Logo
+                Image.asset(
+                  'assets/logo.png',
+                  width: 200,
+                  height: 200,
+                ),
+                const SizedBox(height: 20),
 
-              // Text Fields for Username and Password
-              const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: TextField(
-                  style: TextStyle(color: Colors.white), // Textfarbe der Eingabefelder
-                  decoration: InputDecoration(
-                    labelText: 'Username',
-                    labelStyle: TextStyle(color: Colors.white), // Textfarbe des Labels
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white), // Rahmenfarbe im Normalzustand
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white), // Rahmenfarbe im Fokus
-                    ),
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: TextField(
-                  style: TextStyle(color: Colors.white),
-                  obscureText: true, // Versteckte Eingabe für Passwort
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: TextStyle(color: Colors.white),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                // Text Fields for Username and Password
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextFormField(
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelText: 'Username',
+                      labelStyle: TextStyle(color: Colors.white),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
-              ),
-ElevatedButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>  YearCalendar())),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Hintergrundfarbe des Buttons
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextFormField(
+                    key: const Key('password'), // Add a key for form validation
+                    style: TextStyle(color: Colors.white),
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      labelStyle: TextStyle(color: Colors.white),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Password is required';
+                      }
+                      if (value.length < 10) {
+                        return 'Password must be at least 10 characters';
+                      }
+                      // Add more password constraints as needed
+                      return null;
+                    },
+                  ),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      fontSize: 20, // Textgröße
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => YearCalendar()),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              // "Forgot Password" link
-              TextButton(
-                onPressed: () {
-                  // Implement your forgot password functionality here
-                },
-                child: const Text(
-                  "Forgot Password?",
-                  style: TextStyle(color: Colors.white),
+                const SizedBox(height: 10),
+                // "Forgot Password" link
+                TextButton(
+                  onPressed: () {
+                    // Implement your forgot password functionality here
+                  },
+                  child: const Text(
+                    "Forgot Password?",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-              ),
 
-              // "Sign Up" link
-            TextButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupScreen())),
-                  // Implementiere die Signup-Logik hier
-                
-                child: const Text('or signup'),
+                // "Sign Up" link
+                TextButton(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignupScreen()),
+                  ),
+                  child: const Text('or signup'),
                 )
-            ],
-        
+              ],
+            ),
+          ),
         ),
-       )
-      )
-    ); 
+      ),
+    );
   }
 }
-

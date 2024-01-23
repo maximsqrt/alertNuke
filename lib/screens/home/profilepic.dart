@@ -54,7 +54,7 @@ class _ProfilPicScreenState extends State<ProfilePicScreen> {
             onPressed: () {
             _pickImage(ImageSource.camera);
     Navigator.pop(context); // This line will navigate back to the previous screen (SettingsScreen)
-          },
+          },///brauchen noch ne Async Funktion hier und das image muss zurück geparesed werden.
             child: const Text('Back'),
           ),
         ],

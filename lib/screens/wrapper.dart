@@ -1,4 +1,6 @@
+import 'package:alertnukeapp/screens/Icons/iconsscreen.dart';
 import 'package:alertnukeapp/screens/calender/year/year.dart';
+import 'package:alertnukeapp/screens/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 
@@ -12,12 +14,12 @@ class Root extends StatefulWidget {
 
 class _RootState extends State<Root> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
+  static  List<Widget> _widgetOptions = <Widget>[
    YearCalendar(),
     Text("Chat"),
     Text("Socials"),
-    Text("Icons"),
-    Text("Settings")
+    IconsScreen(),
+   SettingsScreen(),
   ];
 
   void _onItemTapped(int index){
