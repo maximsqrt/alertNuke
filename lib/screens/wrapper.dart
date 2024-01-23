@@ -77,3 +77,13 @@ class LogoWidget extends StatelessWidget {
     );
   }
 }
+/*Hauptklasse Root: Diese Klasse ist der Einstiegspunkt für die BottomNavigationBar. Der Konstruktor nimmt einen optionalen Key-Parameter an, der zur Identifizierung des Widgets verwendet wird.
+
+Key-Parameter: Der Key-Parameter ermöglicht die eindeutige Identifizierung eines Widgets. In diesem Fall wird er an die super-Klasse übergeben, um die Elternklasse zu initialisieren.
+
+StatefulWidget und State: Die Root-Klasse erbt von StatefulWidget, was bedeutet, dass sie einen zugehörigen State-Objekt erstellt. Der State speichert den aktuellen Zustand des Widgets, insbesondere den ausgewählten Index der BottomNavigationBar.
+_RootState-Klasse: Diese Klasse repräsentiert den Zustand der Root-Klasse. Sie enthält den ausgewählten Index und eine Liste von Widgets für die verschiedenen BottomNavigationBar-Elemente.
+_onItemTapped-Methode: Diese Methode wird aufgerufen, wenn ein Element in der BottomNavigationBar ausgewählt wird. Sie aktualisiert den Zustand, um den ausgewählten Index zu ändern.
+_widgetOptions-Liste: Diese Liste enthält die Widgets, die den Inhalt der verschiedenen BottomNavigationBar-Elemente repräsentieren, einschließlich des Jahreskalenders und Platzhaltern für andere Funktionen.
+build-Methode: Diese Methode erstellt die visuelle Darstellung des Widgets. Sie verwendet den ausgewählten Index, um das entsprechende Widget aus der _widgetOptions-Liste anzuzeigen.
+LogoWidget-Klasse: Eine separate Widget-Klasse, die ein Logo anzeigt. Der Konstruktor akzeptiert den Pfad zum Bild und die build-Methode erstellt die visuelle Darstellung des Logos.*/

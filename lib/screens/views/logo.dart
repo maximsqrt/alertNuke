@@ -19,3 +19,20 @@ class LogoImage extends StatelessWidget {
 
 
 
+class LogoBackgroundImage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        Image(
+          image: AssetImage("assets/settingsbackgrnd.png"),
+          
+        ),
+        SizedBox(height: 10),
+      ],
+    );
+  }
+}
+
+
+

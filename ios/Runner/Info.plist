@@ -16,6 +16,21 @@
 	<string>alertnukeapp</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleDevelopmentRegion</key>
+	
+    <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>CFBundleDisplayName</key>
+    <string>Alertnukeapp</string>
+    <!-- ... other keys ... -->
+
+    <!-- Camera Access -->
+    <key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to take photos and videos.</string>
+
+    <!-- Photo Library Access -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your photo library to pick photos.</string>
+
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
