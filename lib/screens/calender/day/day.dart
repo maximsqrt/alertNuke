@@ -3,14 +3,16 @@
 import 'package:alertnukeapp/common/datetime.dart';
 import 'package:alertnukeapp/screens/calender/day/timecontainer.dart';
 import 'package:alertnukeapp/screens/views/timecolumn.dart';
+import 'package:alertnukeapp/screens/views/wrappermethod/wrappermethod.dart';
 import 'package:alertnukeapp/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class DayCalendar extends StatefulWidget {
-  final int? selectedDay;
+  final int selectedDay;
+  final int monthNumber;
 
-  const DayCalendar({Key? key, this.selectedDay}) : super(key: key);
+  const DayCalendar({Key? key, required this.selectedDay, required this.monthNumber}) : super(key: key);
 
   @override
   _DayCalendarState createState() => _DayCalendarState();
@@ -24,11 +26,13 @@ class _DayCalendarState extends State<DayCalendar> {
 
   @override
   void initState() {
+    currentDate = DateTime(currentDate.year, widget.monthNumber, widget.selectedDay);
     super.initState();
     weekNames = ['Time', widget.selectedDay?.toString() ?? ''];
   }
 
- @override
+
+  @override
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
@@ -67,47 +71,11 @@ Widget build(BuildContext context) {
           ),
         ],
       ),
-    ),
+    )
   );
 }
+
 }
-
-// class TimeContainer extends StatelessWidget {
-//   final ScrollController timeController;
-
-//   TimeContainer({Key? key, required this.timeController}) : super(key: key);
-
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return Container(
-// //       decoration: BoxDecoration(
-// //         color: Color.fromARGB(114, 171, 205, 239),
-// //         borderRadius: BorderRadius.circular(3.0),
-// //       ),
-// //       child: ListView.builder(
-// //         physics: const NeverScrollableScrollPhysics(),
-// //         controller: timeController,
-// //         itemCount: 48,
-// //         padding: EdgeInsets.zero,
-// //         itemBuilder: (context, timeIndex) {
-// //           final totalMinutes = ((timeIndex * 30) + (6 * 60)) % (24 * 60);
-// //           final hour = totalMinutes ~/ 60;
-// //           final minute = totalMinutes % 60;
-// //           return Padding(
-// //             padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 7.0),
-// //             child: Text(
-// //               '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}',
-// //               style: const TextStyle(
-// //                 color: Colors.white,
-// //                 fontSize: 14,
-// //               ),
-// //             ),
-// //           );
-// //         },
-// //       ),
-// //     );
-// //   }
-// // }
 
 class DayContainer extends StatelessWidget {
   final ScrollController dayController;

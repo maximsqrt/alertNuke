@@ -36,8 +36,8 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: TextFormField(
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
                       labelText: 'Username',
                       labelStyle: TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
@@ -53,9 +53,9 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: TextFormField(
                     key: const Key('password'), // Add a key for form validation
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Password',
                       labelStyle: TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
@@ -82,7 +82,7 @@ class LoginScreen extends StatelessWidget {
                     if (_formKey.currentState?.validate() ?? false) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => YearCalendar()),
+                        MaterialPageRoute(builder: (context) => const YearCalendar()),
                       );
                     }
                   },

@@ -12,8 +12,9 @@ class MonthCalendar extends StatefulWidget {
   // Constructor to initialize with the selected month index
   final int monthIndex;
   final int selectedMonth;
+  final Function(int) dayCallback;
 
-  MonthCalendar({Key? key, required this.monthIndex})
+  MonthCalendar({Key? key, required this.monthIndex,required this.dayCallback})
       : selectedMonth = monthIndex,
         super(key: key);
 
@@ -80,7 +81,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
                       int monthIndex = index + 1;
 
                       // Build a month page using a custom function
-                      return buildMonthPage(monthIndex, 0.5, 20);
+                      return buildMonthPage(monthIndex, 0.5, 20, dayCallback: (day) => widget.dayCallback(day));
                     },
                   ),
                 ),

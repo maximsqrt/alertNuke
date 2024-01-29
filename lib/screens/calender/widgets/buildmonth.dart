@@ -1,10 +1,15 @@
+import 'package:alertnukeapp/application/DateHelperService.dart';
 import 'package:alertnukeapp/screens/calender/day/day.dart';
 import 'package:alertnukeapp/screens/calender/year/year.dart';
 import 'package:alertnukeapp/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 
-Widget buildMonthPage(int monthIndex, double childAspectRatio, int fontSize) {
+Widget buildMonthPage(int monthIndex, double childAspectRatio, int fontSize, {required Function(int) dayCallback}) {
+
+
+
+
   int actualFontSize = fontSize;
   return Container(
     decoration: BoxDecoration(
@@ -12,7 +17,7 @@ Widget buildMonthPage(int monthIndex, double childAspectRatio, int fontSize) {
     ),
     child: GridView.builder(
       padding: EdgeInsets.zero,
-      itemCount: daysInMonth(monthIndex),
+      itemCount: dateHelperService.daysInMonth(monthIndex),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 7,
         mainAxisSpacing: 0,
@@ -24,7 +29,7 @@ Widget buildMonthPage(int monthIndex, double childAspectRatio, int fontSize) {
 
         return GestureDetector(
           onTap: () {
-            onDayTap(context, monthIndex, day);
+            dayCallback(day);
           },
           child: AspectRatio(
             aspectRatio: 1.0,
@@ -54,15 +59,3 @@ Widget buildMonthPage(int monthIndex, double childAspectRatio, int fontSize) {
   );
 }
 
-void onDayTap(BuildContext context, int month, int day) {
-  navigateToDayView(context, day);
-}
-
-void navigateToDayView(BuildContext context, int day) {
-  Navigator.of(context).push(MaterialPageRoute<void>(
-    builder: (BuildContext context) {
-      return DayCalendar(selectedDay: day);
-    },
-  ));
-  print('Navigation to Day View - $day');
-}

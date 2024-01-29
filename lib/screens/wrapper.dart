@@ -20,6 +20,7 @@ class _RootState extends State<Root> {
     Text("Socials"),
     IconsScreen(),
    SettingsScreen(),
+   
   ];
 
   void _onItemTapped(int index){

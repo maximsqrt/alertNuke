@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 
 ///Methode austüfteln die den Wrapper einbindet und in den Screens aufgerufen werde kann////import 'package:flutter/material.dart';
 
-class CustomBottomNavigationBar {
+class CustomBottomNavigationBar  {
+  // CustomBottomNavigationBar(Map map);
+
+  static int selectedIndex = 0;
+
   static Widget build({
-    required int selectedIndex,
     required ValueChanged<int> onItemTapped,
   }) {
     return BottomNavigationBar(
@@ -59,7 +62,6 @@ class _RootState extends State<Root> {
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: CustomBottomNavigationBar.build(
-        selectedIndex: _selectedIndex,
         onItemTapped: _onItemTapped,
       ),
     );
