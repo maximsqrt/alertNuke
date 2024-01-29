@@ -110,12 +110,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavigationBar.build(
-        selectedIndex: 0, // Set the initial selected index as needed
-        onItemTapped: (index) {
-          // Handle bottom navigation item tap
-        },
-      ),
+     
     );
   }
 }

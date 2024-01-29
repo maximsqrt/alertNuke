@@ -1,3 +1,4 @@
+import 'package:alertnukeapp/screens/calender/day/day.dart';
 import 'package:alertnukeapp/screens/calender/month/month.dart';
 import 'package:alertnukeapp/screens/login/login.dart';
 import 'package:alertnukeapp/screens/settings/settings.dart';
@@ -8,8 +9,8 @@ import 'screens/calender/year/year.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     //runapp ist in der Flutter Lib definiert
-    home: LoginScreen(),
+    home: Root(),
   ));
 }
