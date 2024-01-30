@@ -11,7 +11,7 @@ class MonthColor {
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       colors: [primaryColor, secondaryColor],
-      stops: [0.2, 0.7],
+      stops: [0.1, 0.7],
       tileMode: TileMode.repeated,
       transform: GradientRotation(45 * 3.1415926535897932 / 180),
     );

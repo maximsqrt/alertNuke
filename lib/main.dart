@@ -1,17 +1,11 @@
-import 'package:alertnukeapp/screens/calender/day/day.dart';
-import 'package:alertnukeapp/screens/calender/month/month.dart';
-import 'package:alertnukeapp/screens/calender/widgets/buildyear.dart';
-import 'package:alertnukeapp/screens/login/login.dart';
-import 'package:alertnukeapp/screens/settings/settings.dart';
-import 'package:alertnukeapp/screens/start/start.dart';
-import 'package:alertnukeapp/screens/wrapper.dart';
 
-import 'screens/calender/year/year.dart';
+import 'package:alertnukeapp/screens/wrapper.dart';
+import 'package:alertnukeapp/screens/social/social.dart';
 
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MaterialApp(
+  runApp( MaterialApp(
     //runapp ist in der Flutter Lib definiert
     home: Root(),
   ));

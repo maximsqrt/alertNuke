@@ -1,9 +1,9 @@
 import 'package:alertnukeapp/screens/Icons/iconsscreen.dart';
 import 'package:alertnukeapp/screens/calender/year/year.dart';
+import 'package:alertnukeapp/screens/chat/chat.dart';
 import 'package:alertnukeapp/screens/settings/settings.dart';
+import 'package:alertnukeapp/screens/social/social.dart';
 import 'package:flutter/material.dart';
-
-
 
 class Root extends StatefulWidget {
   const Root({Key? key}) : super(key: key);
@@ -14,20 +14,20 @@ class Root extends StatefulWidget {
 
 class _RootState extends State<Root> {
   int _selectedIndex = 0;
-  static  List<Widget> _widgetOptions = <Widget>[
-   YearCalendar(),
-    Text("Chat"),
-    Text("Socials"),
+  static List<Widget> _widgetOptions = <Widget>[
+    const YearCalendar(),
+    ChatCalendar(),
+    SocialCalendar(),
     IconsScreen(),
-   SettingsScreen(),
-   
+    SettingsScreen(),
   ];
 
-  void _onItemTapped(int index){
+  void _onItemTapped(int index) {
     setState(() {
-          _selectedIndex = index;
-        });
+      _selectedIndex = index;
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,8 +67,7 @@ class LogoWidget extends StatelessWidget {
 
   const LogoWidget({Key? key, required this.imagePath}) : super(key: key);
 
-
-@override
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 30, // Passe die Breite nach Bedarf an

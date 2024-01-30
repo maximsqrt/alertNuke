@@ -1,9 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:alertnukeapp/common/datetime.dart';
 import 'package:alertnukeapp/screens/calender/day/timecontainer.dart';
-import 'package:alertnukeapp/screens/views/timecolumn.dart';
-import 'package:alertnukeapp/screens/views/wrappermethod/wrappermethod.dart';
 import 'package:alertnukeapp/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -28,7 +25,7 @@ class _DayCalendarState extends State<DayCalendar> {
   void initState() {
     currentDate = DateTime(currentDate.year, widget.monthNumber, widget.selectedDay);
     super.initState();
-    weekNames = ['Time', widget.selectedDay?.toString() ?? ''];
+    weekNames = ['Time', widget.selectedDay.toString() ?? ''];
   }
 
 
