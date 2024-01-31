@@ -1,4 +1,5 @@
-import 'package:alertnukeapp/themes/colors.dart';
+import 'package:alertnukeapp/config/colors.dart';
+
 import 'package:flutter/material.dart';
 import 'package:alertnukeapp/screens/views/logo.dart';
 import 'package:alertnukeapp/screens/home/profilepic.dart';  // Import ProfilePicScreen

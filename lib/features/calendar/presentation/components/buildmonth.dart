@@ -1,7 +1,5 @@
 import 'package:alertnukeapp/application/DateHelperService.dart';
-import 'package:alertnukeapp/screens/calender/day/day.dart';
-import 'package:alertnukeapp/screens/calender/year/year.dart';
-import 'package:alertnukeapp/themes/colors.dart';
+import 'package:alertnukeapp/config/colors.dart';
 import 'package:flutter/material.dart';
 
 

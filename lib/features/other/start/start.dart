@@ -1,5 +1,6 @@
-import 'package:alertnukeapp/screens/login/login.dart';
-import 'package:alertnukeapp/screens/signup/signup.dart';
+
+import 'package:alertnukeapp/features/authentication/presentation/login.dart';
+import 'package:alertnukeapp/features/authentication/presentation/signup.dart';
 import 'package:flutter/material.dart';
 
 class StartScreen extends StatelessWidget {

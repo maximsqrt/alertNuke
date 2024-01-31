@@ -1,4 +1,6 @@
-import 'package:alertnukeapp/screens/login/login.dart';
+
+import 'package:alertnukeapp/features/authentication/application/authentication_signup_service.dart';
+import 'package:alertnukeapp/features/authentication/presentation/login.dart';
 import 'package:flutter/material.dart';
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -8,18 +10,11 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-String? password; 
-String? email;
-String? repeatPassword;
 
 
-void signUp(){
 
-//passwortvergleich, ob werte gesetzt sind 
-// 
+AuthenticationSignupService authenticationService = AuthenticationSignupService();  
 
-
-}
 
 //Wie mit => signup auf die Funktion verweisen 
 
@@ -54,7 +49,7 @@ void signUp(){
                 child: TextField(
                   onChanged: (value) {
                     setState((){
-                      email = value;
+                      authenticationService.email = value;
                     });
                   },
                   style: const TextStyle(color: Colors.white), // Textfarbe der Eingabefelder
@@ -75,7 +70,7 @@ void signUp(){
                 child: TextField(
                 onChanged: (value) {
                     setState((){
-                      email = value;
+                      authenticationService.password = value;
                     });
                   },
                   style: const TextStyle(color: Colors.white),
@@ -97,7 +92,7 @@ void signUp(){
                 child: TextField(
                    onChanged: (value) {
                     setState((){
-                      repeatPassword = value;
+                      authenticationService.repeatPassword = value;
                     });
                   },
                   style: const TextStyle(color: Colors.white), // Textfarbe der Eingabefelder

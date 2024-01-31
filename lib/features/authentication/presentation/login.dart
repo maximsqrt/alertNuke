@@ -1,9 +1,13 @@
-import 'package:alertnukeapp/screens/calender/year/year.dart';
-import 'package:alertnukeapp/screens/signup/signup.dart';
+
+import 'package:alertnukeapp/features/authentication/application/authentication_login_service.dart';
+import 'package:alertnukeapp/features/authentication/presentation/signup.dart';
+import 'package:alertnukeapp/features/overview/presentation/overview.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  AuthenticationLoginService authenticationService = AuthenticationLoginService();  
 
   LoginScreen({Key? key}) : super(key: key);
 
@@ -82,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                     if (_formKey.currentState?.validate() ?? false) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const YearCalendar()),
+                        MaterialPageRoute(builder: (context) => const Overview()),
                       );
                     }
                   },

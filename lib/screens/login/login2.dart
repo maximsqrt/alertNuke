@@ -1,4 +1,5 @@
-import 'package:alertnukeapp/screens/signup/signup.dart';
+
+import 'package:alertnukeapp/features/authentication/presentation/signup.dart';
 import 'package:flutter/material.dart';
 
 

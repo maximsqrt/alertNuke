@@ -1,48 +1,30 @@
-import 'package:alertnukeapp/screens/calender/day/day.dart';
-import 'package:alertnukeapp/screens/calender/month/month.dart';
-import 'package:alertnukeapp/screens/calender/widgets/buildyear.dart';
+
+import 'package:alertnukeapp/features/calendar/presentation/components/buildyear.dart';
+import 'package:alertnukeapp/features/social/presentation/matrixbackground.dart';
 import 'package:alertnukeapp/screens/views/actualdate.dart';
 import 'package:alertnukeapp/screens/views/logo.dart';
-import 'package:alertnukeapp/themes/colors.dart';
-import 'package:alertnukeapp/themes/colors.dart';
-import 'package:alertnukeapp/themes/matrixbackground.dart';
 import 'package:flutter/material.dart';
 
-enum YearStatus { year, month, day }
+
 
 class YearCalendar extends StatefulWidget {
-  const YearCalendar({Key? key}) : super(key: key);
+
+  final Function(int) changeMonthStatus;
+  final Function(int) changeDayStatus;
+
+  const YearCalendar({Key? key, required this.changeDayStatus, required this.changeMonthStatus}) : super(key: key);
 
   @override
   _YearCalendar createState() => _YearCalendar();
 }
 
 class _YearCalendar extends State<YearCalendar> {
-  void changeMonthStatus(int newMonthIndex) {
-    setState(() {
-      selectedMonthIndex = newMonthIndex;
-      status = YearStatus.month;
-    });
-  }
-
-  void changeDayStatus(int newDayIndex) {
-    setState(() {
-      selectedDayIndex = newDayIndex;
-      status = YearStatus.day;
-    });
-  }
-
-  int selectedMonthIndex = 0;
-
-  int selectedDayIndex = 0;
-
-  YearStatus status = YearStatus.year;
+  
 
 @override
 Widget build(BuildContext context) {
   ScrollController _scrollController = ScrollController();
-  if (status == YearStatus.year) {
-    return Scaffold( 
+   return Scaffold( 
       appBar: LottieAppBar(
         backgroundColor: Colors.black,
         title: ActualDate(timeController: _scrollController, now: DateTime.now()),
@@ -85,9 +67,9 @@ Widget build(BuildContext context) {
                           aspectRatio: 1.0, // Set the aspect ratio (1.0 for square)
                           child: MonthGridItem(
                             monthIndex: index + 1,
-                            showMonth: (newMonthIndex) => changeMonthStatus(newMonthIndex),
+                            showMonth: (newMonthIndex) => widget.changeMonthStatus(newMonthIndex),
                             // Pass necessary callbacks here
-                            dayCallback: (day) => changeDayStatus(day),
+                            dayCallback: (day) => widget.changeDayStatus(day),
                           ),
                         ),
                       ),
@@ -100,11 +82,6 @@ Widget build(BuildContext context) {
         ),
       ),  
     );
-  } else if (status == YearStatus.month) {
-    return MonthCalendar(monthIndex: selectedMonthIndex, dayCallback: (day) => changeDayStatus(day));
-  } else {
-    return DayCalendar(selectedDay: selectedDayIndex, monthNumber: selectedMonthIndex);
-  }
 }
 
 

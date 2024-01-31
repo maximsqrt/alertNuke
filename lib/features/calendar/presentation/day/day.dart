@@ -1,7 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:alertnukeapp/screens/calender/day/timecontainer.dart';
-import 'package:alertnukeapp/themes/colors.dart';
+
+import 'package:alertnukeapp/config/colors.dart';
+import 'package:alertnukeapp/features/calendar/presentation/day/timecontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 

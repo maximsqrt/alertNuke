@@ -1,8 +1,6 @@
 // Importing necessary packages and files
-import 'package:alertnukeapp/screens/calender/widgets/buildmonth.dart';
-import 'package:alertnukeapp/screens/calender/year/year.dart';
-import 'package:alertnukeapp/screens/views/wrappermethod/wrappermethod.dart';
-import 'package:alertnukeapp/themes/colors.dart';
+import 'package:alertnukeapp/config/colors.dart';
+import 'package:alertnukeapp/features/calendar/presentation/components/buildmonth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:alertnukeapp/screens/views/timecolumn.dart';

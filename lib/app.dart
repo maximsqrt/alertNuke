@@ -1,0 +1,15 @@
+import 'package:alertnukeapp/features/authentication/presentation/login.dart';
+
+import 'package:flutter/material.dart';
+
+class App extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+
+      //UsermodelRepository 
+      //When userdaten 
+      home: LoginScreen(), // Hier kannst du den Wrapper oder eine andere Startseite festlegen
+    );
+  }
+}

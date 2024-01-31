@@ -1,5 +1,5 @@
+import 'package:alertnukeapp/config/colors.dart';
 import 'package:alertnukeapp/screens/Icons/iconslist.dart';
-import 'package:alertnukeapp/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 class IconsScreen extends StatelessWidget {
