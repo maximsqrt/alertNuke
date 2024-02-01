@@ -33,7 +33,7 @@ dependencies:
   table_calendar: ^3.0.9
   flutter_staggered_grid_view: ^0.7.0
   cupertino_icons: ^1.0.2
-  kalender: ^0.1.6
+  kalender: ^0.2.2
   intl: ^0.18.1
   sqflite: ^2.3.0
   shimmer: ^3.0.0
@@ -60,7 +60,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

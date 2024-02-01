@@ -250,10 +250,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_lints
-      sha256: a25a15ebbdfc33ab1cd26c63a6ee519df92338a9c10f122adda92938253bef04
+      sha256: e2a421b7e59244faef694ba7b30562e489c2b489866e505074eb005cd7060db7
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.3"
+    version: "3.0.1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -388,18 +388,18 @@ packages:
     dependency: "direct main"
     description:
       name: kalender
-      sha256: ea31ba7b7803c2a8ffd12f2f56bbb071c886cdf6a2ce993652fac5d20fca364e
+      sha256: "7d2606d8fe4171a644208b5dcdca80db4febf9cf2362a8c7b38916b0568ee52e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.9"
+    version: "0.2.2"
   lints:
     dependency: transitive
     description:
       name: lints
-      sha256: "0a217c6c989d21039f1498c3ed9f3ed71b354e69873f13a8dfc3c9fe76f1b452"
+      sha256: cbf8d4b858bb0134ef3ef87841abdf8d63bfc255c266b7bf6b39daa1085c4290
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "3.0.0"
   lottie:
     dependency: "direct main"
     description:
