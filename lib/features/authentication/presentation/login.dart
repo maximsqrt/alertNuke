@@ -168,7 +168,7 @@ class LoginScreen extends StatelessWidget {
       shape: RoundedRectangleBorder(  
         borderRadius: BorderRadius.circular(10.0)
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Color.fromARGB(255, 255, 54, 54),
       title: const Text('Anmeldung fehlgeschlagen'),
       content: const Text('Benutzername oder Passwort ungültig.'),
       actions: <Widget>[
