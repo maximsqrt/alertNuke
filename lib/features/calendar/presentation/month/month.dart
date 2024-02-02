@@ -99,7 +99,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
           ),
           // Positioned widget for displaying the time column on top of the page
           Positioned(
-            top: 80,
+            top: 60,
             left: 0,
             right: 0,
             child: TimeColumn(

@@ -1,14 +1,12 @@
 import "package:alertnukeapp/config/colors.dart";
 import "package:flutter/material.dart";
 
-
-
 class GradientAppBar extends StatelessWidget {
-  final String title;
+  final String? title;
   final Widget logo;
-  final double barHeight = 40.0;
+  final double barHeight = 50.0;
 
-  GradientAppBar(this.title, {required this.logo});
+  GradientAppBar({this.title, required this.logo});
 
   @override
   Widget build(BuildContext context) {
@@ -20,23 +18,22 @@ class GradientAppBar extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: JPfancyColor.jpFancyColor(),
       ),
-         
-        
-      
-      child:
-      Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[ 
-        logo,
+        children: <Widget>[
+          logo,
           SizedBox(width: 8),
-          Text(
-          title, 
-          style: TextStyle(
-              fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-      ],
+          if (title != null)
+            Text(
+              title!,
+              style: TextStyle(
+                fontSize: 20.0,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+        ],
       ),
-      
     );
   }
 }

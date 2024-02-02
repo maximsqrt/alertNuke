@@ -3,10 +3,12 @@ import 'package:alertnukeapp/features/authentication/application/authentication_
 import 'package:alertnukeapp/features/authentication/presentation/signup.dart';
 import 'package:alertnukeapp/features/overview/presentation/overview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   AuthenticationLoginService authenticationService = AuthenticationLoginService();  
 
   LoginScreen({Key? key}) : super(key: key);
@@ -28,106 +30,155 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                // Logo
-                Image.asset(
-                  'assets/logo.png',
-                  width: 200,
-                  height: 200,
-                ),
-                const SizedBox(height: 20),
-
-                // Text Fields for Username and Password
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      labelText: 'Username',
-                      labelStyle: TextStyle(color: Colors.white),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextFormField(
-                    key: const Key('password'), // Add a key for form validation
-                    style: const TextStyle(color: Colors.white),
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: TextStyle(color: Colors.white),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password is required';
-                      }
-                      if (value.length < 10) {
-                        return 'Password must be at least 10 characters';
-                      }
-                      // Add more password constraints as needed
-                      return null;
-                    },
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState?.validate() ?? false) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Overview()),
-                      );
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                ),
+                _buildLogo(),
+                _buildUsernameTextField(),
+                _buildPasswordTextField(),
+                _buildLoginButton(context),
                 const SizedBox(height: 10),
-                // "Forgot Password" link
-                TextButton(
-                  onPressed: () {
-                    // Implement your forgot password functionality here
-                  },
-                  child: const Text(
-                    "Forgot Password?",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-
-                // "Sign Up" link
-                TextButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignupScreen()),
-                  ),
-                  child: const Text('or signup'),
-                )
+                _buildForgotPasswordLink(),
+                _buildSignUpLink(context),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return Image.asset(
+      'assets/logo.png',
+      width: 200,
+      height: 200,
+    );
+  }
+
+  Widget _buildUsernameTextField() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: TextFormField(
+        controller: _usernameController,
+        style: const TextStyle(color: Colors.white),
+        decoration: const InputDecoration(
+          labelText: 'Username',
+          labelStyle: TextStyle(color: Colors.white),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPasswordTextField() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: TextFormField(
+        controller: _passwordController,
+        key: const Key('password'),
+        style: const TextStyle(color: Colors.white),
+        obscureText: true,
+        decoration: const InputDecoration(
+          labelText: 'Password',
+          labelStyle: TextStyle(color: Colors.white),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Password is required';
+          }
+          if (value.length < 10) {
+            return 'Password must be at least 10 characters';
+          }
+          return null;
+        },
+      ),
+    );
+  }
+
+  Widget _buildLoginButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () async {
+        if (_formKey.currentState?.validate() ?? false) {
+          String username = _usernameController.text.trim();
+          String password = _passwordController.text.trim();
+          bool loggedIn = await authenticationService.signIn(username, password);
+          if (loggedIn) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Overview()),
+            );
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return _buildLoginFailedDialog(context);
+              },
+            );
+          }
+        }
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.blue,
+      ),
+      child: const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Text(
+          'Login',
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildForgotPasswordLink() {
+    return TextButton(
+      onPressed: () {
+        // Implement your forgot password functionality here
+      },
+      child: const Text(
+        "Forgot Password?",
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _buildSignUpLink(BuildContext context) {
+    return TextButton(
+      onPressed: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SignupScreen()),
+      ),
+      child: const Text('or signup'),
+    );
+  }
+
+  Widget _buildLoginFailedDialog(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(  
+        borderRadius: BorderRadius.circular(10.0)
+      ),
+      backgroundColor: Colors.transparent,
+      title: const Text('Anmeldung fehlgeschlagen'),
+      content: const Text('Benutzername oder Passwort ungültig.'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('OK'),
+        ),
+      ],
     );
   }
 }

@@ -1,9 +1,6 @@
 import 'package:alertnukeapp/app.dart';
 import 'package:alertnukeapp/config/firebase_options.dart';
-
 import 'package:firebase_core/firebase_core.dart';
-import 'package:shimmer/main.dart';
-
 import 'package:flutter/material.dart';
 
 

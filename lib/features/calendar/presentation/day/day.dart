@@ -26,7 +26,7 @@ class _DayCalendarState extends State<DayCalendar> {
   void initState() {
     currentDate = DateTime(currentDate.year, widget.monthNumber, widget.selectedDay);
     super.initState();
-    weekNames = ['Time', widget.selectedDay.toString() ?? ''];
+    weekNames = ['Time', widget.selectedDay.toString()];
   }
 
 

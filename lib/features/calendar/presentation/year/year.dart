@@ -1,22 +1,18 @@
-
-import 'package:alertnukeapp/config/colors.dart';
 import 'package:alertnukeapp/config/customgradientappbar.dart';
 import 'package:alertnukeapp/features/calendar/presentation/components/buildyear.dart';
-import 'package:alertnukeapp/features/social/presentation/matrixbackground.dart';
-import 'package:alertnukeapp/screens/views/actualdate.dart';
-import 'package:alertnukeapp/screens/views/logo.dart';
+
 import 'package:alertnukeapp/screens/views/timecolumn.dart';
 import 'package:flutter/material.dart';
-
-
-import 'package:flutter/material.dart';
-import 'package:alertnukeapp/config/customgradientappbar.dart';
 
 class YearCalendar extends StatefulWidget {
   final Function(int) changeMonthStatus;
   final Function(int) changeDayStatus;
 
-  const YearCalendar({Key? key, required this.changeDayStatus, required this.changeMonthStatus}) : super(key: key);
+  const YearCalendar(
+      {Key? key,
+      required this.changeDayStatus,
+      required this.changeMonthStatus})
+      : super(key: key);
 
   @override
   _YearCalendar createState() => _YearCalendar();
@@ -30,11 +26,10 @@ class _YearCalendar extends State<YearCalendar> {
       body: Column(
         children: <Widget>[
           GradientAppBar(
-            "Custom Gradient App Bar",
             logo: Image.asset(
-              'assets/logo.png',
-              width: 40, // specify the width
-              height: 40, // specify the height
+              'assets/AlertNuke.png',
+              width: 200, // specify the width
+              // specify the height
             ),
           ),
           Expanded(
@@ -53,11 +48,13 @@ class _YearCalendar extends State<YearCalendar> {
               ),
               child: Column(
                 children: [
-                  TimeColumn(timeController: _scrollController, now: DateTime.now()),
-                  Expanded(
+                  TimeColumn(
+                      timeController: _scrollController, now: DateTime.now()),
+                  Flexible(
                     child: GridView.builder(
                       itemCount: 12,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         mainAxisSpacing: 5,
                         crossAxisSpacing: 5,
@@ -72,9 +69,11 @@ class _YearCalendar extends State<YearCalendar> {
                                 aspectRatio: 1.0,
                                 child: MonthGridItem(
                                   monthIndex: index + 1,
-                                  showMonth: (newMonthIndex) => widget.changeMonthStatus(newMonthIndex),
+                                  showMonth: (newMonthIndex) =>
+                                      widget.changeMonthStatus(newMonthIndex),
                                   // Pass necessary callbacks here
-                                  dayCallback: (day) => widget.changeDayStatus(day),
+                                  dayCallback: (day) =>
+                                      widget.changeDayStatus(day),
                                 ),
                               ),
                             ),
