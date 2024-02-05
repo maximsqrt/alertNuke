@@ -5,6 +5,7 @@ import 'package:alertnukeapp/config/colors.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/timecontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:intl/intl.dart';
 
 class DayCalendar extends StatefulWidget {
   final int selectedDay;
@@ -29,49 +30,61 @@ class _DayCalendarState extends State<DayCalendar> {
     weekNames = ['Time', widget.selectedDay.toString()];
   }
 
-
-  @override
+@override
 Widget build(BuildContext context) {
   return Scaffold(
+    backgroundColor: BackgroundColor.primaryColor,
     appBar: AppBar(
-      title: Text(currentDate.day.toString()),
+      title: Text(
+        '${DateFormat('EEEE').format(currentDate)}, ${currentDate.day.toString()} ${DateFormat('MMMM y').format(currentDate)}',
+        style: const TextStyle(fontSize: 18),
+      ),
     ),
-    body: Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFF6CA7BE), Color(0xFF2E0B4B)],
-          tileMode: TileMode.repeated,
-          stops: [0.1, 0.7],
-          transform: GradientRotation(45 * 3.1415926535897932 / 180),
+    body: Padding(
+      padding: const EdgeInsets.only(top: 50, left: 10, right: 10, bottom: 0),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0xFF6CA7BE), Color(0xFF2E0B4B)],
+                  tileMode: TileMode.repeated,
+                  stops: [0.1, 0.7],
+                  transform: GradientRotation(45 * 3.1415926535897932 / 180),
+                ),
+              ),
+              child: StaggeredGrid.count(
+                crossAxisCount: 6,
+                mainAxisSpacing: 1,
+                crossAxisSpacing: 1,
+                children: [
+                  // Small Time Column
+                  StaggeredGridTile.count(
+                    crossAxisCellCount: 1,
+                    mainAxisCellCount: 16,
+                    child: TimeContainer(timeController: _timeController),
+                  ),
+                  // Large Day Column
+                  StaggeredGridTile.count(
+                    crossAxisCellCount: 5,
+                    mainAxisCellCount: 16,
+                    child: DayContainer(dayController: _dayController),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
-      padding: const EdgeInsets.only(top: 50, left: 10, right: 10, bottom: 0),
-      child: StaggeredGrid.count(
-        crossAxisCount: 6,
-        mainAxisSpacing: 2,
-        crossAxisSpacing: 2,
-        children: [
-          // Small Time Column
-          StaggeredGridTile.count(
-            crossAxisCellCount: 1,
-            mainAxisCellCount: 16,
-            child: TimeContainer(timeController: _timeController),
-          ),
-          // Large Day Column
-          StaggeredGridTile.count(
-            crossAxisCellCount: 5,
-            mainAxisCellCount: 16,
-            child: DayContainer(dayController: _dayController),
-          ),
-        ],
-      ),
-    )
+    ),
   );
 }
+
 
 }
 

@@ -1,55 +1,105 @@
 import 'package:alertnukeapp/config/colors.dart';
-import 'package:alertnukeapp/screens/Icons/iconslist.dart';
+import 'package:alertnukeapp/config/customgradientappbar.dart';
+import 'package:alertnukeapp/features/icons/presentation/iconslist.dart';
 import 'package:flutter/material.dart';
+import 'package:unicons/unicons.dart'; // Import the Unicons library
 
-class IconsScreen extends StatelessWidget {
+class IconsScreen extends StatefulWidget {
+  @override
+  _IconsScreenState createState() => _IconsScreenState();
+}
+
+class _IconsScreenState extends State<IconsScreen> {
+  List<IconData> allUnicons = uniconsList;
+  List<IconData> filteredIcons = [];
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    filteredIcons = allUnicons;
+  }
+
+  void filterIcons(String query) {
+    List<IconData> filtered = allUnicons.where((icon) {
+      return icon.toString().toLowerCase().contains(query.toLowerCase());
+    }).toList();
+
+    setState(() {
+      filteredIcons = filtered;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Your App Title'),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: SettingsBackgroundColor.linearGradient(),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: iconList.length,
-                        itemBuilder: (context, index) {
-                          IconData? iconData = iconList[index][0] as IconData?;
-                          String? label = iconList[index][1] as String?;
-
-                          // Check for nullability before using the values
-                          if (iconData != null && label != null) {
-                            return ListTile(
-                              leading: Icon(iconData),
-                              title: Text(label),
-                              subtitle: Text(
-                                  'Code Point: ${iconData.codePoint}'),
-                            );
-                          } else {
-                            // Handle the case where either iconData or label is null
-                            return Container(); // You can replace this with an appropriate widget or handle the case differently.
-                          }
-                        },
-                      ),
+      body: Expanded(
+        child: Column(
+          children: <Widget>[
+            GradientAppBar(
+              logo: Image.asset(
+                'assets/AlertNuke.png',
+                width: 200,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: searchController,
+                onChanged: filterIcons,
+                decoration: InputDecoration(
+                  labelText: 'Search for Icon',
+                  prefixIcon: Icon(UniconsLine.search),
+                  fillColor: Colors.white,
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: SettingsBackgroundColor.linearGradient(),
+                  boxShadow: [
+                    // Add box shadow here
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
                     ),
                   ],
                 ),
+                child: Scrollbar(
+                  thickness: 10,
+                  child: ListView.builder(
+                    itemCount: filteredIcons.length,
+                    itemBuilder: (context, index) {
+                      final IconData icon = filteredIcons[index];
+                      final String iconName = icon.toString();
+                      return ListTile(
+                        leading: Icon(icon, color: FancyFontColor.primaryColor),
+                        title: Text(iconName,
+                            style:
+                                TextStyle(color: FancyFontColor.primaryColor)),
+                      );
+                    },
+                  ),
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
