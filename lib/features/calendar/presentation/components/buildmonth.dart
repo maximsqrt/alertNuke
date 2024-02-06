@@ -45,7 +45,7 @@ Widget buildMonthPage(int monthIndex, double childAspectRatio, int fontSize, {re
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: actualFontSize.toDouble(),
-                    color: Color.fromARGB(187, 233, 220, 220),
+                    color: const Color.fromARGB(187, 233, 220, 220),
                   ),
                 ),
               ),
