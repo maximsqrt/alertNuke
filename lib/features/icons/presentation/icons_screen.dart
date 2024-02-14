@@ -34,12 +34,30 @@ class _IconsScreenState extends State<IconsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        
+        title: Image.asset(
+          'assets/AlertNuke.png',
+          width: 200, // specify the width
+          // specify the height
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomLeft,
+              end: Alignment.centerRight,
+              colors: [Color(0xFF6CA7BE), Color(0xFF2E0B4B)],
+            ),
+          ),
+        ),
+      ),
       body: Column(
         children: <Widget>[
-          // Your AppBar widget here
-          SearchBar(controller: searchController, onChanged: filterIcons),
+           SearchBar(controller: searchController, onChanged: filterIcons),
           Expanded(
-            child: IconList(icons: filteredIcons, onTap: _onIconTapped),
+            
+            child: IconList(icons: filteredIcons, onTap: _showNameDialog),
           ),
         ],
       ),
@@ -63,6 +81,7 @@ class _IconsScreenState extends State<IconsScreen> {
     }
   }
 }
+
 class NameDialog extends StatelessWidget {
   final IconData icon;
 

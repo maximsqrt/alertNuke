@@ -20,6 +20,12 @@ class _IconsChoosenState extends State<IconsChoosen> {
       backgroundColor: const Color.fromARGB(202, 199, 64, 181),
       appBar: AppBar(
         title: const Text('Chosen Icons'),
+        //  leading: IconButton(
+        //   icon: Icon(Icons.arrow_back), // Add an icon to the leading property
+        //   onPressed: () {
+        //     Navigator.pop(context); // Navigate back when the icon is pressed
+        //   }
+        //  ),
       ),
       body: ListView.builder(
         itemCount: chosenIcons.length < 10 ? chosenIcons.length + 1 : 10,

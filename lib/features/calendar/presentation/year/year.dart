@@ -22,16 +22,30 @@ class _YearCalendar extends State<YearCalendar> {
   @override
   Widget build(BuildContext context) {
     ScrollController _scrollController = ScrollController();
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          GradientAppBar(
-            logo: Image.asset(
+    return Scaffold(appBar: AppBar(backgroundColor: Colors.transparent,
+    title: Image.asset(
               'assets/AlertNuke.png',
               width: 200, // specify the width
               // specify the height
             ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomLeft,
+              end: Alignment.centerRight,
+              colors:  [Color(0xFF6CA7BE), Color(0xFF2E0B4B)],
+
+            
+            
+              
+            ),
           ),
+        ),),
+      body: Column( 
+        children: <Widget>[
+        
+            
+          
           Expanded(
             child: Container(
               height: MediaQuery.of(context).size.height,
