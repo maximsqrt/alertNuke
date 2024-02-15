@@ -1,3 +1,4 @@
+import 'package:alertnukeapp/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:unicons/unicons.dart';
 
@@ -19,8 +20,8 @@ class IconList extends StatelessWidget {
         final IconData icon = icons[index];
         return ListTile(
           onTap: () => onTap(context, icon),
-          leading: Icon(icon),
-          title: Text(icon.toString()),
+          leading: Icon(icon, color: FancyFontColor.primaryColor),
+          title: Text(icon.toString(),style: TextStyle( color: FancyFontColor.primaryColor ),),
         );
       },
     );

@@ -1,4 +1,6 @@
+import 'package:alertnukeapp/config/colors.dart';
 import 'package:alertnukeapp/features/icons/presentation/iconlist_to_screen.dart';
+import 'package:alertnukeapp/features/icons/presentation/icons_searchbar.dart';
 import 'package:alertnukeapp/features/icons/presentation/iconselection.dart';
 import 'package:flutter/material.dart';
 import 'iconlist.dart'; // Import the iconlist.dart file
@@ -52,16 +54,20 @@ class _IconsScreenState extends State<IconsScreen> {
           ),
         ),
       ),
-      body: Column(
+      body: Container(decoration: BoxDecoration(
+        gradient: SettingsBackgroundColor.linearGradient()), 
+        child:
+      
+      Column(
         children: <Widget>[
-           SearchBar(controller: searchController, onChanged: filterIcons),
+           FancySearch(controller: searchController, onChanged: filterIcons),
           Expanded(
             
             child: IconList(icons: filteredIcons, onTap: _showNameDialog),
           ),
         ],
       ),
-    );
+    ),);
   }
 
   void _onIconTapped(BuildContext context, IconData icon) {

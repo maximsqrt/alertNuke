@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:unicons/unicons.dart';
 
 ///Search BAR!
-class SearchBar extends StatelessWidget {
+class FancySearch extends StatelessWidget {
   final TextEditingController controller;
   final ValueChanged<String> onChanged;
 
-  const SearchBar({super.key, 
+  const FancySearch({super.key, 
     required this.controller,
     required this.onChanged,
   });
