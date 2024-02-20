@@ -12,7 +12,7 @@ class OverviewService {
 
     static List<Widget> widgetOptions = <Widget>[
     Calendar(),
-    ChatCalendar(),
+    ChatsCalendar(),
     SocialCalendar(),
     IconsScreen(),
     SettingsScreen(),
