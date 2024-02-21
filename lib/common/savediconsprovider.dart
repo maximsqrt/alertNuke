@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-
 import 'package:riverpod/riverpod.dart';
 
-final savedIconsProvider = StateNotifierProvider<SavedIconsNotifier, List<IconData>>((ref) {
+class IconWithName {
+  final IconData icon;
+  final String name;
+
+  IconWithName({required this.icon, required this.name});
+}
+
+final savedIconsProvider = StateNotifierProvider<SavedIconsNotifier, List<IconWithName>>((ref) {
   return SavedIconsNotifier();
 });
 
-class SavedIconsNotifier extends StateNotifier<List<IconData>> {
+class SavedIconsNotifier extends StateNotifier<List<IconWithName>> {
   SavedIconsNotifier() : super([]);
 
-  void addIcon(IconData icon) {
-    state = [...state, icon];
+  void addIcon(IconWithName iconWithName) {
+    state = [...state, iconWithName];
   }
 }

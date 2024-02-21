@@ -1,3 +1,4 @@
+import 'package:alertnukeapp/application/FirebaseUserData.dart';
 import 'package:alertnukeapp/config/colors.dart';
 
 import 'package:flutter/material.dart';
@@ -7,9 +8,10 @@ import 'package:alertnukeapp/screens/home/profilepic.dart';  // Import ProfilePi
 // EditableField widget for displaying and editing user information
 class EditableField extends StatelessWidget {
   final String label;
+  final String? value;
 
   // Constructor to initialize the label
-  const EditableField({Key? key, required this.label}) : super(key: key);
+  const EditableField({Key? key, required this.label, this.value}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class EditableField extends StatelessWidget {
         const SizedBox(height: 10),
         // TextFormField for user input/editing
         TextFormField(
+          initialValue: value,
           // Add necessary properties for user input/editing
         ),
       ],
@@ -129,11 +132,11 @@ class SettingsScreen extends StatelessWidget {
           // Spacing
           const SizedBox(height: 20),
           // Editable fields for user information
-          const EditableField(label: 'Name:'),
+          EditableField(label: 'Name:',value: FirebaseUserData.username,),
           const SizedBox(height: 10),
           const EditableField(label: 'Phone Number:'),
           const SizedBox(height: 10),
-          const EditableField(label: 'Email Address:'),
+          EditableField(label: 'Email Address:', value: FirebaseUserData.email,),
           // Vertical spacing
           SizedBox(height: MediaQuery.of(context).size.height * 0.1),
           // Save button with gradient background

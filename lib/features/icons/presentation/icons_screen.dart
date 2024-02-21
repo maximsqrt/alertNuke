@@ -2,8 +2,10 @@ import 'package:alertnukeapp/config/colors.dart';
 import 'package:alertnukeapp/features/icons/presentation/iconlist_to_screen.dart';
 import 'package:alertnukeapp/features/icons/presentation/icons_searchbar.dart';
 import 'package:alertnukeapp/features/icons/presentation/iconselection.dart';
+import 'package:alertnukeapp/features/icons/presentation/iconswithnamelist.dart';
 import 'package:flutter/material.dart';
 import 'iconlist.dart'; // Import the iconlist.dart file
+import 'package:riverpod/riverpod.dart'; // Import Riverpod
 
 class IconsScreen extends StatefulWidget {
   const IconsScreen({Key? key}) : super(key: key);
@@ -23,6 +25,7 @@ class _IconsScreenState extends State<IconsScreen> {
     super.initState();
     allUnicons = uniconsList; // Access the uniconsList from iconlist.dart
     filteredIcons = allUnicons;
+    
   }
 
   void filterIcons(String query) {
@@ -38,7 +41,7 @@ class _IconsScreenState extends State<IconsScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        
+        leading: Container(),
         title: Image.asset(
           'assets/AlertNuke.png',
           width: 200, // specify the width
@@ -70,9 +73,6 @@ class _IconsScreenState extends State<IconsScreen> {
     ),);
   }
 
-  void _onIconTapped(BuildContext context, IconData icon) {
-    Navigator.pop(context, icon);
-  }
 
   Future<void> _showNameDialog(BuildContext context, IconData icon) async {
     String? iconName = await showDialog<String>(
@@ -91,7 +91,7 @@ class _IconsScreenState extends State<IconsScreen> {
 class NameDialog extends StatelessWidget {
   final IconData icon;
 
-  const NameDialog({required this.icon});
+  const NameDialog({super.key, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -125,3 +125,5 @@ class NameDialog extends StatelessWidget {
     );
   }
 }
+
+// Map<String, Icon>

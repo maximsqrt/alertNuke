@@ -16,13 +16,14 @@ class IconList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: icons.length,
+      itemCount: namesWithIconsList.length,
       itemBuilder: (context, index) {
-        final IconData icon = icons[index];
+        final String iconName = namesWithIconsList.keys.elementAt(index);
+        final IconData icon = namesWithIconsList[iconName]!;
         return ListTile(
           onTap: () => onTap(context, icon),
           leading: Icon(icon, color: FancyFontColor.primaryColor),
-          title: Text(iconsWithNamesList[icon].toString(),style: TextStyle( color: FancyFontColor.primaryColor ),),
+          title: Text(iconName,style: TextStyle( color: FancyFontColor.primaryColor ),),
         );
       },
     );

@@ -1,7 +1,8 @@
-
+import 'package:alertnukeapp/config/custombuttons.dart';
 import 'package:alertnukeapp/features/authentication/application/authentication_signup_service.dart';
-import 'package:alertnukeapp/features/authentication/presentation/login.dart';
+import 'package:alertnukeapp/features/overview/presentation/overview.dart';
 import 'package:flutter/material.dart';
+
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -10,15 +11,12 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  AuthenticationSignupService authenticationService =
+      AuthenticationSignupService();
 
-
-
-AuthenticationSignupService authenticationService = AuthenticationSignupService();  
-
-
-//Wie mit => signup auf die Funktion verweisen 
-
-
+//Wie mit => signup auf die Funktion verweisen
+  String? repeatedEmail;
+//store repeated Email
 
   @override
   Widget build(BuildContext context) {
@@ -44,23 +42,27 @@ AuthenticationSignupService authenticationService = AuthenticationSignupService(
               const SizedBox(height: 20),
 
               // Text Fields for Username and Password
-               Padding(
+              Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
                   onChanged: (value) {
-                    setState((){
-                      authenticationService.email = value;
+                    setState(() {
+                      authenticationService.username = value;
                     });
                   },
-                  style: const TextStyle(color: Colors.white), // Textfarbe der Eingabefelder
+                  style: const TextStyle(
+                      color: Colors.white), // Textfarbe der Eingabefelder
                   decoration: const InputDecoration(
                     labelText: 'Choose Username',
-                    labelStyle: TextStyle(color: Colors.white), // Textfarbe des Labels
+                    labelStyle:
+                        TextStyle(color: Colors.white), // Textfarbe des Labels
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white), // Rahmenfarbe im Normalzustand
+                      borderSide: BorderSide(
+                          color: Colors.white), // Rahmenfarbe im Normalzustand
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white), // Rahmenfarbe im Fokus
+                      borderSide: BorderSide(
+                          color: Colors.white), // Rahmenfarbe im Fokus
                     ),
                   ),
                 ),
@@ -68,8 +70,8 @@ AuthenticationSignupService authenticationService = AuthenticationSignupService(
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
-                onChanged: (value) {
-                    setState((){
+                  onChanged: (value) {
+                    setState(() {
                       authenticationService.password = value;
                     });
                   },
@@ -87,45 +89,78 @@ AuthenticationSignupService authenticationService = AuthenticationSignupService(
                   ),
                 ),
               ),
-               Padding(
+              Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
-                   onChanged: (value) {
-                    setState((){
+                  onChanged: (value) {
+                    setState(() {
                       authenticationService.repeatPassword = value;
                     });
                   },
-                  style: const TextStyle(color: Colors.white), // Textfarbe der Eingabefelder
+                  style: const TextStyle(
+                      color: Colors.white), // Textfarbe der Eingabefelder
                   obscureText: true, //versteckte Eingabe für Passwort
                   decoration: const InputDecoration(
                     labelText: 'Repeat Password',
-                    labelStyle: TextStyle(color: Colors.white), // Textfarbe des Labels
+                    labelStyle:
+                        TextStyle(color: Colors.white), // Textfarbe des Labels
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white), // Rahmenfarbe im Normalzustand
+                      borderSide: BorderSide(
+                          color: Colors.white), // Rahmenfarbe im Normalzustand
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white), // Rahmenfarbe im Fokus
+                      borderSide: BorderSide(
+                          color: Colors.white), // Rahmenfarbe im Fokus
                     ),
                   ),
                 ),
               ),
-             ElevatedButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>  LoginScreen())),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Hintergrundfarbe des Buttons
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'SignUp',
-                    style: TextStyle(
-                      fontSize: 20, // Textgröße
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      authenticationService.email = value;
+                    });
+                  },
+                  style: const TextStyle(
+                      color: Colors.white), // Textfarbe der Eingabefelder
+                  obscureText: true, //versteckte Eingabe für Passwort
+                  decoration: const InputDecoration(
+                    labelText: 'E-Mail',
+                    labelStyle:
+                        TextStyle(color: Colors.white), // Textfarbe des Labels
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.white), // Rahmenfarbe im Normalzustand
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.white), // Rahmenfarbe im Fokus
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
-              
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: FancyButton(
+                  title: 'SignUp',
+                  onTap: () async {
+                    //ab in den AUthOrdner
+                    bool signedUp = await authenticationService.signUp();
+                    if (signedUp) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Overview()),
+                      );
+                    } else {
+                     throw 'ERROR';
+                    }
+                  },
+                  key: const ValueKey('signup_button'),
+                ),
+              ),
             ],
           ),
         ),
@@ -133,4 +168,3 @@ AuthenticationSignupService authenticationService = AuthenticationSignupService(
     );
   }
 }
-

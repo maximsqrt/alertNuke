@@ -1,7 +1,28 @@
+import 'package:alertnukeapp/application/FirebaseUserData.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationLoginService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _instance = FirebaseFirestore.instance;
+
+
+  /*
+    "name": "...",
+    "email": "...",
+    "benutzername": "...",
+    "friends": [],
+
+
+    _firestore.collection("users").doc(FirebaseUserData.userId).set({
+      "name": "...",
+    "email": "...",
+    "benutzername": "...",
+    "friends": [],
+    })
+
+   
+  */
 
   // Method to sign in with email and password
 Future<bool> signIn(String email, String password) async {
@@ -10,7 +31,15 @@ Future<bool> signIn(String email, String password) async {
       email: email,
       password: password,
     );
-    return userCredential.user != null;
+    
+    if(userCredential.user != null){
+      FirebaseUserData.userId = userCredential.user!.uid;
+      final data = await _instance.collection("users").doc(userCredential.user!.uid).get();
+      FirebaseUserData.email = data.data()!["email"];
+      FirebaseUserData.username = data.data()!["username"];
+      return true;
+    }
+    return false;
   } catch (e) {
     print(e);
     if (e is FirebaseAuthException && (e.code == 'user-not-found' || e.code == 'wrong-password')) {
@@ -33,6 +62,10 @@ Future<bool> signIn(String email, String password) async {
         email: email,
         password: password,
       );
+
+
+      // IN DB ANLEGE UNTER Sammlung USERS
+
       return userCredential.user != null;
     } catch (e) {
       print(e);

@@ -1,9 +1,11 @@
 
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
+
+import 'package:alertnukeapp/config/custombuttons.dart';
 import 'package:alertnukeapp/features/authentication/application/authentication_login_service.dart';
 import 'package:alertnukeapp/features/authentication/presentation/signup.dart';
 import 'package:alertnukeapp/features/overview/presentation/overview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -11,7 +13,7 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
   AuthenticationLoginService authenticationService = AuthenticationLoginService();  
 
-  LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -95,9 +97,9 @@ class LoginScreen extends StatelessWidget {
           if (value == null || value.isEmpty) {
             return 'Password is required';
           }
-          if (value.length < 10) {
-            return 'Password must be at least 10 characters';
-          }
+          // if (value.length < 10) {
+          //   return 'Password must be at least 10 characters';
+          // }
           return null;
         },
       ),
@@ -105,8 +107,9 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _buildLoginButton(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () async {
+    return FancyButton(
+      title: 'Login',
+      onTap: () async {
         if (_formKey.currentState?.validate() ?? false) {
           String username = _usernameController.text.trim();
           String password = _passwordController.text.trim();
@@ -126,18 +129,8 @@ class LoginScreen extends StatelessWidget {
           }
         }
       },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blue,
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Text(
-          'Login',
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
-      ),
+     
+  key: const ValueKey('LogIn'     ),
     );
   }
 
@@ -157,7 +150,7 @@ class LoginScreen extends StatelessWidget {
     return TextButton(
       onPressed: () => Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const SignupScreen()),
+        MaterialPageRoute(builder: (context) =>  SignupScreen()),
       ),
       child: const Text('or signup'),
     );

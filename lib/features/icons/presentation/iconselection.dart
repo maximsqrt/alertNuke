@@ -1,11 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:alertnukeapp/features/icons/presentation/icons.dart';
 import 'package:alertnukeapp/features/icons/presentation/icons_screen.dart';
 
 class IconsChoosen extends StatefulWidget {
   final IconWithName iconWithName;
 
-  IconsChoosen({required this.iconWithName}); // Correct the constructor syntax
+  const IconsChoosen({super.key, required this.iconWithName}); // Correct the constructor syntax
 
   @override
   _IconsChoosenState createState() => _IconsChoosenState();
@@ -54,7 +55,7 @@ class _IconsChoosenState extends State<IconsChoosen> {
     // Navigate to IconsScreen to select an icon
     IconData? selectedIcon = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => IconsScreen()),
+      MaterialPageRoute(builder: (context) => const IconsScreen()),
     );
 
     // If an icon is selected, add it to chosenIcons list
@@ -70,5 +71,5 @@ class IconWithName {
   final IconData icon;
   final String name;
 
-  IconWithName({required this.icon, required this.name}); // Make sure to provide name
+  IconWithName({required this.name, required this.icon}); // Make sure to provide name
 }

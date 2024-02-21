@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+// ignore: unused_import
 import 'package:alertnukeapp/config/colors.dart';
-import 'package:alertnukeapp/features/social/presentation/matrixbackground.dart';
 import 'package:alertnukeapp/screens/chat/chat.dart';
 
 // Sample user data
@@ -19,6 +19,8 @@ final List<String> users = [
 
 // Screen for social activities
 class SocialCalendar extends StatelessWidget {
+  const SocialCalendar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
