@@ -1,3 +1,5 @@
+import 'package:alertnukeapp/features/overview/application/overview_service.dart';
+import 'package:alertnukeapp/screens/social/social.dart';
 import 'package:flutter/material.dart';
 
 // Hauptfarben für den Hintergrundgradienten
@@ -13,12 +15,34 @@ class ChatsCalendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(user != null ? 'Chats with $user' : 'Chats Calendar'),
-      ),
-      // Hintergrundgradient
-      backgroundColor: gradientEnd,
+return Scaffold(appBar: AppBar(
+      leading: Container(
+      // Updated arrow icon
+         
+  ), 
+    
+    
+      
+      backgroundColor: Colors.transparent,
+    title: Image.asset(
+              'assets/AlertNuke.png',
+              width: 200, // specify the width
+              // specify the height
+            ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomLeft,
+              end: Alignment.centerRight,
+              colors:  [Color(0xFF6CA7BE), Color(0xFF2E0B4B)],
+
+            
+            
+            ),
+            ),
+          ),
+        ),
+      
       body: ListView.builder(
         itemCount: 20, // Anzahl der Nachrichten erhöhen
         itemBuilder: (context, index) {

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:alertnukeapp/screens/settings/applications.dart/applications.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -17,8 +18,37 @@ class _ProfilPicScreenState extends State<ProfilePicScreen> {
 
     setState(() {
       // Update the state with the selected image file
-      _imageFile = pickedImage != null ? File(pickedImage.path) : null;
+      _imageFile = pickedImage != null ? File(pickedImage.path!) : null;
     });
+    // Upload the picked image to Firebase Storage
+  //Create Instance of FirebaseStorageService for Image and UserID
+  FirebaseImageStorageService imageStorageService = FirebaseImageStorageService();
+
+  //Get User
+  String? userId = await imageStorageService.getCurrentUserId();
+  if (userId != null) {
+    //upload the picked image to Firebase Storage 
+    await imageStorageService.uploadProfilePicture(_imageFile!, userId);
+
+
+
+
+  } else {
+    print('No user logged in.');
+  }
+
+
+
+
+
+
+
+
+
+
+
+  
+
   }
 
   @override

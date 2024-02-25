@@ -651,3 +651,7 @@ Map<String, IconData> namesWithIconsList = {
   "adobe_alt": UniconsLine.adobe_alt,
   // Add more entries as needed
 };
+
+
+
+// namesWithIconsList['abacus'] == UniconsLine.abacus
