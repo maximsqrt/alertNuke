@@ -1,10 +1,22 @@
-// import 'package:flutter/material.dart';
-// import 'package:unicons/unicons.dart';
+import 'package:flutter/material.dart';
+import 'package:unicons/unicons.dart';
 
 
 
+Map<String, IconData> namesWithIconsList = {
+  "abacus": UniconsLine.abacus,
+  "accessible_icon_alt": UniconsLine.accessible_icon_alt,
+  "adjust": UniconsLine.adjust,
+  "adjust_alt": UniconsLine.adjust_alt,
+  "adjust_circle": UniconsLine.adjust_circle,
+  "adjust_half": UniconsLine.adjust_half,
+  "adobe": UniconsLine.adobe,
+  "adobe_alt": UniconsLine.adobe_alt,
+  // Add more entries as needed
+};
 
-// Map<IconData, String> iconsWithNamesList = 
+
+// Map<IconData, String> namesWithIconsList = 
 //   {
 //     UniconsLine.abacus: "abacus",
 //     UniconsLine.accessible_icon_alt: "accessible_icon_alt",
@@ -634,23 +646,23 @@
 //     UniconsLine.label: "label ",
 //     UniconsLine.lamp: "lamp ",
 //     UniconsLine.language: "language ",
-//     UniconsLine.laptop: "laptop "
+//     UniconsLine.laptop: "laptop ",
 //   };
 
-import 'package:flutter/material.dart';
-import 'package:unicons/unicons.dart';
+// import 'package:flutter/material.dart';
+// import 'package:unicons/unicons.dart';
 
-Map<String, IconData> namesWithIconsList = {
-  "abacus": UniconsLine.abacus,
-  "accessible_icon_alt": UniconsLine.accessible_icon_alt,
-  "adjust": UniconsLine.adjust,
-  "adjust_alt": UniconsLine.adjust_alt,
-  "adjust_circle": UniconsLine.adjust_circle,
-  "adjust_half": UniconsLine.adjust_half,
-  "adobe": UniconsLine.adobe,
-  "adobe_alt": UniconsLine.adobe_alt,
-  // Add more entries as needed
-};
+// Map<String, IconData> namesWithIconsList = {
+//   "abacus": UniconsLine.abacus,
+//   "accessible_icon_alt": UniconsLine.accessible_icon_alt,
+//   "adjust": UniconsLine.adjust,
+//   "adjust_alt": UniconsLine.adjust_alt,
+//   "adjust_circle": UniconsLine.adjust_circle,
+//   "adjust_half": UniconsLine.adjust_half,
+//   "adobe": UniconsLine.adobe,
+//   "adobe_alt": UniconsLine.adobe_alt,
+//   // Add more entries as needed
+// };
 
 
 

@@ -16,11 +16,13 @@ class ChatsCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 return Scaffold(appBar: AppBar(
-      leading: Container(
-      // Updated arrow icon
-         
-  ), 
-    
+      leading: IconButton( 
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          Navigator.of(context).pop();
+        }
+      ),
+      
     
       
       backgroundColor: Colors.transparent,

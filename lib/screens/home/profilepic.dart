@@ -1,10 +1,14 @@
 import 'dart:io';
-
 import 'package:alertnukeapp/screens/settings/applications.dart/applications.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+
 class ProfilePicScreen extends StatefulWidget {
+  final Function(File)? onImageSelected; // Define onImageSelected function
+
+  ProfilePicScreen({Key? key, this.onImageSelected}) : super(key: key);
+
   @override
   _ProfilPicScreenState createState() => _ProfilPicScreenState();
 }
@@ -20,91 +24,71 @@ class _ProfilPicScreenState extends State<ProfilePicScreen> {
       // Update the state with the selected image file
       _imageFile = pickedImage != null ? File(pickedImage.path!) : null;
     });
-    // Upload the picked image to Firebase Storage
-  //Create Instance of FirebaseStorageService for Image and UserID
-  FirebaseImageStorageService imageStorageService = FirebaseImageStorageService();
 
-  //Get User
-  String? userId = await imageStorageService.getCurrentUserId();
-  if (userId != null) {
-    //upload the picked image to Firebase Storage 
-    await imageStorageService.uploadProfilePicture(_imageFile!, userId);
-
-
-
-
-  } else {
-    print('No user logged in.');
+    // Call the onImageSelected function if it's provided
+    if (widget.onImageSelected != null && _imageFile != null) {
+      widget.onImageSelected!(_imageFile!);
+    // Upload the selected image to Firebase Storage
+      await _uploadImage(_imageFile!);
+    }
   }
 
+  Future<void> _uploadImage(File imageFile) async {
+    try {
+      // Get the current user's ID
+      String? userId = await FirebaseImageStorageService().getCurrentUserId();
+      if (userId == null) {
+        print('No user logged in.');
+        return;
+      }
 
-
-
-
-
-
-
-
-
-
-  
-
+      // Upload the image to Firebase Storage
+      String? downloadUrl = await FirebaseImageStorageService().uploadProfilePicture(imageFile, userId);
+      if (downloadUrl != null) {
+        print('Uploaded image URL: $downloadUrl');
+      } else {
+        print('Failed to upload image');
+      }
+    } catch (e) {
+      print('Error uploading profile picture: $e');
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Display the selected image or a placeholder if none is selected
-          _imageFile != null
-              ? Image.file(
-                  _imageFile!,
-                  height: 200,
-                  width: 200,
-                )
-              : const Placeholder(
-                  fallbackHeight: 200,
-                  fallbackWidth: 200,
-                ),
-          const SizedBox(height: 20),
-          // Button to open the image picker for gallery
-          ElevatedButton(
-            onPressed: () => _pickImage(ImageSource.gallery),
-            child: const Text('Pick Image from Gallery'),
-          ),
-          const SizedBox(height: 10),
-          // Button to open the image picker for camera
-          ElevatedButton(
-            onPressed: () => _pickImage(ImageSource.camera),
-            child: const Text('Take Photo'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-            _pickImage(ImageSource.camera);
-    Navigator.pop(context); // This line will navigate back to the previous screen (SettingsScreen)
-          },///brauchen noch ne Async Funktion hier und das image muss zurück geparesed werden.
-            child: const Text('Back'),
-          ),
-        ],
-  
+    // Your UI implementation
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile Picture'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _imageFile != null
+                ? Image.file(
+                    _imageFile!,
+                    height: 200,
+                    width: 200,
+                  )
+                : Placeholder(
+                    fallbackHeight: 200,
+                    fallbackWidth: 200,
+                  ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => _pickImage(ImageSource.gallery),
+              child: Text('Pick Image from Gallery'),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () => _pickImage(ImageSource.camera),
+              child: Text('Take Photo'),
+            ),
+          ],
+        ),
       ),
     );
-        
-      
-    
   }
 }
-
-
-/*File? _imageFile;: Diese Variable speichert die ausgewählte Bilddatei. 
-Der Typ File? bedeutet, dass sie auch null sein kann.
-_pickImage(ImageSource source): Diese Funktion öffnet den Bildauswähler 
-(Galerie oder Kamera) und aktualisiert den Zustand mit der ausgewählten Bilddatei.
-Image.file(_imageFile!, height: 200, width: 200): Zeigt das ausgewählte Bild an.
- Wenn kein Bild ausgewählt ist, wird ein Placeholder angezeigt.
-ElevatedButton: Zwei Schaltflächen, eine zum Auswählen eines Bildes aus der 
-Galerie und eine zum Aufnehmen eines Fotos mit der Kamera.*/
-
-///Erriner _Var konvention für Privat Variable also nur da sichtbar

@@ -1,50 +1,34 @@
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseImageStorageService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
   Future<String?> getCurrentUserId() async {
-    try {
-      // Get the current user from Firebase Authentication
-      User? user = FirebaseAuth.instance.currentUser;
-      
-      // If user is not null, return the user ID (UID)
-      if (user != null) {
-        return user.uid;
-      } else {
-        // Handle the case where no user is logged in
-        return null;
-      }
-    } catch (e) {
-      print('Error retrieving current user ID: $e');
-      return null;
-    }
+    return _auth.currentUser?.uid;
   }
 
-  Future<String?> uploadProfilePicture(File file, String path) async {
+  Future<String?> uploadProfilePicture(File imageFile, String userId) async {
     try {
-      // Get the current user's ID
-      String? userId = await getCurrentUserId();
-      if (userId == null) {
-        print('No user logged in.');
-        return null;
-      }
+      // Create a reference to the location you want to upload to in firebase
+      Reference ref = _storage.ref().child('userProfilePics/$userId');
 
-      // Get a reference to the location where the image will be stored
-      Reference ref = _storage.ref().child('profilePictures/$userId');
+      // Upload the file to firebase
+      UploadTask uploadTask = ref.putFile(imageFile);
 
-      // Upload the file to Firebase Storage
-      TaskSnapshot uploadTask = await ref.putFile(file);
+      // Waits till the file is uploaded then stores the download url 
+      final TaskSnapshot downloadUrl = (await uploadTask);
+      
+      // The URL of the image stored in firebase
+      final String url = (await downloadUrl.ref.getDownloadURL());
+      
+      return url;
 
-      // Get the download URL for the image
-      String downloadUrl = await uploadTask.ref.getDownloadURL();
-
-      // Return the download URL
-      return downloadUrl;
     } catch (e) {
-      print('Error uploading profile picture: $e');
+      print('Error occurred while uploading to Firebase Storage: $e');
       return null;
     }
   }
