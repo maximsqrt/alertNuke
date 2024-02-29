@@ -1,59 +1,75 @@
+
 import 'dart:io';
+
+import 'package:alertnukeapp/features/icons/domain/firebase_image.dart';
+import 'package:alertnukeapp/features/icons/domain/profilepictureprovider.dart';
 import 'package:alertnukeapp/screens/settings/applications.dart/applications.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:provider/provider.dart';
 
 class ProfilePicScreen extends StatefulWidget {
- 
-
-  ProfilePicScreen({Key? key}) : super(key: key);
-
   @override
-  _ProfilPicScreenState createState() => _ProfilPicScreenState();
+  _ProfilePicScreenState createState() => _ProfilePicScreenState();
 }
 
-class _ProfilPicScreenState extends State<ProfilePicScreen> {
+class _ProfilePicScreenState extends State<ProfilePicScreen> {
   File? _imageFile; // Variable to store the selected image file
+  bool _isMounted = false; //Ob das Widget gemounted ist?
 
-  // Function to open the image picker and set the selected image
+  @override 
+  void initState(){
+    super.initState();
+    _isMounted = true;
+  }
+
+  @override
+  void dispose(){
+    _isMounted = false; //Widget mark unmounted wenn disposed
+    super.dispose();
+  }
+  // n diesem Fall bezieht sich die Meldung darauf, 
+  // dass das State-Objekt, das den Bildschirm repräsentiert
+  //  (_ProfilePicScreenState), nicht mehr gemounted ist.
+  //   Dies bedeutet, dass das Widget bereits aus dem 
+  //   Widget-Baum entfernt wurde, möglicherweise weil der Benutzer 
+  //   den Bildschirm verlassen hat oder die App 
+  //   eine andere Ansicht angezeigt hat.
+
   Future<void> _pickImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
 
     setState(() {
       // Update the state with the selected image file
-      _imageFile = pickedImage != null ? File(pickedImage.path!) : null;
+      _imageFile = pickedImage != null ? File(pickedImage.path) : null;
     });
 
-    // Call the onImageSelected function if it's provided
-    if ( _imageFile != null) {
-      
-    // Upload the selected image to Firebase Storage
+    if (_imageFile != null) {
+      // Upload the selected image to Firebase Storage
       await _uploadImage(_imageFile!);
     }
   }
-
-  Future<void> _uploadImage(File imageFile) async {
+Future<void> _uploadImage(File imageFile) async {
     try {
+      // Implement your Firebase Image Storage functionality here
       // Get the current user's ID
       String? userId = await FirebaseImageStorageService().getCurrentUserId();
-      if (userId == null) {
-        print('No user logged in.');
-        return;
-      }
-
-      // Upload the image to Firebase Storage
-      String? downloadUrl = await FirebaseImageStorageService().uploadProfilePicture(imageFile, userId);
-      if (downloadUrl != null) {
-        print('Uploaded image URL: $downloadUrl');
-      } else {
-        print('Failed to upload image');
+      if (_isMounted && userId != null) { // Check if the widget is still mounted
+        // Upload the image to Firebase Storage
+        String? downloadUrl = await FirebaseImageStorageService().uploadProfilePicture(imageFile, userId);
+        if (downloadUrl != null) {
+          print('Uploaded image URL: $downloadUrl');
+          if (_isMounted) { // Check if the widget is still mounted
+            Provider.of<ProfilePictureProvider>(context, listen: false).updateProfilePictureUrl(downloadUrl);
+          }
+        } else {
+          print('Failed to upload image');
+        }
       }
     } catch (e) {
       print('Error uploading profile picture: $e');
     }
   }
-//Methoden auslagern !!!!!!!
 
   @override
   Widget build(BuildContext context) {

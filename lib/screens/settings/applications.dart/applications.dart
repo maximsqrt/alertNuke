@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -10,6 +11,24 @@ class FirebaseImageStorageService {
   Future<String?> getCurrentUserId() async {
     return _auth.currentUser?.uid;
   }
+Future<String?> getProfilePictureUrl(String userId) async {
+  try {
+    // Document reference for the user
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    
+    // Check if the user document exists
+    if (userSnapshot.exists) {
+      // Get the profile picture URL from the user document
+      return (userSnapshot.data() as Map<String,dynamic>)['profilePictureUrl'];
+    } else {
+      print('User document does not exist');
+      return null;
+    }
+  } catch (e) {
+    print('Error occurred while fetching profile picture URL: $e');
+    return null;
+  }
+}
 
   Future<String?> uploadProfilePicture(File imageFile, String userId) async {
     try {
@@ -31,5 +50,10 @@ class FirebaseImageStorageService {
       print('Error occurred while uploading to Firebase Storage: $e');
       return null;
     }
+  }
+  Future<void> storeImageUrl(String imageUrl, String userId) async {
+     await FirebaseFirestore.instance.collection('users').doc(userId).update({
+      'profilePictureUrl': imageUrl,
+     });
   }
 }
