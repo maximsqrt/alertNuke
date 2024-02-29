@@ -1,9 +1,10 @@
 import 'package:alertnukeapp/application/FirebaseUserData.dart';
+import 'package:alertnukeapp/config/bodybuilder.dart';
 import 'package:alertnukeapp/config/colors.dart';
+import 'package:alertnukeapp/config/custombuttons.dart';
 
 import 'package:flutter/material.dart';
-import 'package:alertnukeapp/screens/views/logo.dart';
-import 'package:alertnukeapp/screens/home/profilepic.dart';  // Import ProfilePicScreen
+import 'package:alertnukeapp/screens/home/profilepic.dart'; // Import ProfilePicScreen
 
 // EditableField widget for displaying and editing user information
 class EditableField extends StatelessWidget {
@@ -11,11 +12,11 @@ class EditableField extends StatelessWidget {
   final String? value;
 
   // Constructor to initialize the label
-  const EditableField({Key? key, required this.label, this.value}) : super(key: key);
+  const EditableField({Key? key, required this.label, this.value})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    
     // Column with label and TextFormField for user input
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,7 +24,8 @@ class EditableField extends StatelessWidget {
         // Label for the editable field
         Text(
           label,
-          style: const TextStyle(fontSize: 18, color: FancyFontColor.primaryColor),
+          style:
+              const TextStyle(fontSize: 18, color: FancyFontColor.primaryColor),
         ),
         // Vertical spacing
         const SizedBox(height: 10),
@@ -39,83 +41,49 @@ class EditableField extends StatelessWidget {
 
 // Main screen for user settings
 class SettingsScreen extends StatelessWidget {
+  Color get fontColor => FancyFontColor.primaryColor;
+  LinearGradient get buttonColor => FancyButtonColor.linearGradient();
   @override
   Widget build(BuildContext context) {
     // Scaffold containing the main body of the settings screen
     return Scaffold(
-      body: _buildBody(context),
+      body: SettingsBodyBuilder.buildBody(context, fontColor, buttonColor, _buildContent(context, fontColor, buttonColor)),
       // Add a floating action button to trigger ProfilePicScreen
       floatingActionButton: Align(
         alignment: Alignment.topCenter,
         child: Padding(
           padding: const EdgeInsets.only(top: 160.0),
-          child: FloatingActionButton(
-            
-    
-        onPressed: () {
-          _openProfilePicScreen(context);
-        },
-        tooltip: 'Change Profile Picture',
-        child: Icon(Icons.image),
+          child: GestureDetector(
+            onTap: () => showBottomSheet(
+              context: context,
+              builder: (context) {
+                return Container(
+                  height: 220,
+                  child: _bottomSheet(),
+                );
+              },
+            ),
+            child: Container(
+              color: Colors.red,
+              height: 100,
+              width: 100,
+            ),
+          ),
+        ),
       ),
-    ),
-  ),
-);
+    );
   }
-  // Builds the main body of the settings screen
-  Widget _buildBody(BuildContext context) {
-    // Styling variables for colors
-    var backgroundcolor = SettingsBackgroundColor.linearGradient();
-    var fontcolor = FancyFontColor.primaryColor;
-    var buttoncolor = FancyButtonColor.linearGradient();
 
-    // Container with gradient background
+  Widget _bottomSheet() {
     return Container(
-      decoration: BoxDecoration(
-        gradient: backgroundcolor,
-      ),
-      // Padding to ensure content is not at the screen edges
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        // Stack to overlay background and content
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            // Background image with color filter
-            _buildBackgroundImage(context),
-            // Content in the middle of the screen
-            _buildContent(context, fontcolor, buttoncolor),
-          ],
-        ),
-      ),
-    );
-  }
 
-  // Builds the background image with color filter
-  Widget _buildBackgroundImage(BuildContext context) {
-    // LogoBackgroundImage instance
-    var logoBackgroundImage = LogoBackgroundImage();
-
-    // Positioned fill to cover the entire screen
-    return Positioned.fill(
-      child: ColorFiltered(
-        // Color filter for background tint
-        colorFilter: const ColorFilter.mode(
-          Color.fromARGB(105, 147, 178, 204),
-          BlendMode.srcIn,
-        ),
-        // Padding to adjust the position of the background image
-        child: Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
-          // LogoBackgroundImage widget
-          child: logoBackgroundImage,
-        ),
-      ),
-    );
+        ///Hier die Methoden rein aus dem ProfilePicScreen!! noch auslagern dafür
+        );
   }
 
   // Builds the content in the middle of the screen
-  Widget _buildContent(BuildContext context, Color fontcolor, LinearGradient buttoncolor) {
+  Widget _buildContent(
+      BuildContext context, Color fontcolor, LinearGradient buttoncolor) {
     return Positioned(
       top: MediaQuery.of(context).size.height * 0.3,
       left: 0,
@@ -127,54 +95,37 @@ class SettingsScreen extends StatelessWidget {
           // Header text
           Text(
             'Your Fancy Profile',
-            style: TextStyle(fontSize: 24, color: fontcolor, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 11, color: fontcolor, fontWeight: FontWeight.bold),
           ),
           // Spacing
           const SizedBox(height: 20),
           // Editable fields for user information
-          EditableField(label: 'Name:',value: FirebaseUserData.username,),
+          EditableField(
+            label: 'Name:',
+            value: FirebaseUserData.username,
+          ),
           const SizedBox(height: 10),
           const EditableField(label: 'Phone Number:'),
           const SizedBox(height: 10),
-          EditableField(label: 'Email Address:', value: FirebaseUserData.email,),
+          EditableField(
+            label: 'Email Address:',
+            value: FirebaseUserData.email,
+          ),
           // Vertical spacing
           SizedBox(height: MediaQuery.of(context).size.height * 0.1),
           // Save button with gradient background
-          _buildSaveButton(buttoncolor),
+          _buildSaveButton(context),
         ],
       ),
     );
   }
 
-  // Builds the Save button with a gradient background
-  Widget _buildSaveButton(LinearGradient buttoncolor) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: buttoncolor,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      // Elevated button with Save text
-      child: ElevatedButton(
-        onPressed: () {
-          // Add functionality to save user profile information
-        },
-        child: const Text(
-          'Save',
-          style: TextStyle(fontSize: 18, color: Colors.white),
-        ),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.transparent,
-          elevation: 0,
-        ),
-      ),
-    );
-  }
-
-  //Function to open ProfilePicScreen
-  void _openProfilePicScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ProfilePicScreen()),
+  Widget _buildSaveButton(BuildContext context) {
+    return FancyButton(
+      title: 'Login',
+      onTap: () {},
+      key: UniqueKey(),
     );
   }
 }

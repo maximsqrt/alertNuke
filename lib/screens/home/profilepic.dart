@@ -5,9 +5,9 @@ import 'package:image_picker/image_picker.dart';
 
 
 class ProfilePicScreen extends StatefulWidget {
-  final Function(File)? onImageSelected; // Define onImageSelected function
+ 
 
-  ProfilePicScreen({Key? key, this.onImageSelected}) : super(key: key);
+  ProfilePicScreen({Key? key}) : super(key: key);
 
   @override
   _ProfilPicScreenState createState() => _ProfilPicScreenState();
@@ -26,8 +26,8 @@ class _ProfilPicScreenState extends State<ProfilePicScreen> {
     });
 
     // Call the onImageSelected function if it's provided
-    if (widget.onImageSelected != null && _imageFile != null) {
-      widget.onImageSelected!(_imageFile!);
+    if ( _imageFile != null) {
+      
     // Upload the selected image to Firebase Storage
       await _uploadImage(_imageFile!);
     }
@@ -53,7 +53,7 @@ class _ProfilPicScreenState extends State<ProfilePicScreen> {
       print('Error uploading profile picture: $e');
     }
   }
-
+//Methoden auslagern !!!!!!!
 
   @override
   Widget build(BuildContext context) {

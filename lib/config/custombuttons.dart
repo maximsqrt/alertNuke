@@ -19,7 +19,7 @@ class FancyButton extends StatelessWidget {
           
           ],
           borderRadius: BorderRadius.circular(30),
-          gradient: FancyButtonColor.linearGradient(), // Use linearGradient method from FancyButtonColor class
+          gradient: FancyButtonColor2.linearGradient(), // Use linearGradient method from FancyButtonColor class
         ),
         width: 150,
         height: 70,
@@ -34,7 +34,7 @@ class FancyButton extends StatelessWidget {
   }
 }
 
-class FancyButtonColor {
+class FancyButtonColor2 {
   static LinearGradient linearGradient() {
     return const LinearGradient(
       colors: [
