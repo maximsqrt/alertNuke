@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationLoginService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _instance = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 
   /*
@@ -24,6 +24,10 @@ class AuthenticationLoginService {
    
   */
 
+String? getUserId()  {
+    return _auth.currentUser?.uid;
+}
+
   // Method to sign in with email and password
 Future<bool> signIn(String email, String password) async {
   try {
@@ -34,7 +38,7 @@ Future<bool> signIn(String email, String password) async {
     
     if(userCredential.user != null){
       FirebaseUserData.userId = userCredential.user!.uid;
-      final data = await _instance.collection("users").doc(userCredential.user!.uid).get();
+      final data = await _firestore.collection("users").doc(userCredential.user!.uid).get();
       FirebaseUserData.email = data.data()!["email"];
       FirebaseUserData.username = data.data()!["username"];
       return true;
@@ -77,6 +81,12 @@ Future<bool> signIn(String email, String password) async {
   Future<void> signOut() async {
     await _auth.signOut();
   }
+
+
+  static final AuthenticationLoginService _instance = AuthenticationLoginService._internal();
+  factory AuthenticationLoginService() => _instance;
+  
+  AuthenticationLoginService._internal() {}
 
 
 }

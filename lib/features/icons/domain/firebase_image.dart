@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +19,7 @@ class ProfilePictureProvider extends ChangeNotifier {
 class ProfilePictureWidget extends StatelessWidget {
   final String userId;
 
-  const ProfilePictureWidget({required this.userId, Key? key}) : super(key: key);
+  const ProfilePictureWidget({required this.userId, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,17 +27,27 @@ class ProfilePictureWidget extends StatelessWidget {
     return Consumer<ProfilePictureProvider>(
       builder: (context, profilePictureProvider, _) {
         String? profilePictureUrl = profilePictureProvider.profilePictureUrl;
-
+  print(profilePictureUrl);
         if (profilePictureUrl != null && profilePictureUrl.isNotEmpty) {
-          return Image.network(
-            profilePictureUrl,
-            height: 200,
-            width: 200,
-            fit: BoxFit.cover,
-          );
+    return ClipRRect(
+  borderRadius: const BorderRadius.all(Radius.circular(75)),
+  child: Container(
+    height: 100,
+    width: 100,
+    decoration: const BoxDecoration(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+    ),
+    child: Image.network(
+      profilePictureUrl,
+      fit: BoxFit.cover,
+    ),
+  ),
+);
+
         } else {
           return _buildDefaultBackground();
         }
+    
       },
     );
   }

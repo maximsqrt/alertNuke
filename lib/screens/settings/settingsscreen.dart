@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:alertnukeapp/config/colors.dart';
+import 'package:alertnukeapp/features/authentication/application/authentication_login_service.dart';
 import 'package:alertnukeapp/features/icons/domain/firebase_image.dart';
-import 'package:alertnukeapp/features/icons/domain/profilepictureprovider.dart';
 import 'package:alertnukeapp/screens/home/profilepic.dart';
 import 'package:alertnukeapp/screens/settings/applications.dart/applications.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ import 'package:icony/icony_ikonate.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-
+///For Name, Phone, Mail
 class EditableField extends StatelessWidget {
   final String label;
   final String? value;
@@ -24,7 +24,7 @@ class EditableField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 18, color: Colors.black),
+          style: const TextStyle(fontSize: 18, color: FancyFontColor.primaryColor),
         ),
         const SizedBox(height: 10),
         TextFormField(
@@ -36,15 +36,17 @@ class EditableField extends StatelessWidget {
 }
 
 class ImagePickerService {
+  //Methode zur Bildwahl
   Future<File?> pickImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
+    //RUfe Pickimage auf und warte 
     return pickedImage != null ? File(pickedImage.path) : null;
   }
 }
 class SettingsScreen extends StatefulWidget {
-  final String? userId; // userId als optionaler Parameter deklariert
   
-  const SettingsScreen({Key? key, this.userId}) : super(key: key);
+  
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -58,14 +60,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    userId = widget.userId ?? '';
+    ///1) initialise User
+    userId = AuthenticationLoginService().getUserId() ?? "";
+    print("UserID: $userId");
+    ///2) get ProfilePicture URL 
     _fetchProfilePictureUrl().then((_) {
+      /// 3) call Provider for ProfilePic Provider
       _profilePictureProvider = Provider.of<ProfilePictureProvider>(context, listen: false);
+      ///4. Profilpictue-URL
       _profilePictureProvider.updateProfilePictureUrl(downloadUrl);
     });
   }
  Future<void> _fetchProfilePictureUrl() async {
+  ///get ProfilPic Url
     String? url = await FirebaseImageStorageService().getProfilePictureUrl(userId);
+    //check if URL is not null
     if (url != null) {
       setState(() {
         downloadUrl = url;
@@ -78,16 +87,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Hier in der didChangeDependencies-Methode initialisieren
-    _profilePictureProvider = Provider.of<ProfilePictureProvider>(context, listen: false);
+    
+   _profilePictureProvider = Provider.of<ProfilePictureProvider>(context, listen: false);
+    _fetchProfilePictureUrl(); 
   }
 
   
 
   @override
   Widget build(BuildContext context) {
-    // Die folgende Zeile wird nicht benötigt, da das Update in initState und didChangeDependencies bereits durchgeführt wird.
-    // Provider.of<ProfilePictureProvider>(context, listen: false).updateProfilePictureUrl(downloadUrl);
+   
 
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
@@ -101,13 +110,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // ignore: avoid_unnecessary_containers
-            Container(child: downloadUrl.isEmpty ? ProfilePictureWidget(userId: '') : Image.network(downloadUrl)),
+            Container(child: ProfilePictureWidget(userId: userId)),
               
               
               const SizedBox(height: 20),
               const Text(
                 'Your Fancy Profile',
-                style: TextStyle(fontSize: 11, color: Colors.black, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, color: FancyFontColor.primaryColor, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
               EditableField(label: 'Name:', value: FirebaseUserData.username), // Use your FirebaseUserData here
