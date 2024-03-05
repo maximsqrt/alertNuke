@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:alertnukeapp/config/colors.dart';
 import 'package:alertnukeapp/features/authentication/application/authentication_login_service.dart';
-import 'package:alertnukeapp/features/icons/domain/firebase_image.dart';
+import 'package:alertnukeapp/features/icons/domain/image_notifier.dart';
 import 'package:alertnukeapp/screens/home/profilepic.dart';
-import 'package:alertnukeapp/screens/settings/applications.dart/applications.dart';
+import 'package:alertnukeapp/screens/settings/applications.dart/firebaseimagestorage.dart';
 import 'package:flutter/material.dart';
 import 'package:alertnukeapp/application/FirebaseUserData.dart';
 import 'package:icony/icony_ikonate.dart';

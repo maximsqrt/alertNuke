@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// Das Provider-Objekt, das das aktuelle Profilbild verfolgt
+// Common
 class ProfilePictureProvider extends ChangeNotifier {
   String? _profilePictureUrl;
 
@@ -16,6 +16,7 @@ class ProfilePictureProvider extends ChangeNotifier {
   }
 }
 
+// Presentation 
 class ProfilePictureWidget extends StatelessWidget {
   final String userId;
 

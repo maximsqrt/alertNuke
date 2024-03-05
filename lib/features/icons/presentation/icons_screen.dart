@@ -1,11 +1,17 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:alertnukeapp/config/colors.dart';
+import 'package:alertnukeapp/features/authentication/application/authentication_login_service.dart';
+import 'package:alertnukeapp/features/icons/data/firebase_icon_repository.dart';
+import 'package:alertnukeapp/features/icons/data/icon_repository.dart';
 import 'package:alertnukeapp/features/icons/presentation/iconlist_to_screen.dart';
 import 'package:alertnukeapp/features/icons/presentation/icons_searchbar.dart';
-import 'package:alertnukeapp/features/icons/presentation/iconselection.dart';
-import 'package:alertnukeapp/features/icons/presentation/iconswithnamelist.dart';
+import 'package:alertnukeapp/features/icons/presentation/iconselectionscreen.dart';
 import 'package:flutter/material.dart';
 import 'iconlist.dart'; // Import the iconlist.dart file
-import 'package:riverpod/riverpod.dart'; // Import Riverpod
+
+
+
 
 class IconsScreen extends StatefulWidget {
   const IconsScreen({Key? key}) : super(key: key);
@@ -15,17 +21,23 @@ class IconsScreen extends StatefulWidget {
 }
 
 class _IconsScreenState extends State<IconsScreen> {
+  late IconData iconData; 
+  late String iconText;
   late List<IconData> allUnicons;
   late List<IconData> filteredIcons;
   final TextEditingController searchController = TextEditingController();
   List<IconWithName> chosenIcons = []; // Define chosenIcons list
 
+
+  late String userId;
   @override
   void initState() {
     super.initState();
+    userId = AuthenticationLoginService().getUserId() ?? ""; // UserID initialisieren
+    print("UserID: $userId");
     allUnicons = uniconsList; // Access the uniconsList from iconlist.dart
     filteredIcons = allUnicons;
-    
+  
   }
 
   void filterIcons(String query) {
@@ -70,32 +82,56 @@ class _IconsScreenState extends State<IconsScreen> {
           ),
         ],
       ),
-    ),);
+
+
+    ),
+    floatingActionButton: FloatingActionButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => IconsChoosenScreen()),
+        );
+      },
+      child: Icon(Icons.add),
+      backgroundColor: Colors.blue, // Set your desired color
+    ),
+    floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, // Position FAB at the bottom right
+  );
+    
   }
 
 
-  Future<void> _showNameDialog(BuildContext context, IconData icon) async {
-    String? iconName = await showDialog<String>(
-      context: context,
-      builder: (_) => NameDialog(icon: icon),
-    );
+Future<void> _showNameDialog(BuildContext context, IconData icon) async {
+  final TextEditingController controller = TextEditingController();
 
-    if (iconName != null && iconName.isNotEmpty) {
-      setState(() {
-        chosenIcons.add(IconWithName(icon: icon, name: iconName));
-      });
+  final iconName = await showDialog<String?>(
+    context: context,
+    builder: (_) => NameDialog(
+      icon: icon,
+    ),
+  );
+if (iconName != null) {
+      final String userId = AuthenticationLoginService().getUserId() ?? "";
+      // Assign iconData the value of the current icon
+      
     }
   }
+
+
+
+
+
 }
 
 class NameDialog extends StatelessWidget {
   final IconData icon;
 
-  const NameDialog({super.key, required this.icon});
+  const NameDialog({Key? key, required this.icon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final TextEditingController controller = TextEditingController();
+final TextEditingController descriptionController = TextEditingController();
     return AlertDialog(
       title: const Text('Name your icon'),
       content: Column(
@@ -112,12 +148,32 @@ class NameDialog extends StatelessWidget {
             controller: controller,
             decoration: const InputDecoration(hintText: 'Enter icon name'),
           ),
+           const SizedBox(height: 10), // Spacer
+          TextField(
+            controller: descriptionController,
+            decoration: const InputDecoration(hintText: 'Enter icon description'),
+          ),
         ],
       ),
       actions: <Widget>[
         TextButton(
-          onPressed: () {
-            Navigator.of(context).pop(controller.text);
+        onPressed: () async {
+            String iconName = controller.text;
+            String iconDescription = descriptionController.text;
+            if (iconName.isNotEmpty) {
+              // Speichern  Daten in Firebase
+              IconRepository repository = FirebaseIconRepository();
+              String? userId = await repository.getCurrentUserId();
+              if (userId != null) {
+                await repository.addIconDataCollection(userId, icon, iconName, iconDescription);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Icon data uploaded')));
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('User not logged in')));
+              }
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please enter a name for the icon')));
+            }
+            Navigator.of(context).pop();
           },
           child: const Text('Save'),
         ),
@@ -126,4 +182,5 @@ class NameDialog extends StatelessWidget {
   }
 }
 
-// Map<String, Icon>
+
+

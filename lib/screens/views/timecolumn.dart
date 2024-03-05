@@ -5,7 +5,7 @@ class TimeColumn extends StatelessWidget {
   final ScrollController timeController;
   final DateTime now;
 
-  TimeColumn({required this.timeController, required this.now});
+  const TimeColumn({required this.timeController, required this.now});
 
   @override
   Widget build(BuildContext context) {

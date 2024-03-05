@@ -1,7 +1,6 @@
 import 'package:alertnukeapp/config/colors.dart';
 import 'package:alertnukeapp/features/icons/presentation/iconswithnamelist.dart';
 import 'package:flutter/material.dart';
-import 'package:unicons/unicons.dart';
 
 class IconList extends StatelessWidget {
   final List<IconData> icons;

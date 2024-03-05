@@ -1,9 +1,7 @@
 
 import 'dart:io';
-
-import 'package:alertnukeapp/features/icons/domain/firebase_image.dart';
-import 'package:alertnukeapp/features/icons/domain/profilepictureprovider.dart';
-import 'package:alertnukeapp/screens/settings/applications.dart/applications.dart';
+import 'package:alertnukeapp/features/icons/domain/image_notifier.dart';
+import 'package:alertnukeapp/screens/settings/applications.dart/firebaseimagestorage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';

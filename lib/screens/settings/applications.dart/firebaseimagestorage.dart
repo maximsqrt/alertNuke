@@ -15,7 +15,6 @@ Future<String?> getProfilePictureUrl(String userId) async {
   try {
     return await _storage.ref().child('userProfilePics/$userId').getDownloadURL();
   } catch (e) {
-    print('Error occurred while fetching profile picture URL: $e');
     return null;
   }
 }
@@ -37,7 +36,6 @@ Future<String?> getProfilePictureUrl(String userId) async {
       return url;
 
     } catch (e) {
-      print('Error occurred while uploading to Firebase Storage: $e');
       return null;
     }
   }
