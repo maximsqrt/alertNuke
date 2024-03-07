@@ -1,3 +1,4 @@
+import 'package:alertnukeapp/common/savediconsprovider.dart';
 import 'package:alertnukeapp/features/authentication/presentation/login.dart';
 import 'package:alertnukeapp/features/icons/domain/image_notifier.dart';
 import 'package:alertnukeapp/features/icons/presentation/icon_notifier.dart';
@@ -15,8 +16,9 @@ class App extends StatelessWidget {
     return MultiProvider(providers: [
      
     ChangeNotifierProvider(
-      create: (context) => ProfilePictureProvider()), 
-     
+      create: (context) => SavedIconsNotifier()), 
+     ChangeNotifierProvider(
+      create: (context) => ProfilePictureProvider()),
     ],
       child: MaterialApp(
         

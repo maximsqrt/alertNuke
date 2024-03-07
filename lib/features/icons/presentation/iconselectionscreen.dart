@@ -1,48 +1,54 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:alertnukeapp/config/colors.dart';
-import 'package:alertnukeapp/features/icons/data/firebase_icon_repository.dart';
-import 'package:alertnukeapp/features/icons/data/icon_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:alertnukeapp/features/icons/data/firebase_icon_repository.dart';
 import 'package:alertnukeapp/features/icons/presentation/icons_screen.dart';
-import 'package:icony/icony_ikonate.dart';
+import 'package:provider/provider.dart';
+import 'package:alertnukeapp/common/savediconsprovider.dart'; // Importieren Sie den Provider
+import 'package:alertnukeapp/features/icons/presentation/profileiconprovider.dart';
+import 'package:unicons/unicons.dart';
 
 class IconsChoosenScreen extends StatefulWidget {
-  
-  const IconsChoosenScreen(); // Correct the constructor syntax
+  const IconsChoosenScreen();
 
   @override
   _IconsChoosenState createState() => _IconsChoosenState();
 }
 
 class _IconsChoosenState extends State<IconsChoosenScreen> {
-  List<IconWithName> chosenIcons = [];
-
   @override
   void initState() {
     super.initState();
-    _loadIcons(); // Laden Sie die Icons beim Initialisieren des Bildschirms
+    _loadIcons();
   }
 
-Future<void> _loadIcons() async {
+  Future<void> _loadIcons() async {
     String? userId = await FirebaseIconRepository().getCurrentUserId();
+    print("$userId");
     if (userId != null) {
-      List<IconWithName> icons = await FirebaseIconRepository().getIcondataCollection(userId);
-      // Konvertieren Sie die IconDataModel-Objekte in IconWithName-Objekte und aktualisieren Sie die Liste
-      setState(() {
-        chosenIcons = icons.map((icon) => IconWithName(name: icon.iconText, icon: IconData(int.parse(icon.iconString)))).toList();
-      });
+      List<IconWithName> icons =
+          await FirebaseIconRepository().getIcondataCollection(userId);
+      print(icons);
+      // Holen Sie sich eine Instanz des Providers
+      var savedIconsProvider =
+          Provider.of<SavedIconsNotifier>(context, listen: false);
+
+      // Fügen Sie die Icons dem Provider hinzu
+      savedIconsProvider.updateIcons(icons);
     } else {
-      print('User ID is null'); // Behandeln Sie den Fall, wenn die Benutzer-ID nicht verfügbar ist
+      print('User ID is null');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    var savedIconsNotifier =
+        Provider.of<SavedIconsNotifier>(context, listen: true);
+    List<IconWithName> chosenIcons = savedIconsNotifier.icons;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(202, 199, 64, 181),
       appBar: AppBar(
-        title: const Text('Choooosen Icons'),
+        title: const Text('Chosen Icons'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -63,42 +69,48 @@ Future<void> _loadIcons() async {
             );
           } else {
             final iconWithName = chosenIcons[index];
+            print('IconData properties:');
+            print('Code Point: ${iconWithName.icon}');
+
+// Add any other properties you want to print
             return ListTile(
-              leading: Icon(iconWithName.icon),
+              iconColor: FancyFontColor.primaryColor,
+              leading: Icon(IconData(iconWithName.icon.codePoint,
+                  fontFamily: iconWithName.icon.fontFamily,
+                  fontPackage: 'Unicons',
+                  matchTextDirection: iconWithName.icon.matchTextDirection)),
               title: Text(iconWithName.name),
+              subtitle: Text(iconWithName.iconDescription),
+              // Add any other relevant information here
             );
           }
         },
       ),
     );
   }
+}
 
-  Future<void> _showIconSelection(BuildContext context) async {
-    IconData? selectedIcon = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const IconsScreen()),
-    );
+Future<void> _showIconSelection(BuildContext context) async {
+  // Navigiere zur Seite, auf der der Benutzer ein Icon auswählen kann
+  IconData? selectedIcon = await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const IconsScreen()),
+  );
 
-    if (selectedIcon != null) {
-      setState(() {
-        chosenIcons.add(IconWithName(icon: selectedIcon, name: 'Icon'));
-      });
-    }
+  // Wenn ein Icon ausgewählt wurde, füge es dem Provider hinzu
+  if (selectedIcon != null) {
+    String name = ''; // Namen des ausgewählten Icons
+    String iconDescription = ''; // Beschreibung des ausgewählten Icons
+
+    // Holen Sie sich eine Instanz des Providers
+    var savedIconsProvider =
+        Provider.of<SavedIconsNotifier>(context, listen: false);
+
+    // Füge das ausgewählte Icon zum Provider hinzu
+    savedIconsProvider.addIcon(IconWithName(
+      icon: selectedIcon,
+      name: name,
+      iconDescription: iconDescription,
+    ));
   }
 }
-
-
-class IconWithName {
-  final IconData icon;
-  final String name;
-  final String iconText;
-  final String iconString;
-
-  IconWithName({
-    required this.name,
-    required this.icon,
-    this.iconText = '4',
-    this.iconString = '4',
-  });
-}
-

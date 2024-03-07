@@ -1,19 +1,19 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-abstract class IconRepository{
-  Future<void> addIconDataCollection(String userId, IconData iconData, String iconText, String iconDescription);
+// abstract class IconRepository{
+//   Future<void> addIconDataCollection(String userId, IconData iconData, String iconText, String iconDescription);
 
-  Future<String?> getCurrentUserId();
-}
+//   Future<String?> getCurrentUserId();
+// }
 
-class IconDataModel {
-  final String iconString;
-  final String iconText;
-  final String iconDescription;
+// class IconDataModel {
+//   final String iconString;
+//   final String iconText;
+//   final String iconDescription;
 
-  IconDataModel({
-    required this.iconString,
-    required this.iconText,
-    required this.iconDescription,
-  });
-}
+//   IconDataModel({
+//     required this.iconString,
+//     required this.iconText,
+//     required this.iconDescription,
+//   });
+// }

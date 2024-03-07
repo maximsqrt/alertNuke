@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod/riverpod.dart';
+import 'package:provider/provider.dart';
+
 
 class IconWithName {
   final IconData icon;
   final String name;
+  final String iconDescription;
+  
+  IconWithName({required this.icon, required this.name, required this.iconDescription});
+}
+abstract class IconRepository{
+  Future<void> addIconDataCollection(String userId, IconData iconData, String iconText, String iconDescription);
 
-  IconWithName({required this.icon, required this.name});
+  Future<String?> getCurrentUserId();
 }
 
-final savedIconsProvider = StateNotifierProvider<SavedIconsNotifier, List<IconWithName>>((ref) {
-  return SavedIconsNotifier();
-});
+final savedIconsProvider = ChangeNotifierProvider<SavedIconsNotifier>(
+  create: (context) => SavedIconsNotifier(),
+);
 
-class SavedIconsNotifier extends StateNotifier<List<IconWithName>> {
-  SavedIconsNotifier() : super([]);
+class SavedIconsNotifier extends ChangeNotifier {
+  List<IconWithName> _icons = [];
+
+  List<IconWithName> get icons => _icons;
 
   void addIcon(IconWithName iconWithName) {
-    state = [...state, iconWithName];
+    _icons = [..._icons, iconWithName];
+    notifyListeners();
+  }
+
+  void updateIcons(List<IconWithName> icons) {
+    _icons = List.from(icons);
+    notifyListeners();
   }
 }
