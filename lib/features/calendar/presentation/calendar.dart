@@ -37,6 +37,7 @@ void changeMonthStatus(int newMonthIndex) {
 
 @override
 Widget build(BuildContext context) {
+  // ignore: unused_local_variable, no_leading_underscores_for_local_identifiers
   ScrollController _scrollController = ScrollController();
   if (status == CalendarStatus.year) {
     return YearCalendar(changeMonthStatus: changeMonthStatus, changeDayStatus: changeDayStatus);

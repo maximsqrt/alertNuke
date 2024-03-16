@@ -12,8 +12,61 @@ Map<String, IconData> namesWithIconsList = {
   "adjust_half": UniconsLine.adjust_half,
   "adobe": UniconsLine.adobe,
   "adobe_alt": UniconsLine.adobe_alt,
+  "horizontal_align_center ": UniconsLine.horizontal_align_center,
+"horizontal_align_left ": UniconsLine.horizontal_align_left,
+"horizontal_align_right ": UniconsLine.horizontal_align_right,
+"horizontal_distribution_center ": UniconsLine.horizontal_distribution_center,
+"horizontal_distribution_left ": UniconsLine.horizontal_distribution_left,
+"horizontal_distribution_right ": UniconsLine.horizontal_distribution_right,
+"hospital_square_sign ": UniconsLine.hospital_square_sign,
+"hourglass ": UniconsLine.hourglass,
+"image ": UniconsLine.image,
+"image_block ": UniconsLine.image_block,
+"image_broken ": UniconsLine.image_broken,
+"image_check ": UniconsLine.image_check,
+"image_download ": UniconsLine.image_download,
+"image_edit ": UniconsLine.image_edit,
+"image_lock ": UniconsLine.image_lock,
+"image_minus ": UniconsLine.image_minus,
+"image_plus ": UniconsLine.image_plus,
+"image_question ": UniconsLine.image_question,
+"image_redo ": UniconsLine.image_redo,
+"image_resize_landscape ": UniconsLine.image_resize_landscape,
+"image_resize_square ": UniconsLine.image_resize_square,
+"image_search ": UniconsLine.image_search,
+"image_share ": UniconsLine.image_share,
+"image_shield ": UniconsLine.image_shield,
+"image_slash ": UniconsLine.image_slash,
+"image_times ": UniconsLine.image_times,
+"image_upload ": UniconsLine.image_upload,
+"images ": UniconsLine.images,
+"import ": UniconsLine.import,
+"inbox ": UniconsLine.inbox,
+"info ": UniconsLine.info,
+"info_circle ": UniconsLine.info_circle,
+"invoice ": UniconsLine.invoice,
+"italic ": UniconsLine.italic,
+"jackhammer ": UniconsLine.jackhammer,
+"kayak ": UniconsLine.kayak,
+"key_skeleton ": UniconsLine.key_skeleton,
+"keyboard ": UniconsLine.keyboard,
+"keyboard_alt ": UniconsLine.keyboard_alt,
+"keyboard_hide ": UniconsLine.keyboard_hide,
+"keyboard_show ": UniconsLine.keyboard_show,
+"keyhole_circle ": UniconsLine.keyhole_circle,
+"keyhole_square_full ": UniconsLine.keyhole_square_full,
+"kid ": UniconsLine.kid,
+"label ": UniconsLine.label,
+"lamp ": UniconsLine.lamp,
+"language ": UniconsLine.language,
+"laptop ": UniconsLine.laptop,
+
   // Add more entries as needed
 };
+
+
+
+
 
 
 // Map<IconData, String> namesWithIconsList = 
@@ -332,6 +385,7 @@ Map<String, IconData> namesWithIconsList = {
 //     UniconsLine.comment_exclamation: "comment_exclamation ",
 //     UniconsLine.comment_heart: "comment_heart ",
 //     UniconsLine.comment_image: "comment_image ",
+
 //     UniconsLine.comment_info: "comment_info ",
 //     UniconsLine.comment_info_alt: "comment_info_alt ",
 //     UniconsLine.comment_lines: "comment_lines ",
@@ -485,6 +539,7 @@ Map<String, IconData> namesWithIconsList = {
 //     UniconsLine.expand_left: "expand_left ",
 //     UniconsLine.expand_right: "expand_right ",
 //     UniconsLine.export: "export ",
+
 //     UniconsLine.exposure_alt: "exposure_alt ",
 //     UniconsLine.exposure_increase: "exposure_increase ",
 //     UniconsLine.external_link_alt: "external_link_alt ",
@@ -598,6 +653,7 @@ Map<String, IconData> namesWithIconsList = {
 //     UniconsLine.history_alt: "history_alt ",
 //     UniconsLine.home: "home ",
 //     UniconsLine.home_alt: "home_alt ",
+
 //     UniconsLine.horizontal_align_center: "horizontal_align_center ",
 //     UniconsLine.horizontal_align_left: "horizontal_align_left ",
 //     UniconsLine.horizontal_align_right: "horizontal_align_right ",
