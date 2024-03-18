@@ -26,7 +26,7 @@ class _IconsChoosenState extends State<IconsChoosenScreen> {
     if (userId != null) {
       List<IconWithName> icons =
           await FirebaseIconRepository().getIcondataCollection(userId);
-      print(icons);
+      
       // Holen Sie sich eine Instanz des Providers
       var savedIconsProvider =
           Provider.of<SavedIconsNotifier>(context, listen: false);
@@ -68,8 +68,7 @@ class _IconsChoosenState extends State<IconsChoosenScreen> {
             );
           } else {
             final iconWithName = chosenIcons[index];
-            print('IconData properties:');
-            print('Code Point: ${iconWithName.icon}');
+            
 
 // Add any other properties you want to print
             return ListTile(

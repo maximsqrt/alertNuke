@@ -35,8 +35,7 @@ class FirebaseIconRepository implements IconRepository {
         .get();
   querySnapshot.docs.forEach((doc) {
   Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-  print('Document ID: ${doc.id}');
-  print('Data: $data');
+  
 });
 
 List<IconWithName> icons = querySnapshot.docs.map((doc) {
@@ -44,10 +43,10 @@ List<IconWithName> icons = querySnapshot.docs.map((doc) {
   
 // Extract the IconData string
   String iconString = data['icondata_unicode'] ?? '';
-  print(iconString);
+  
   // Extract the hexadecimal code point from the IconData string
   String hexString = iconString.substring(11, iconString.length-1); // Remove "IconData(U+" from the beginning
-  print('hextring'+ hexString);
+  
   // Convert the hexadecimal string to an integer code point
   int codePoint = int.parse(hexString, radix: 16);
   

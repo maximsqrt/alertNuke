@@ -30,7 +30,7 @@ class FirebaseIconAppointmentRepository implements IconRepository {
   Future<void> addIconAppointment(
       String userId, IconAppointment iconAppointment) async {
     await _firestore
-        .collection('Users')
+        .collection('users')
         .doc(userId)
         .collection('Appointments')
         .add({

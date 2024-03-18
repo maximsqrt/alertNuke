@@ -57,7 +57,7 @@ class _DayCalendarState extends State<DayCalendar> {
                 Container(
                   // Festgelegte Breite für das Zeit-Widget, um es nicht-scrollbar zu machen
                   width: 70, // Beispielbreite, anpassen nach Bedarf
-                  height: 48 * 40, // Deine berechnete Höhe
+                  height: 48 * 39.5, // Deine berechnete Höhe
                   decoration: BoxDecoration(
                     gradient: SettingsBackgroundColor
                         .linearGradient(), // Beispielhintergrundfarbe
@@ -68,7 +68,7 @@ class _DayCalendarState extends State<DayCalendar> {
                   // Der restliche Bereich für den scrollbaren Teil
                   child: Container(
                     height: 48 *
-                        40, // Höhe des scrollbaren Bereichs, angepasst an den TimeContainer
+                        39.5, // Höhe des scrollbaren Bereichs, angepasst an den TimeContainer
                     child: GestureDetector(
                       onTapUp: (TapUpDetails details) {
                         _handleTap(context, details);
@@ -86,24 +86,24 @@ class _DayCalendarState extends State<DayCalendar> {
     );
   }
   ///TappedUpDetails
-  void _handleTap(BuildContext context, TapUpDetails details) {
-    final RenderBox renderBox = context.findRenderObject() as RenderBox;
-    final position = renderBox.globalToLocal(details.globalPosition);
-    final double containerHeight =
-        MediaQuery.of(context).size.height; // Adjust based on your container
-    final int totalSlots =
-        48; // Since you mentioned 48 slots (24 hours * 2 slots per hour)
-    final double slotHeight = containerHeight / totalSlots;
-    final int tappedSlot = position.dy ~/ slotHeight;
+void _handleTap(BuildContext context, TapUpDetails details) {
+  final RenderBox renderBox = context.findRenderObject() as RenderBox;
+  final position = renderBox.globalToLocal(details.localPosition);
+  final containerHeight = MediaQuery.of(context).size.height; // Container-Höhe anpassen
+  final totalSlots = 48; // 24 Stunden * 2 Slots pro Stunde
+  print("container height" + containerHeight.toString());
+  final slotHeight = containerHeight / totalSlots; // Höhe jedes Slots
+  print("slot height" + slotHeight.toString());
+  final tappedSlot = (position.dy / slotHeight).floor(); // Bestimme den getappten Slot
 
-    final int hour = tappedSlot ~/ 2;
-    final int minute = (tappedSlot % 2) * 30;
+  final hour = tappedSlot ~/ 4;
+  final minute = (tappedSlot % 2) * 30;
 
-    print(
-        "Tapped slot: $tappedSlot, Time: ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}");
+  print("Tapped slot: $tappedSlot, Time: ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}");
 
-    _showIconSelectionDialog(context, hour, minute);
-  }
+  _showIconSelectionDialog(context, hour, minute);
+}
+
 
   Future<void>  _showIconSelectionDialog(
       BuildContext context, int hour, int minute) async {
