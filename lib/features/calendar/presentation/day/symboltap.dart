@@ -10,19 +10,20 @@ class SymbolTap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Assuming SavedIconsNotifier is your provider for storing/fetching icons
-    final iconRepository = Provider.of<FirebaseIconRepository>(context, listen: false);
-final iconsNotifier = Provider.of<SavedIconsNotifier>(context, listen: false);
-final iconService = IconService(iconRepository, iconsNotifier);
+    final iconRepository =
+        Provider.of<FirebaseIconRepository>(context, listen: false);
+    final iconsNotifier =
+        Provider.of<SavedIconsNotifier>(context, listen: false);
 
-    
-     return AlertDialog(
+    return AlertDialog(
       title: const Text('Choose Your Icon'),
       content: Container(
         // Define a fixed height for the container, or make it dynamic based on content or screen size as needed
         height: 200, // Example fixed height
         width: double.maxFinite, // Use the maximum width available
         child: FutureBuilder<List<IconWithName>>(
-          future: IconService(iconRepository, iconsNotifier).fetchIcons(), // Implement this method to fetch icons from Firebase
+          future: IconService(iconRepository, iconsNotifier)
+              .fetchIcons(), // Implement this method to fetch icons from Firebase
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
@@ -35,11 +36,21 @@ final iconService = IconService(iconRepository, iconsNotifier);
               shrinkWrap: true,
               itemCount: icons.length,
               itemBuilder: (context, index) {
-                final iconData = icons[index];
+                final iconWithNamedata = icons[index];
+                // Recreate the IconData to ensure all properties are correctly applied
+                IconData recreatedIconData = IconData(
+                  iconWithNamedata.icon.codePoint,
+                  fontFamily: iconWithNamedata.icon.fontFamily,
+                  fontPackage:
+                      'unicons', // Ensure this matches the exact package name used in pubspec.yaml
+                  matchTextDirection: iconWithNamedata.icon.matchTextDirection,
+                );
+
                 return ListTile(
-                  leading: Icon(iconData.icon), // Your IconWithData might need adjustments to work
-                  title: Text(iconData.name),
-                  onTap: () => Navigator.of(context).pop(iconData),
+                  leading: Icon(
+                      recreatedIconData), // Use the recreated IconData object directly
+                  title: Text(iconWithNamedata.name),
+                  onTap: () => Navigator.of(context).pop(iconWithNamedata),
                 );
               },
             );

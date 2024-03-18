@@ -4,8 +4,7 @@ import 'package:alertnukeapp/features/icons/data/firebase_icon_repository.dart';
 import 'package:alertnukeapp/features/icons/presentation/icons_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:alertnukeapp/common/savediconsprovider.dart'; // Importieren Sie den Provider
-import 'package:alertnukeapp/features/icons/presentation/profileiconprovider.dart';
-import 'package:unicons/unicons.dart';
+
 
 class IconsChoosenScreen extends StatefulWidget {
   const IconsChoosenScreen();
