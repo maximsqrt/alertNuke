@@ -60,7 +60,7 @@ class SymbolTap extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Cdancel'),
         ),
       ],
     );

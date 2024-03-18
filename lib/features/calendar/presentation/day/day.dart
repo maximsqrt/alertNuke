@@ -121,7 +121,7 @@ void _handleTap(BuildContext context, TapUpDetails details) {
 
       // Benutzer-ID abrufen
       String? userId = await FirebaseIconAppointmentRepository().getCurrentUserId();
-
+ 
       if (userId != null) {
         // IconAppointment Instanz erstellen
         IconAppointment appointment = IconAppointment(
