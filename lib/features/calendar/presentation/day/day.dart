@@ -1,12 +1,14 @@
 import 'package:alertnukeapp/common/savediconsprovider.dart';
 import 'package:alertnukeapp/config/colors.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/appointments.dart';
+import 'package:alertnukeapp/features/calendar/presentation/day/displayappointment.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/symboltap.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/timecontainer.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class DayCalendar extends StatefulWidget {
   final int selectedDay;
@@ -18,6 +20,16 @@ class DayCalendar extends StatefulWidget {
 
   @override
   _DayCalendarState createState() => _DayCalendarState();
+  void _showAppointments(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      // Übergabe des ausgewählten Datums an AppointmentsList
+      return AppointmentsList(selectedDate:  DateTime(DateTime.now().year, widget.monthNumber, widget.selectedDay);
+    },
+  );
+}
+
 }
 
 class _DayCalendarState extends State<DayCalendar> {
@@ -74,7 +86,7 @@ class _DayCalendarState extends State<DayCalendar> {
                         _handleTap(context, details);
                         // printAppointment(context , details);
                       },
-                      child: DayContainer(dayController: _dayController),
+                      child: DayContainer(dayController: _dayController, selectedDate: null,),
                     ),
                   ),
                 ),
@@ -144,11 +156,13 @@ void _handleTap(BuildContext context, TapUpDetails details) {
 
 class DayContainer extends StatelessWidget {
   final ScrollController dayController;
+final DateTime selectedDate;
+  DayContainer({Key? key, required this.dayController, required this.selectedDate}) : super(key: key);
 
-  DayContainer({Key? key, required this.dayController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+     final icons = Provider.of<SavedIconsNotifier>(context).icons;
     return Container(
       decoration: BoxDecoration(
         gradient: MonthColor.fancyLinearGradient(),
@@ -156,9 +170,12 @@ class DayContainer extends StatelessWidget {
       ),
       child: ListView.builder(
         controller: dayController,
-        itemCount: 48,
-        itemBuilder: (context, dayIndex) {
-          return Container(); // Placeholder for your existing code
+        itemCount: icons.length,
+        itemBuilder: (context, index) {
+          final icon = icons[index];
+          // Erstelle eine Ansicht für jedes Icon
+          return 
+           AppointmentsList(selectedDate: selectedDate);
         },
       ),
     );
