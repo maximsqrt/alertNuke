@@ -1,9 +1,7 @@
 import 'package:alertnukeapp/common/savediconsprovider.dart';
-import 'package:alertnukeapp/features/icons/presentation/iconselectionscreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:alertnukeapp/features/icons/data/icon_repository.dart';
 
 class FirebaseIconRepository implements IconRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -21,7 +19,6 @@ class FirebaseIconRepository implements IconRepository {
         'iconDescription': iconDescription,
       });
     } catch (e) {
-      print('Error adding icon data collection: $e');
     }
   }
 
@@ -76,7 +73,6 @@ List<IconWithName> icons = querySnapshot.docs.map((doc) {
 
     return icons;
   } catch (e) {
-    print('Error getting icon data collection: $e');
     throw e;
   }
 }
@@ -84,12 +80,9 @@ List<IconWithName> icons = querySnapshot.docs.map((doc) {
 Future<void> printIconDataCollection(String userId) async {
   try {
     List<IconWithName> iconDataCollection = await getIcondataCollection(userId);
-    print('Icon Data Collection:');
     iconDataCollection.forEach((iconData) {
-      print('Name: ${iconData.name}, Icon: ${iconData.icon}, Icon Description: ${iconData.iconDescription}');
     });
   } catch (e) {
-    print('Error printing icon data collection: $e');
   }
 }
 

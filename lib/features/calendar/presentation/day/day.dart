@@ -4,8 +4,10 @@ import 'package:alertnukeapp/features/calendar/presentation/day/appointments.dar
 import 'package:alertnukeapp/features/calendar/presentation/day/displayappointment.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/symboltap.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/timecontainer.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -20,21 +22,17 @@ class DayCalendar extends StatefulWidget {
 
   @override
   _DayCalendarState createState() => _DayCalendarState();
-  void _showAppointments(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    builder: (BuildContext context) {
-      // Übergabe des ausgewählten Datums an AppointmentsList
-      return AppointmentsList(selectedDate:  DateTime(DateTime.now().year, widget.monthNumber, widget.selectedDay);
-    },
-  );
-}
+
+
+
+
 
 }
 
 class _DayCalendarState extends State<DayCalendar> {
   final ScrollController _timeController = ScrollController();
   final ScrollController _dayController = ScrollController();
+  late DateTime selectedDate;
   DateTime currentDate = DateTime.now();
   late List<String> weekNames;
 
@@ -43,11 +41,30 @@ class _DayCalendarState extends State<DayCalendar> {
     currentDate =
         DateTime(currentDate.year, widget.monthNumber, widget.selectedDay);
     super.initState();
+    selectedDate = DateTime(DateTime.now().year, widget.monthNumber, widget.selectedDay);
     weekNames = ['Time', widget.selectedDay.toString()];
+
+      void _showAppointments(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      // Übergabe des ausgewählten Datums an AppointmentsList
+      return Column(
+            children: [
+              Flexible(
+                child: 
+           AppointmentsDisplay(selectedDate: selectedDate),
+              ),],);
+    },
+  );
+}
+  
   }
 
   @override
   Widget build(BuildContext context) {
+   
+    
     return Scaffold(
       backgroundColor: BackgroundColor.primaryColor,
       appBar: AppBar(
@@ -86,7 +103,7 @@ class _DayCalendarState extends State<DayCalendar> {
                         _handleTap(context, details);
                         // printAppointment(context , details);
                       },
-                      child: DayContainer(dayController: _dayController, selectedDate: null,),
+                      child: DayContainer(dayController: _dayController, selectedDate: selectedDate),
                     ),
                   ),
                 ),
@@ -102,10 +119,8 @@ void _handleTap(BuildContext context, TapUpDetails details) {
   final RenderBox renderBox = context.findRenderObject() as RenderBox;
   final position = renderBox.globalToLocal(details.localPosition);
   final containerHeight = MediaQuery.of(context).size.height; // Container-Höhe anpassen
-  final totalSlots = 48; // 24 Stunden * 2 Slots pro Stunde
-  print("container height" + containerHeight.toString());
+  const totalSlots = 48; // 24 Stunden * 2 Slots pro Stunde
   final slotHeight = containerHeight / totalSlots; // Höhe jedes Slots
-  print("slot height" + slotHeight.toString());
   final tappedSlot = (position.dy / slotHeight).floor(); // Bestimme den getappten Slot
 
   final hour = tappedSlot ~/ 4;
@@ -174,17 +189,15 @@ final DateTime selectedDate;
         itemBuilder: (context, index) {
           final icon = icons[index];
           // Erstelle eine Ansicht für jedes Icon
-          return 
-           AppointmentsList(selectedDate: selectedDate);
+          return Column(
+            children: [
+              Flexible(
+                child: 
+           AppointmentsDisplay(selectedDate: selectedDate),
+              ),],);
         },
       ),
     );
   }
 }
 
-// AppointmentMangerController
-// Liste von Icon Data Objeken mit Zeit/heigh etc. 
-// Zeiten Vergleichn/ Height vergleichen
-// An der Stelle Container mit Icons ersetzen
-
-// addNewAppointment

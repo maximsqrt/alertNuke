@@ -5,8 +5,9 @@ import 'package:intl/intl.dart';
 
 class DayColumn extends StatelessWidget {
   final ScrollController dayController;
+  final DateTime selectedDate;
 
-  DayColumn({required this.dayController});
+  DayColumn({required this.dayController,required this.selectedDate});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class DayColumn extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Expanded(
-            child: DayContainer(dayController: dayController),
+            child: DayContainer(dayController: dayController, selectedDate: selectedDate),
           ),
         ],
       ),
