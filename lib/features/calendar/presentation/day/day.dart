@@ -4,11 +4,7 @@ import 'package:alertnukeapp/features/calendar/presentation/day/appointments.dar
 import 'package:alertnukeapp/features/calendar/presentation/day/displayappointment.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/symboltap.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/timecontainer.dart';
-import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -22,11 +18,6 @@ class DayCalendar extends StatefulWidget {
 
   @override
   _DayCalendarState createState() => _DayCalendarState();
-
-
-
-
-
 }
 
 class _DayCalendarState extends State<DayCalendar> {
@@ -41,30 +32,29 @@ class _DayCalendarState extends State<DayCalendar> {
     currentDate =
         DateTime(currentDate.year, widget.monthNumber, widget.selectedDay);
     super.initState();
-    selectedDate = DateTime(DateTime.now().year, widget.monthNumber, widget.selectedDay);
+    selectedDate =
+        DateTime(DateTime.now().year, widget.monthNumber, widget.selectedDay);
     weekNames = ['Time', widget.selectedDay.toString()];
 
-      void _showAppointments(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    builder: (BuildContext context) {
-      // Übergabe des ausgewählten Datums an AppointmentsList
-      return Column(
+    void _showAppointments(BuildContext context) {
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          // Übergabe des ausgewählten Datums an AppointmentsList
+          return Column(
             children: [
-              Flexible(
-                child: 
-           AppointmentsDisplay(selectedDate: selectedDate),
-              ),],);
-    },
-  );
-}
-  
+              Expanded(
+                child: AppointmentsDisplay(selectedDate: selectedDate),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-   
-    
     return Scaffold(
       backgroundColor: BackgroundColor.primaryColor,
       appBar: AppBar(
@@ -103,7 +93,9 @@ class _DayCalendarState extends State<DayCalendar> {
                         _handleTap(context, details);
                         // printAppointment(context , details);
                       },
-                      child: DayContainer(dayController: _dayController, selectedDate: selectedDate),
+                      child: DayContainer(
+                          dayController: _dayController,
+                          selectedDate: selectedDate),
                     ),
                   ),
                 ),
@@ -114,26 +106,29 @@ class _DayCalendarState extends State<DayCalendar> {
       ),
     );
   }
+
   ///TappedUpDetails
-void _handleTap(BuildContext context, TapUpDetails details) {
-  final RenderBox renderBox = context.findRenderObject() as RenderBox;
-  final position = renderBox.globalToLocal(details.localPosition);
-  final containerHeight = MediaQuery.of(context).size.height; // Container-Höhe anpassen
-  const totalSlots = 48; // 24 Stunden * 2 Slots pro Stunde
-  final slotHeight = containerHeight / totalSlots; // Höhe jedes Slots
-  final tappedSlot = (position.dy / slotHeight).floor(); // Bestimme den getappten Slot
+  void _handleTap(BuildContext context, TapUpDetails details) {
+    final RenderBox renderBox = context.findRenderObject() as RenderBox;
+    final position = renderBox.globalToLocal(details.localPosition);
+    final containerHeight =
+        MediaQuery.of(context).size.height; // Container-Höhe anpassen
+    const totalSlots = 48; // 24 Stunden * 2 Slots pro Stunde
+    final slotHeight = containerHeight / totalSlots; // Höhe jedes Slots
+    final tappedSlot =
+        (position.dy / slotHeight).floor(); // Bestimme den getappten Slot
 
-  final hour = tappedSlot ~/ 4;
-  final minute = (tappedSlot % 2) * 30;
+    final hour = tappedSlot ~/ 4;
+    final minute = (tappedSlot % 2) * 30;
 
-  print("Tapped slot: $tappedSlot, Time: ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}");
+    print(
+        "Tapped slot: $tappedSlot, Time: ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}");
 
-  _showIconSelectionDialog(context, hour, minute);
-}
+    _showIconSelectionDialog(context, hour, minute, position.dy);
+  }
 
-
-  Future<void>  _showIconSelectionDialog(
-      BuildContext context, int hour, int minute) async {
+  Future<void> _showIconSelectionDialog(
+      BuildContext context, int hour, int minute, double position) async {
     final IconWithName? selectedIcon = await showDialog<IconWithName>(
       context: context,
       builder: (context) => const SymbolTap(),
@@ -147,19 +142,22 @@ void _handleTap(BuildContext context, TapUpDetails details) {
           widget.selectedDay, hour, minute);
 
       // Benutzer-ID abrufen
-      String? userId = await FirebaseIconAppointmentRepository().getCurrentUserId();
- 
+      String? userId =
+          await FirebaseIconAppointmentRepository().getCurrentUserId();
+
       if (userId != null) {
         // IconAppointment Instanz erstellen
         IconAppointment appointment = IconAppointment(
           iconWithName: selectedIcon,
           appointmentDate: appointmentDate,
+          iconPosition: position,
           appointmentDescription:
               "Beschreibung hier einfügen", // Füge eine Möglichkeit hinzu, eine Beschreibung zu erfassen
         );
 
         // Termin in Firebase speichern
-        await FirebaseIconAppointmentRepository().addIconAppointment(userId, appointment);
+        await FirebaseIconAppointmentRepository()
+            .addIconAppointment(userId, appointment);
 
         // Optional: Bestätigung anzeigen oder den State aktualisieren
       } else {
@@ -171,33 +169,23 @@ void _handleTap(BuildContext context, TapUpDetails details) {
 
 class DayContainer extends StatelessWidget {
   final ScrollController dayController;
-final DateTime selectedDate;
-  DayContainer({Key? key, required this.dayController, required this.selectedDate}) : super(key: key);
-
+  final DateTime selectedDate;
+  DayContainer(
+      {Key? key, required this.dayController, required this.selectedDate})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-     final icons = Provider.of<SavedIconsNotifier>(context).icons;
+    final icons = Provider.of<SavedIconsNotifier>(context).icons;
     return Container(
       decoration: BoxDecoration(
         gradient: MonthColor.fancyLinearGradient(),
         borderRadius: BorderRadius.circular(3.0),
       ),
-      child: ListView.builder(
+      child: SingleChildScrollView(
         controller: dayController,
-        itemCount: icons.length,
-        itemBuilder: (context, index) {
-          final icon = icons[index];
-          // Erstelle eine Ansicht für jedes Icon
-          return Column(
-            children: [
-              Flexible(
-                child: 
-           AppointmentsDisplay(selectedDate: selectedDate),
-              ),],);
-        },
+        child: AppointmentsDisplay(selectedDate: selectedDate),
       ),
     );
   }
 }
-

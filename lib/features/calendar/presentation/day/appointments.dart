@@ -8,11 +8,14 @@ class IconAppointment {
   final IconWithName iconWithName;
   final DateTime appointmentDate;
   final String appointmentDescription;
+  ///Optional für Apoinzments 
+  final double? iconPosition;
 
   IconAppointment({
     required this.iconWithName,
     required this.appointmentDate,
     required this.appointmentDescription,
+    this.iconPosition,
   });
 }
 
@@ -29,11 +32,9 @@ class FirebaseIconAppointmentRepository implements IconRepository {
   @override
   Future<void> addIconAppointment(
       String userId, IconAppointment iconAppointment) async {
-    await _firestore
-        .collection('users')
-        .doc(userId)
-        .collection('Appointments')
-        .add({
+   final data = {
+      
+        
       'iconCodePoint': iconAppointment.iconWithName.icon.codePoint,
       'iconFontFamily': iconAppointment.iconWithName.icon.fontFamily,
       'iconFontPackage': iconAppointment.iconWithName.icon.fontPackage,
@@ -41,7 +42,17 @@ class FirebaseIconAppointmentRepository implements IconRepository {
       'iconDescription': iconAppointment.iconWithName.iconDescription,
       'appointmentDate': iconAppointment.appointmentDate,
       'appointmentDescription': iconAppointment.appointmentDescription,
-    });
+    };
+      // Optional: Hinzufügen der Position, wenn sie vorhanden ist
+  if (iconAppointment.iconPosition != null) {
+    data['iconPosition'] = iconAppointment.iconPosition;
+  }
+  print( iconAppointment.iconPosition.toString());
+   await _firestore
+      .collection('users')
+      .doc(userId)
+      .collection('Appointments')
+      .add(data);
   }
 
   @override
