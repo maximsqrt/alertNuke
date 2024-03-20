@@ -11,26 +11,33 @@ class AppointmentsDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userId = Provider.of<User?>(context)?.uid;
-
+String usercollectionname = 'users';
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
-          .collection('users')
+          .collection(usercollectionname)
           .doc(userId)
           .collection('Appointments')
           .where('appointmentDate', 
-                isGreaterThanOrEqualTo: Timestamp.fromDate(DateTime(selectedDate.year, selectedDate.month, selectedDate.day)),
-                isLessThan: Timestamp.fromDate(DateTime(selectedDate.year, selectedDate.month, selectedDate.day + 1)))
+       isGreaterThanOrEqualTo: Timestamp.fromDate(DateTime(selectedDate.year, selectedDate.month, selectedDate.day)),
+       isLessThan: Timestamp.fromDate(DateTime(selectedDate.year, selectedDate.month, selectedDate.day + 1)))
+
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return CircularProgressIndicator();
+        print("Selected Date: ${selectedDate.day.toString()}");
+print(Timestamp.fromDate(DateTime(selectedDate.year, selectedDate.month, selectedDate.day - 1)));
+print(Timestamp.fromDate(DateTime(selectedDate.year, selectedDate.month, selectedDate.day + 1)));
 
+print("USERID: $userId");
         List<Widget> appointmentWidgets = snapshot.data!.docs.map((doc) {
           var appointmentData = doc.data() as Map<String, dynamic>;
-          var icon = IconData(appointmentData['iconCodePoint'], fontFamily: appointmentData['iconFontFamily'], fontPackage: appointmentData['iconFontPackage']);
+          
+          var iconCodePoint = (appointmentData['iconCodePoint']);
+          var icon = IconData(iconCodePoint, fontFamily: 'UniconsLine', fontPackage: 'unicons');
           var name = appointmentData['iconName'];
-          var description = appointmentData['appointmentDescription']; // Hinzugefügt für Vollständigkeit
+          var description = appointmentData['iconDescription']; // Hinzugefügt für Vollständigkeit
           var appointmentDate = (appointmentData['appointmentDate'] as Timestamp).toDate();
-
+print("ICON: $iconCodePoint");
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(

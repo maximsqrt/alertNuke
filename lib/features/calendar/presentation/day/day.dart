@@ -152,7 +152,8 @@ class _DayCalendarState extends State<DayCalendar> {
           appointmentDate: appointmentDate,
           iconPosition: position,
           appointmentDescription:
-              "Beschreibung hier einfügen", // Füge eine Möglichkeit hinzu, eine Beschreibung zu erfassen
+              "Beschreibung hier einfügen", 
+              // Füge eine Möglichkeit hinzu, eine Beschreibung zu erfassen
         );
 
         // Termin in Firebase speichern

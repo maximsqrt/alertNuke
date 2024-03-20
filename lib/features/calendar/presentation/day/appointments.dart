@@ -34,7 +34,7 @@ class FirebaseIconAppointmentRepository implements IconRepository {
       String userId, IconAppointment iconAppointment) async {
    final data = {
       
-        
+      
       'iconCodePoint': iconAppointment.iconWithName.icon.codePoint,
       'iconFontFamily': iconAppointment.iconWithName.icon.fontFamily,
       'iconFontPackage': iconAppointment.iconWithName.icon.fontPackage,
