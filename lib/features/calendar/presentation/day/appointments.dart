@@ -1,23 +1,11 @@
 import 'package:alertnukeapp/common/savediconsprovider.dart';
+import 'package:alertnukeapp/features/calendar/domain/icon_appointment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class IconAppointment {
-  final IconWithName iconWithName;
-  final DateTime appointmentDate;
-  final String appointmentDescription;
-  ///Optional für Apoinzments 
-  final double? iconPosition;
 
-  IconAppointment({
-    required this.iconWithName,
-    required this.appointmentDate,
-    required this.appointmentDescription,
-    this.iconPosition,
-  });
-}
 
 abstract class IconRepository {
   Future<void> addIconAppointment(

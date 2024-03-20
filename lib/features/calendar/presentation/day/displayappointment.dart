@@ -1,3 +1,5 @@
+import 'package:alertnukeapp/features/calendar/application/calendar_slot_helper.dart';
+import 'package:alertnukeapp/features/calendar/domain/icon_appointment.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +14,7 @@ class AppointmentsDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     final userId = Provider.of<User?>(context)?.uid;
 String usercollectionname = 'users';
+
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection(usercollectionname)
@@ -23,39 +26,68 @@ String usercollectionname = 'users';
 
           .snapshots(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) return CircularProgressIndicator();
-        print("Selected Date: ${selectedDate.day.toString()}");
-print(Timestamp.fromDate(DateTime(selectedDate.year, selectedDate.month, selectedDate.day - 1)));
-print(Timestamp.fromDate(DateTime(selectedDate.year, selectedDate.month, selectedDate.day + 1)));
+        if (!snapshot.hasData) return const CircularProgressIndicator();
+        
 
-print("USERID: $userId");
-        List<Widget> appointmentWidgets = snapshot.data!.docs.map((doc) {
+
+        List<IconAppointment> icons = [];
+
+    
+        for(QueryDocumentSnapshot doc in snapshot.data!.docs){
           var appointmentData = doc.data() as Map<String, dynamic>;
-          
-          var iconCodePoint = (appointmentData['iconCodePoint']);
-          var icon = IconData(iconCodePoint, fontFamily: 'UniconsLine', fontPackage: 'unicons');
-          var name = appointmentData['iconName'];
-          var description = appointmentData['iconDescription']; // Hinzugefügt für Vollständigkeit
-          var appointmentDate = (appointmentData['appointmentDate'] as Timestamp).toDate();
-print("ICON: $iconCodePoint");
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Icon(icon),
-                SizedBox(width: 10),
-                Expanded(child: Text("$name - $description ")),
-              ],
-            ),
-          );
-        }).toList();
+          IconAppointment iconAppointment = IconAppointment.fromMap(appointmentData);
+          icons.add(iconAppointment);
+        }
+       
+
+         print("After snapshot: ${icons.length}");
+
+        List<Widget> appointmentWidgets = [];
+
+
+
+for(int i = 1; i <= 48; i++){
+  
+            bool foundAppointment = false;
+           for(IconAppointment appointment in icons){
+            int iconIndex = CalendarSlotHelper.getSlotFromTime(appointment.appointmentDate);
+            int index = i;
+
+            
+              if(iconIndex == index){
+                   appointmentWidgets.add(Padding(
+                     padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      
+                    children: [
+                      Icon(appointment.iconWithName.icon),
+                      SizedBox(width: 2),
+                      Text("${appointment.iconWithName.name} - ${appointment.iconWithName.iconDescription}"),
+                    
+                    ],
+                   )));
+                 foundAppointment = true;
+              } 
+         }
+
+         if(!foundAppointment){
+          appointmentWidgets.add(Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0), // Increased padding,
+            child:  Text(" "),
+          ));
+
+         }
+}
+
+
 
         return SingleChildScrollView(
           child: Column(
             children: appointmentWidgets,
           ),
         );
-      },
+      }      
     );
   }
 }

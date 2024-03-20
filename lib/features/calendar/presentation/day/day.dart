@@ -1,5 +1,6 @@
 import 'package:alertnukeapp/common/savediconsprovider.dart';
 import 'package:alertnukeapp/config/colors.dart';
+import 'package:alertnukeapp/features/calendar/domain/icon_appointment.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/appointments.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/displayappointment.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/symboltap.dart';
@@ -69,42 +70,21 @@ class _DayCalendarState extends State<DayCalendar> {
           padding:
               const EdgeInsets.only(top: 50, left: 10, right: 10, bottom: 0),
           child: IntrinsicHeight(
-            child: Row(
-              // Horizontale Anordnung für Zeit und Tag
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
+            child: Container(
                   // Festgelegte Breite für das Zeit-Widget, um es nicht-scrollbar zu machen
-                  width: 70, // Beispielbreite, anpassen nach Bedarf
+                  width: MediaQuery.of(context).size.width, // Beispielbreite, anpassen nach Bedarf
                   height: 48 * 39.5, // Deine berechnete Höhe
                   decoration: BoxDecoration(
                     gradient: SettingsBackgroundColor
                         .linearGradient(), // Beispielhintergrundfarbe
                   ),
-                  child: TimeContainer(timeController: _timeController),
+                  child: TimeContainer(timeController: _timeController, selectedDate: selectedDate,),
                 ),
-                Expanded(
-                  // Der restliche Bereich für den scrollbaren Teil
-                  child: Container(
-                    height: 48 *
-                        39.5, // Höhe des scrollbaren Bereichs, angepasst an den TimeContainer
-                    child: GestureDetector(
-                      onTapUp: (TapUpDetails details) {
-                        _handleTap(context, details);
-                        // printAppointment(context , details);
-                      },
-                      child: DayContainer(
-                          dayController: _dayController,
-                          selectedDate: selectedDate),
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ),
         ),
       ),
     );
+    
   }
 
   ///TappedUpDetails
