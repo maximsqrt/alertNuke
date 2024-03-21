@@ -1,5 +1,6 @@
 import 'package:alertnukeapp/common/savediconsprovider.dart';
 import 'package:alertnukeapp/config/colors.dart';
+import 'package:alertnukeapp/config/colors.dart';
 import 'package:alertnukeapp/features/calendar/domain/icon_appointment.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/appointments.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/displayappointment.dart';
@@ -8,6 +9,7 @@ import 'package:alertnukeapp/features/calendar/presentation/day/timecontainer.da
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:unicons/unicons.dart';
 
 class DayCalendar extends StatefulWidget {
   final int selectedDay;
@@ -37,32 +39,65 @@ class _DayCalendarState extends State<DayCalendar> {
         DateTime(DateTime.now().year, widget.monthNumber, widget.selectedDay);
     weekNames = ['Time', widget.selectedDay.toString()];
 
-    void _showAppointments(BuildContext context) {
-      showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          // Übergabe des ausgewählten Datums an AppointmentsList
-          return Column(
-            children: [
-              Expanded(
-                child: AppointmentsDisplay(selectedDate: selectedDate),
-              ),
-            ],
-          );
-        },
-      );
-    }
+    // void _showAppointments(BuildContext context) {
+    //   showModalBottomSheet(
+    //     context: context,
+    //     builder: (BuildContext context) {
+    //       // Übergabe des ausgewählten Datums an AppointmentsList
+    //       return Column(
+    //         children: [
+    //           Expanded(
+    //             child: AppointmentsDisplay(selectedDate: selectedDate),
+    //           ),
+    //         ],
+    //       );
+    //     },
+    //   );
+    // }
+  }
+  void _updateDate(int daysToAdd) {
+    setState(() {
+      selectedDate = selectedDate.add(Duration(days: daysToAdd));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return 
+    
+
+    
+    Scaffold(
       backgroundColor: BackgroundColor.primaryColor,
       appBar: AppBar(
         title: Text(
-          '${DateFormat('EEEE').format(currentDate)}, ${currentDate.day.toString()} ${DateFormat('MMMM y').format(currentDate)}',
-          style: const TextStyle(fontSize: 18),
+          '${DateFormat('EEEE').format(selectedDate)}, ${selectedDate.day.toString()} ${DateFormat('MMMM y').format(currentDate)}',
+          style: const TextStyle(fontSize: 18, color: FancyFontColor.primaryColor)
+          
+        
         ),
+         flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomLeft,
+              end: Alignment.centerRight,
+              colors:  [Color(0xFF6CA7BE), Color(0xFF2E0B4B)],
+
+            
+            
+            ),
+            ),
+          ),
+        leading: IconButton(
+          icon: const Icon(UniconsLine.arrow_down),
+          onPressed: () => _updateDate(-1), // Tag zurück
+      ),
+       actions: <Widget>[
+          IconButton(
+            icon: const Icon(UniconsLine.arrow_up),
+            onPressed: () => _updateDate(1), // Tag vor
+             ),
+        ],
       ),
       body: SingleChildScrollView(
         // Scroll-View für den gesamten Bildschirm
