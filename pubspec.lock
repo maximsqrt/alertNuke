@@ -476,10 +476,10 @@ packages:
     dependency: "direct main"
     description:
       name: kalender
-      sha256: dc708207f5ee38519355cba600a0df0c3d7387b090a571c1162d7fb594167dd6
+      sha256: "2ab1e80b89a507ce6d0d5b0724c92fc6ec161d0b4715edf27a42dcbcad437f46"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.3"
+    version: "0.3.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -741,6 +741,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.1"
+  timezone:
+    dependency: transitive
+    description:
+      name: timezone
+      sha256: "1cfd8ddc2d1cfd836bc93e67b9be88c3adaeca6f40a00ca999104c30693cdca0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.2"
   typed_data:
     dependency: transitive
     description:
