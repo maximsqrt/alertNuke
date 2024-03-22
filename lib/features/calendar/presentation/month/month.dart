@@ -11,8 +11,13 @@ class MonthCalendar extends StatefulWidget {
   final int monthIndex;
   final int selectedMonth;
   final Function(int) dayCallback;
+  final int selectedYear;
 
-  MonthCalendar({Key? key, required this.monthIndex,required this.dayCallback})
+  const MonthCalendar(
+      {Key? key,
+      required this.monthIndex,
+      required this.selectedYear,
+      required this.dayCallback})
       : selectedMonth = monthIndex,
         super(key: key);
 
@@ -22,15 +27,16 @@ class MonthCalendar extends StatefulWidget {
 
 // State class for the MonthCalendar
 class _MonthCalendarState extends State<MonthCalendar> {
-  late PageController _pageController;  // Controller for handling the page view
-  late TextEditingController _timeController;  // Controller for handling time input
-  int currentPage = 0;  // Variable to keep track of the current page (month)
+  late PageController _pageController; // Controller for handling the page view
+  late TextEditingController
+      _timeController; // Controller for handling time input
+  int currentPage = 0; // Variable to keep track of the current page (month)
 
   // Initializing controllers and setting the initial page to the selected month
   @override
   void initState() {
     super.initState();
-    currentPage = widget.monthIndex - 1;
+    currentPage = widget.monthIndex + 1;
     _pageController = PageController(initialPage: currentPage);
     _timeController = TextEditingController();
   }
@@ -60,7 +66,8 @@ class _MonthCalendarState extends State<MonthCalendar> {
               color: BackgroundColor.primaryColor,
               borderRadius: BorderRadius.circular(3.0),
             ),
-            padding: const EdgeInsets.only(top: 100, left: 10, right: 10, bottom: 0),
+            padding:
+                const EdgeInsets.only(top: 100, left: 10, right: 10, bottom: 0),
             child: Column(
               children: [
                 const SizedBox(height: 100),
@@ -73,27 +80,32 @@ class _MonthCalendarState extends State<MonthCalendar> {
                         currentPage = page;
                       });
                     },
-                    itemCount: 12,  // Number of months
+                    itemCount: 12, // Number of months
                     itemBuilder: (BuildContext context, int index) {
                       // Calculate the month for the current page
                       int monthIndex = index + 1;
 
                       // Build a month page using a custom function
-                      return buildMonthPage(monthIndex, 0.5, 20, dayCallback: (day) => widget.dayCallback(day));
+                      return buildMonthPage(
+                          monthIndex - 2, widget.selectedYear, 0.5, 20,
+                          dayCallback: (day) => widget.dayCallback(day));
                     },
                   ),
                 ),
-                
+
                 // Displaying the current month's name
                 Text(
-                  DateFormat('MMMM')
-                      .format(DateTime.now().add(Duration(days: 1 + currentPage * 30))),
+                  DateFormat('MMMM yyyy').format(DateTime(
+                    widget.selectedYear ?? DateTime.now().year,
+                    1 + currentPage, // Direkt auf den "ziel"-Monat basierend auf `currentPage`
+                    1,
+                  )),
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
-                 ),
-                ),
+                  ),
+                )
               ],
             ),
           ),
@@ -109,7 +121,6 @@ class _MonthCalendarState extends State<MonthCalendar> {
           ),
         ],
       ),
-     
     );
   }
 }

@@ -2,20 +2,18 @@ import 'package:alertnukeapp/application/DateHelperService.dart';
 import 'package:alertnukeapp/config/colors.dart';
 import 'package:flutter/material.dart';
 
-
-Widget buildMonthPage(int monthIndex, double childAspectRatio, int fontSize, {required Function(int) dayCallback}) {
-
-
-
-
+Widget buildMonthPage(int monthIndex,int? selectedYear, double childAspectRatio, int fontSize, {required Function(int) dayCallback}) {
   int actualFontSize = fontSize;
+  // Anpassung hier: Monatsindex + 1, um von 0-basierter zu 1-basierter Indexierung zu wechseln
+  int correctedMonthIndex = monthIndex + 1;
+  int year = selectedYear ?? DateTime.now().year;
   return Container(
     decoration: BoxDecoration(
       gradient: MonthColor.fancyLinearGradient(),
     ),
     child: GridView.builder(
       padding: EdgeInsets.zero,
-      itemCount: dateHelperService.daysInMonth(monthIndex),
+      itemCount: dateHelperService.daysInMonth(correctedMonthIndex, year), // Korrigierte Übergabe
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 7,
         mainAxisSpacing: 0,
@@ -56,4 +54,3 @@ Widget buildMonthPage(int monthIndex, double childAspectRatio, int fontSize, {re
     ),
   );
 }
-

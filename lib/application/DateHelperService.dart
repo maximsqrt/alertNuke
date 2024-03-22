@@ -1,9 +1,18 @@
 class dateHelperService {
 // Other helper methods/constants
-  static int daysInMonth(int month) {
-    var now = DateTime.now();
-    var firstDayThisMonth = DateTime(now.year, month, 1);
-    var firstDayNextMonth = DateTime(now.year, month + 1, 1);
+  static int daysInMonth(int month, int year) {
+   
+    var firstDayThisMonth = DateTime(year, month, 1);
+    var firstDayNextMonth;
+
+     if (month == 12) {
+      // Für Dezember setze den ersten Tag des nächsten Monats auf den 1. Januar des nächsten Jahres
+      firstDayNextMonth = DateTime(year + 1, 1, 1);
+    } else {
+      // Für alle anderen Monate einfach den nächsten Monat verwenden
+      firstDayNextMonth = DateTime(year, month + 1, 1);
+    }
+
     return firstDayNextMonth.difference(firstDayThisMonth).inDays;
   }
 

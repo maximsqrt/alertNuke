@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 class MonthGridItem extends StatelessWidget {
 
   final int monthIndex;
-
+  final int? selectedYear;
   Function(int) showMonth;
   Function(int) dayCallback;
   
- MonthGridItem({super.key, required this.monthIndex, required this.showMonth,required this.dayCallback});
+ MonthGridItem({super.key, required this.monthIndex, required this.selectedYear, required this.showMonth,required this.dayCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class MonthGridItem extends StatelessWidget {
             const SizedBox(height: 10),
             Expanded(
               child: Container(
-                child: buildMonthPage(monthIndex, 1, 10,dayCallback: (day) => dayCallback(day)),
+                child: buildMonthPage(monthIndex, selectedYear,1, 10,dayCallback: (day) => dayCallback(day)),
               ),
             ),
           ],

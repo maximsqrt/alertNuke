@@ -39,21 +39,7 @@ class _DayCalendarState extends State<DayCalendar> {
         DateTime(DateTime.now().year, widget.monthNumber, widget.selectedDay);
     weekNames = ['Time', widget.selectedDay.toString()];
 
-    // void _showAppointments(BuildContext context) {
-    //   showModalBottomSheet(
-    //     context: context,
-    //     builder: (BuildContext context) {
-    //       // Übergabe des ausgewählten Datums an AppointmentsList
-    //       return Column(
-    //         children: [
-    //           Expanded(
-    //             child: AppointmentsDisplay(selectedDate: selectedDate),
-    //           ),
-    //         ],
-    //       );
-    //     },
-    //   );
-    // }
+
   }
   void _updateDate(int daysToAdd) {
     setState(() {

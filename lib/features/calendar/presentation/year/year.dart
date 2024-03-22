@@ -1,52 +1,52 @@
+
+
 import 'package:alertnukeapp/features/calendar/presentation/components/buildyear.dart';
 
 import 'package:alertnukeapp/screens/views/timecolumn.dart';
 import 'package:flutter/material.dart';
+import 'package:unicons/unicons.dart';
 
 class YearCalendar extends StatefulWidget {
   final Function(int) changeMonthStatus;
   final Function(int) changeDayStatus;
+  final int selectedYear;
 
-  const YearCalendar(
+   const YearCalendar(
       {Key? key,
       required this.changeDayStatus,
-      required this.changeMonthStatus})
+      required this.changeMonthStatus, required this.selectedYear, required void Function(int newYearIndex) changeYearStatus})
       : super(key: key);
 
   @override
   _YearCalendar createState() => _YearCalendar();
 }
-
+ 
 class _YearCalendar extends State<YearCalendar> {
+ DateTime selectedDate = DateTime.now();
+    Key key = UniqueKey();
+    void _updateYear(int yearToAdd) {
+    setState(() {
+        
+        selectedDate = DateTime(selectedDate.year + yearToAdd);
+        key = UniqueKey();
+        print(selectedDate.year);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     ScrollController _scrollController = ScrollController();
     return Scaffold(appBar: AppBar(
-      leading: Container(
-      // Updated arrow icon
-         
-  ), 
-    
-    
-      
-      backgroundColor: Colors.transparent,
-    title: Image.asset(
-              'assets/AlertNuke.png',
-              width: 200, // specify the width
-              // specify the height
-            ),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.bottomLeft,
-              end: Alignment.centerRight,
-              colors:  [Color(0xFF6CA7BE), Color(0xFF2E0B4B)],
-
-            
-            
-            ),
-            ),
-          ),
+      title: Text("${selectedDate.year}"),
+          leading: IconButton(
+          icon: const Icon(UniconsLine.arrow_down),
+          onPressed: () => _updateYear(-1), // Tag zurück
+      ),
+       actions: <Widget>[
+          IconButton(
+            icon: const Icon(UniconsLine.arrow_up),
+            onPressed: () => _updateYear(1), // Tag vor
+             ),
+        ],
         ),
       body: Column( 
         children: <Widget>[
@@ -73,6 +73,7 @@ class _YearCalendar extends State<YearCalendar> {
                       timeController: _scrollController, now: DateTime.now()),
                   Flexible(
                     child: GridView.builder(
+                      key: PageStorageKey('MonthGridView-${selectedDate.year}'),
                       itemCount: 12,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -89,9 +90,10 @@ class _YearCalendar extends State<YearCalendar> {
                               child: AspectRatio(
                                 aspectRatio: 1.0,
                                 child: MonthGridItem(
-                                  monthIndex: index + 1,
+                                  monthIndex: index +1,
+                                  selectedYear: selectedDate.year,
                                   showMonth: (newMonthIndex) =>
-                                      widget.changeMonthStatus(newMonthIndex),
+                                      widget.changeMonthStatus(newMonthIndex -2),
                                   // Pass necessary callbacks here
                                   dayCallback: (day) =>
                                       widget.changeDayStatus(day),

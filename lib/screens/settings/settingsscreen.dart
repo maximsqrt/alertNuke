@@ -14,8 +14,9 @@ import 'package:provider/provider.dart';
 class EditableField extends StatelessWidget {
   final String label;
   final String? value;
+  final Color textColor; 
 
-  const EditableField({super.key, required this.label, this.value});
+  const EditableField({super.key, required this.label, this.value,  this.textColor = Colors.white, });
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +100,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
    
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title: const Text('Settings'),
+      flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomLeft,
+              end: Alignment.centerRight,
+              colors:  [Color(0xFF6CA7BE), Color(0xFF2E0B4B)],
+
+            
+            
+            ),
+            ),
+          ),),
       body: Container(
         decoration: BoxDecoration(
           gradient: SettingsBackgroundColor.linearGradient(),
@@ -123,7 +136,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 10),
               const EditableField(label: 'Phone Number:', value: ''), // Provide phone number value if available
               const SizedBox(height: 10),
-              EditableField(label: 'Email Address:', value: FirebaseUserData.email), // Use your FirebaseUserData here
+              EditableField(label: 'Email Address:', value: FirebaseUserData.email, textColor: Colors.white), // Use your FirebaseUserData here
               SizedBox(height: MediaQuery.of(context).size.height * 0.1),
               _buildSaveButton(context),
             ],
