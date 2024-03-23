@@ -29,7 +29,7 @@ class MonthGridItem extends StatelessWidget {
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 14,
               ),
             ),
             const SizedBox(height: 10),

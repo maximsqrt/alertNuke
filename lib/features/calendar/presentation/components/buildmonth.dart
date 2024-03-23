@@ -9,6 +9,7 @@ Widget buildMonthPage(int monthIndex,int? selectedYear, double childAspectRatio,
   int year = selectedYear ?? DateTime.now().year;
   return Container(
     decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(3),
       gradient: MonthColor.fancyLinearGradient(),
     ),
     child: GridView.builder(
@@ -32,10 +33,10 @@ Widget buildMonthPage(int monthIndex,int? selectedYear, double childAspectRatio,
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  width: 0.80,
+                  width: 0.30,
                   color: const Color.fromARGB(117, 127, 76, 229),
                 ),
-                borderRadius: BorderRadius.circular(3.0),
+                borderRadius: BorderRadius.circular(9.0),
               ),
               child: Center(
                 child: Text(
