@@ -33,4 +33,6 @@ What are you waiting for? Get AlertNukeApp now and elevate your calendar experie
 ---
 
 Feel free to adjust the tone further if needed, but this should give you a strong starting point for a README that captures the essence and attitude of AlertNukeApp.
-![Uploading Screenshot 2024-03-23 at 12.39.42.png…]()
+
+
+<img width="380" alt="Screenshot 2024-03-23 at 12 47 11" src="https://github.com/maximsqrt/alertNuke/assets/150453870/61aeca2f-4922-4bdc-9154-3a269b2f21dc">
