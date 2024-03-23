@@ -33,3 +33,4 @@ What are you waiting for? Get AlertNukeApp now and elevate your calendar experie
 ---
 
 Feel free to adjust the tone further if needed, but this should give you a strong starting point for a README that captures the essence and attitude of AlertNukeApp.
+![Uploading Screenshot 2024-03-23 at 12.39.42.png…]()
