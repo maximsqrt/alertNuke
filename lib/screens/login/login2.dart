@@ -1,4 +1,5 @@
-import 'package:alertnukeapp/screens/signup/signup.dart';
+
+import 'package:alertnukeapp/features/authentication/presentation/signup.dart';
 import 'package:flutter/material.dart';
 
 
@@ -76,7 +77,7 @@ class Login2Screen extends StatelessWidget {
 
               // "Sign Up" link
                 TextButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupScreen())),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>  SignupScreen())),
                   // Implementiere die Signup-Logik hier
                 
                 child: const Text('or signup'),
