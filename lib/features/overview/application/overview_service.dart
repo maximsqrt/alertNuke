@@ -13,7 +13,7 @@ class OverviewService {
     static List<Widget> widgetOptions = <Widget>[
     const Calendar(),
     const ChatsCalendar(),
-    SocialCalendar(),
+    MapCalendar(),
     const IconsScreen(),
     SettingsScreen(),
   ];

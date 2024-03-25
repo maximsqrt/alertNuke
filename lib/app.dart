@@ -1,6 +1,7 @@
 import 'package:alertnukeapp/common/iconservice.dart';
 import 'package:alertnukeapp/common/savediconsprovider.dart';
 import 'package:alertnukeapp/features/authentication/presentation/login.dart';
+import 'package:alertnukeapp/features/calendar/application/year.provider.dart';
 import 'package:alertnukeapp/features/icons/data/firebase_icon_repository.dart';
 import 'package:alertnukeapp/features/icons/domain/image_notifier.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +20,7 @@ class App extends StatelessWidget {
           value: FirebaseAuth.instance.authStateChanges(),
           initialData: null,
         ),
+        ChangeNotifierProvider(create: (context) => YearProvider()),
         ChangeNotifierProvider(create: (context) => SavedIconsNotifier()),
         ChangeNotifierProvider(create: (context) => ProfilePictureProvider()),
         Provider(

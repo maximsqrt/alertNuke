@@ -52,6 +52,7 @@ dependencies:
   provider: ^6.1.2
   http: ^1.2.0
   riverpod: ^2.5.0
+  google_maps_flutter: ^2.6.0
 
 flutter:
   assets:

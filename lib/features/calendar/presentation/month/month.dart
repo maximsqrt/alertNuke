@@ -1,12 +1,15 @@
 // Importing necessary packages and files
 import 'package:alertnukeapp/config/colors.dart';
+import 'package:alertnukeapp/features/calendar/application/year.provider.dart';
 import 'package:alertnukeapp/features/calendar/presentation/components/buildmonth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:alertnukeapp/screens/views/timecolumn.dart';
+import 'package:provider/provider.dart';
 
 // Defining a StatefulWidget for the MonthCalendar
 class MonthCalendar extends StatefulWidget {
+  
   // Constructor to initialize with the selected month index
   final int monthIndex;
   final int selectedMonth;
@@ -23,10 +26,12 @@ class MonthCalendar extends StatefulWidget {
 
   @override
   _MonthCalendarState createState() => _MonthCalendarState();
+  
 }
 
 // State class for the MonthCalendar
 class _MonthCalendarState extends State<MonthCalendar> {
+  
   late PageController _pageController; // Controller for handling the page view
   late TextEditingController
       _timeController; // Controller for handling time input
@@ -52,8 +57,9 @@ class _MonthCalendarState extends State<MonthCalendar> {
   // Building the UI for the MonthCalendar
   @override
   Widget build(BuildContext context) {
+    print("Selected Year: ${widget.selectedYear}");
     ScrollController _scrollController = ScrollController();
-
+    final yearProvider = Provider.of<YearProvider>(context);
     // Scaffold widget for the overall structure of the screen
     return Scaffold(
       body: Stack(
@@ -87,7 +93,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
 
                       // Build a month page using a custom function
                       return buildMonthPage(
-                          monthIndex - 2, widget.selectedYear, 0.5, 20,
+                          monthIndex - 2, yearProvider, 0.5, 20,
                           dayCallback: (day) => widget.dayCallback(day));
                     },
                   ),
@@ -96,7 +102,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
                 // Displaying the current month's name
                 Text(
                   DateFormat('MMMM yyyy').format(DateTime(
-                    widget.selectedYear ?? DateTime.now().year,
+                    yearProvider.year,
                     1 + currentPage, // Direkt auf den "ziel"-Monat basierend auf `currentPage`
                     1,
                   )),

@@ -1,9 +1,8 @@
-
-
+import 'package:alertnukeapp/features/calendar/application/year.provider.dart';
 import 'package:alertnukeapp/features/calendar/presentation/components/buildyear.dart';
-
 import 'package:alertnukeapp/screens/views/timecolumn.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:unicons/unicons.dart';
 
 class YearCalendar extends StatefulWidget {
@@ -11,48 +10,54 @@ class YearCalendar extends StatefulWidget {
   final Function(int) changeDayStatus;
   final int selectedYear;
 
-   const YearCalendar(
+  const YearCalendar(
       {Key? key,
       required this.changeDayStatus,
-      required this.changeMonthStatus, required this.selectedYear, required void Function(int newYearIndex) changeYearStatus})
+      required this.changeMonthStatus,
+      required this.selectedYear,
+      required void Function(int newYearIndex) changeYearStatus})
       : super(key: key);
 
   @override
   _YearCalendar createState() => _YearCalendar();
 }
- 
+
 class _YearCalendar extends State<YearCalendar> {
- DateTime selectedDate = DateTime.now();
-    Key key = UniqueKey();
-    void _updateYear(int yearToAdd) {
-    setState(() {
-        
-        selectedDate = DateTime(selectedDate.year + yearToAdd);
-        key = UniqueKey();
-        print(selectedDate.year);
-    });
+
+
+  Key key = UniqueKey();
+  void _updateYear(int yearToAdd) {
+    Provider.of<YearProvider>(context,listen:false).changeYear(yearToAdd);
   }
+
   @override
   Widget build(BuildContext context) {
     ScrollController _scrollController = ScrollController();
-    return Scaffold(appBar: AppBar(
-      title: Text("${selectedDate.year}"),
-          leading: IconButton(
-          icon: const Icon(UniconsLine.arrow_down),
-          onPressed: () => _updateYear(-1), // Tag zurück
-      ),
-       actions: <Widget>[
-          IconButton(
-            icon: const Icon(UniconsLine.arrow_up),
-            onPressed: () => _updateYear(1), // Tag vor
-             ),
-        ],
-        ),
-      body: Column( 
+    final yearProvider = Provider.of<YearProvider>(context);
+    return Scaffold( 
+      appBar:
+AppBar(
+  title: Text(yearProvider.year.toString()),
+  leading: IconButton(
+    icon:  Icon(UniconsLine.arrow_down),
+    onPressed: () => _updateYear(-1), // Jahr verringern
+  ),
+  actions: <Widget>[
+    IconButton(
+      icon:  Icon(UniconsLine.arrow_up),
+      onPressed: () => _updateYear(1), // Jahr erhöhen
+    ),
+  ],
+    ),
+
+
+
+
+     
+   
+      
+      body: Column(
         children: <Widget>[
-        
-            
-          
           Expanded(
             child: Container(
               height: MediaQuery.of(context).size.height,
@@ -73,36 +78,41 @@ class _YearCalendar extends State<YearCalendar> {
                       timeController: _scrollController, now: DateTime.now()),
                   Flexible(
                     child: GridView.builder(
-                      key: PageStorageKey('MonthGridView-${selectedDate.year}'),
+                      key: PageStorageKey('MonthGridView-${yearProvider.year  }'),
                       itemCount: 12,
                       gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         mainAxisSpacing: 5,
                         crossAxisSpacing: 5,
                       ),
                       itemBuilder: (context, index) {
-                        return Column(
-                          children: [
+                        print("Übergebenes Jahr an MonthGridItem: ${yearProvider.year }");
+
+                        return 
+                        
+                         
+                        
+                           Column(
+                                          children: [
                             Card(
                               color: const Color.fromARGB(114, 0, 0, 0),
                               elevation: 3,
                               child: AspectRatio(
                                 aspectRatio: 1.0,
                                 child: MonthGridItem(
-                                  monthIndex: index +1,
-                                  selectedYear: selectedDate.year,
-                                  showMonth: (newMonthIndex) =>
-                                      widget.changeMonthStatus(newMonthIndex -2),
+                                  monthIndex: index,
+                                  yearProvider: yearProvider,
+                                  showMonth: (newMonthIndex) => widget
+                                      .changeMonthStatus(newMonthIndex - 2),
                                   // Pass necessary callbacks here
                                   dayCallback: (day) =>
-                                      widget.changeDayStatus(day),
+                                     (){},
                                 ),
                               ),
                             ),
-                          ],
-                        );
-                      },
+                          ],);
+            },
                     ),
                   ),
                 ],

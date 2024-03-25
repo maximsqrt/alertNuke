@@ -1,8 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
+    
         android:label="alertnukeapp"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+          <meta-data android:name="com.google.android.geo.API_KEY"
+                   android:value="DEIN_API_SCHLÜSSEL"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -1,12 +1,23 @@
-import 'package:alertnukeapp/application/DateHelperService.dart';
-import 'package:alertnukeapp/config/colors.dart';
+import 'package:alertnukeapp/common/datetimecalc.dart';
 import 'package:flutter/material.dart';
+// Importiere deine DateTimeCalc Klasse
 
-Widget buildMonthPage(int monthIndex,int? selectedYear, double childAspectRatio, int fontSize, {required Function(int) dayCallback}) {
+import 'package:alertnukeapp/config/colors.dart';
+
+import '../../application/year.provider.dart';
+
+Widget buildMonthPage(int monthIndex, YearProvider yearProvider,  double childAspectRatio, int fontSize, {required Function(int) dayCallback}) {
   int actualFontSize = fontSize;
+
+
   // Anpassung hier: Monatsindex + 1, um von 0-basierter zu 1-basierter Indexierung zu wechseln
   int correctedMonthIndex = monthIndex + 1;
-  int year = selectedYear ?? DateTime.now().year;
+ 
+  
+  
+  // Erstelle eine Instanz von DateTimeCalc mit dem gegebenen Jahr
+  DateTimeCalc dateTimeCalc = DateTimeCalc(yearProvider.year);
+
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(3),
@@ -14,7 +25,8 @@ Widget buildMonthPage(int monthIndex,int? selectedYear, double childAspectRatio,
     ),
     child: GridView.builder(
       padding: EdgeInsets.zero,
-      itemCount: dateHelperService.daysInMonth(correctedMonthIndex, year), // Korrigierte Übergabe
+      // Verwende dateTimeCalc, um die Anzahl der Tage im Monat zu erhalten
+      itemCount: dateTimeCalc.daysInMonth(correctedMonthIndex),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 7,
         mainAxisSpacing: 0,
