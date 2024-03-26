@@ -81,12 +81,22 @@ class _MonthCalendarState extends State<MonthCalendar> {
                 Expanded(
                   child: PageView.builder(
                     controller: _pageController,
-                    onPageChanged: (int page) {
-                      setState(() {
-                        currentPage = page;
-                      });
-                    },
-                    itemCount: 12, // Number of months
+                  onPageChanged: (int page) {
+  if (page >= 12) { // Assuming the swipe is towards the right from December
+    // Move to January of the next year
+    yearProvider.incrementYear(); // You would need to implement this method
+    page = 0; // Reset to January
+  } else if (page < 0) { // Assuming the swipe is towards the left from January
+    // Move to December of the previous year
+    yearProvider.decrementYear(); // You would need to implement this method
+    page = 11; // Reset to December
+  }
+
+  setState(() {
+    currentPage = page;
+  });
+},
+                    itemCount: 120, // Number of months
                     itemBuilder: (BuildContext context, int index) {
                       // Calculate the month for the current page
                       int monthIndex = index + 1;

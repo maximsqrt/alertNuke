@@ -9,6 +9,7 @@ import 'package:alertnukeapp/features/icons/presentation/iconlist_to_screen.dart
 import 'package:alertnukeapp/features/icons/presentation/icons_searchbar.dart';
 import 'package:alertnukeapp/features/icons/presentation/iconselectionscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:unicons/unicons.dart';
 import 'iconlist.dart'; // Import the iconlist.dart file
 
 
@@ -93,7 +94,7 @@ class _IconsScreenState extends State<IconsScreen> {
           MaterialPageRoute(builder: (context) => IconsChoosenScreen()),
         );
       },
-      child: Icon(Icons.add),
+      child: Icon(UniconsLine.plus),
       backgroundColor: Colors.blue, // Set your desired color
     ),
     floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, // Position FAB at the bottom right
