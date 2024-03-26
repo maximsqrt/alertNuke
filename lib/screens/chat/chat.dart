@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:unicons/unicons.dart';
 
 final Color gradientStart = const Color(0xFF6CA7BE);
 final Color gradientEnd = const Color(0xFF2E0B4B);
@@ -14,7 +15,7 @@ class ChatsCalendar extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(UniconsLine.arrow_circle_left),
           onPressed: () {
             Navigator.of(context).pop();
           }

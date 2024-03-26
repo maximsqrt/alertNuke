@@ -9,6 +9,7 @@ import 'package:alertnukeapp/application/FirebaseUserData.dart';
 import 'package:icony/icony_ikonate.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:unicons/unicons.dart';
 
 ///For Name, Phone, Mail
 class EditableField extends StatelessWidget {
@@ -101,6 +102,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Settings'),
+      
+        leading: IconButton(
+          icon: Icon(UniconsLine.arrow_circle_left),
+          onPressed: () {
+           ;
+          }
+        ),
       flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(

@@ -13,6 +13,11 @@ class MapCalendar extends StatefulWidget {
 class _MapScreenState extends State<MapCalendar> {
   MapController mapController = MapController();
   LatLng? _locationData; // Diese Variable könnte noch initialisiert oder aktualisiert werden müssen
+// Zoom-Out-Funktion
+void zoomOut() {
+  var newZoom = mapController.zoom - 1; // Reduziert den aktuellen Zoom-Level um 1
+  mapController.move(mapController.center, newZoom);
+}
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +54,7 @@ class _MapScreenState extends State<MapCalendar> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  FloatingActionButton(onPressed: zoomOut),
                   // Füge hier Widgets hinzu, die in diesem Container erscheinen sollen
                 ],
               ),

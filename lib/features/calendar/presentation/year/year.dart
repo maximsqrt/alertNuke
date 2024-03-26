@@ -42,13 +42,24 @@ AppBar(
     icon:  Icon(UniconsLine.arrow_down),
     onPressed: () => _updateYear(-1), // Jahr verringern
   ),
+  backgroundColor: Colors.transparent,
   actions: <Widget>[
     IconButton(
       icon:  Icon(UniconsLine.arrow_up),
       onPressed: () => _updateYear(1), // Jahr erhöhen
     ),
   ],
-    ),
+   flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomLeft,
+              end: Alignment.centerRight,
+              colors: [Color(0xFF6CA7BE), Color(0xFF2E0B4B)],
+            ),
+          ),
+        ),
+      ),
+    
 
 
 
