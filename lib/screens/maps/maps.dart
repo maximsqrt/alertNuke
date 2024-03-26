@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-// Importiere weitere benötigte Pakete hier
+import 'package:unicons/unicons.dart';
 
 class MapCalendar extends StatefulWidget {
   const MapCalendar({Key? key}) : super(key: key);
@@ -11,13 +11,13 @@ class MapCalendar extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapCalendar> {
-  MapController mapController = MapController();
-  LatLng? _locationData; // Diese Variable könnte noch initialisiert oder aktualisiert werden müssen
-// Zoom-Out-Funktion
-void zoomOut() {
-  var newZoom = mapController.zoom - 1; // Reduziert den aktuellen Zoom-Level um 1
-  mapController.move(mapController.center, newZoom);
-}
+  final MapController mapController = MapController();
+
+  void zoomOut() {
+    var newZoom =
+        mapController.zoom - 1; // Reduziert den aktuellen Zoom-Level um 1
+    mapController.move(mapController.center, newZoom);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,41 +27,46 @@ void zoomOut() {
           FlutterMap(
             mapController: mapController,
             options: MapOptions(
-              center: _locationData ?? const LatLng(48.137154, 11.576124),
+              center:
+                  LatLng(48.137154, 11.576124), // Standard-Zentrum der Karte
               zoom: 18.0,
-              backgroundColor: Colors.white,
-              interactionOptions: const InteractionOptions(
-                flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
-              ),
             ),
-          children: [
-    TileLayer(
-      urlTemplate: "https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=b3250019b1cf4c329cd29f1166421e6a",
-      additionalOptions: {
-        'apikey': 'b3250019b1cf4c329cd29f1166421e6a',
-      },
-    ),
-          Positioned(
-            right: 0,
-            top: (MediaQuery.of(context).size.height - 80) / 2,
-            child: Container(
-              width: 50,
-              height: 220,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
+            children: [
+              TileLayer(
+                urlTemplate:
+                    "https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=b3250019b1cf4c329cd29f1166421e6a",
+                additionalOptions: {
+                  'apikey': 'b3250019b1cf4c329cd29f1166421e6a',
+                },
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FloatingActionButton(onPressed: zoomOut),
-                  // Füge hier Widgets hinzu, die in diesem Container erscheinen sollen
+              // Weitere Layer oder Widgets können hier hinzugefügt werden
+            ],
+          ),
+          Positioned(
+  right: 0,
+  top: (MediaQuery.of(context).size.height - 80) / 2,
+  child: Container(
+    width: 50,
+    height: 50,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(15),
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        IconButton(
+          icon: Icon(UniconsLine.zero_plus),
+          onPressed: zoomOut,
+          // Stilisiere den Button nach Bedarf
+        ),
+                  // Weitere Buttons oder Widgets können hier hinzugefügt werden
                 ],
               ),
             ),
           ),
         ],
       ),
-    ]));
+    );
   }
 }
