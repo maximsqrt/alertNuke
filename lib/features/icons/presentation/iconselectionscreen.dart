@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:alertnukeapp/features/icons/data/firebase_icon_repository.dart';
 import 'package:alertnukeapp/features/icons/presentation/icons_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:alertnukeapp/common/savediconsprovider.dart'; // Importieren Sie den Provider
+import 'package:alertnukeapp/common/savediconsprovider.dart';
+import 'package:unicons/unicons.dart'; // Importieren Sie den Provider
 
 
 class IconsChoosenScreen extends StatefulWidget {
@@ -47,9 +48,10 @@ class _IconsChoosenState extends State<IconsChoosenScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(202, 199, 64, 181),
       appBar: AppBar(
+        
         title: const Text('Chosen Icons'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(UniconsLine.arrow_circle_left),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -63,8 +65,8 @@ class _IconsChoosenState extends State<IconsChoosenScreen> {
               onTap: () {
                 _showIconSelection(context);
               },
-              title: const Text('Add Icon'),
-              leading: const Icon(Icons.add),
+              title: const Text('Add Icon', style: TextStyle(fontSize: 24 ,color: Colors.white)),
+              leading: const Icon(UniconsLine.adobe_alt, color: Colors.amber,),
             );
           } else {
             final iconWithName = chosenIcons[index];

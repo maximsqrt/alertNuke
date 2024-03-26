@@ -29,13 +29,13 @@ class _MapScreenState extends State<MapCalendar> {
                 flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
               ),
             ),
-            children: [
-              TileLayer(
-                urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-              ),
-              // Füge hier MarkerLayerOptions hinzu, wenn du Marker verwenden möchtest
-            ],
-          ),
+          children: [
+    TileLayer(
+      urlTemplate: "https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=b3250019b1cf4c329cd29f1166421e6a",
+      additionalOptions: {
+        'apikey': 'b3250019b1cf4c329cd29f1166421e6a',
+      },
+    ),
           Positioned(
             right: 0,
             top: (MediaQuery.of(context).size.height - 80) / 2,
@@ -56,6 +56,6 @@ class _MapScreenState extends State<MapCalendar> {
           ),
         ],
       ),
-    );
+    ]));
   }
 }
