@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 
 // Defining a StatefulWidget for the MonthCalendar
 class MonthCalendar extends StatefulWidget {
-  
   // Constructor to initialize with the selected month index
   final int monthIndex;
   final int selectedMonth;
@@ -26,12 +25,10 @@ class MonthCalendar extends StatefulWidget {
 
   @override
   _MonthCalendarState createState() => _MonthCalendarState();
-  
 }
 
 // State class for the MonthCalendar
 class _MonthCalendarState extends State<MonthCalendar> {
-  
   late PageController _pageController; // Controller for handling the page view
   late TextEditingController
       _timeController; // Controller for handling time input
@@ -81,29 +78,34 @@ class _MonthCalendarState extends State<MonthCalendar> {
                 Expanded(
                   child: PageView.builder(
                     controller: _pageController,
-                  onPageChanged: (int page) {
-  if (page >= 12) { // Assuming the swipe is towards the right from December
-    // Move to January of the next year
-    yearProvider.incrementYear(); // You would need to implement this method
-    page = 0; // Reset to January
-  } else if (page < 0) { // Assuming the swipe is towards the left from January
-    // Move to December of the previous year
-    yearProvider.decrementYear(); // You would need to implement this method
-    page = 11; // Reset to December
-  }
+                    onPageChanged: (int page) {
+                      if (page >= 12) {
+                        // Assuming the swipe is towards the right from December
+                        // Move to January of the next year
+                        yearProvider
+                            .incrementYear(); // You would need to implement this method
+                        page = 0; // Reset to January
+                      } else if (page < 0) {
+                        // Assuming the swipe is towards the left from January
+                        // Move to December of the previous year
+                        yearProvider
+                            .decrementYear(); // You would need to implement this method
+                        page = 11; // Reset to December
+                      }
 
-  setState(() {
-    currentPage = page;
-  });
-},
+                      setState(() {
+                        currentPage = page;
+                      });
+                    },
                     itemCount: 120, // Number of months
                     itemBuilder: (BuildContext context, int index) {
                       // Calculate the month for the current page
-                      int monthIndex = index + 1;
+                      int monthIndex = index + 2;
 
                       // Build a month page using a custom function
                       return buildMonthPage(
-                          monthIndex - 2, yearProvider, 0.5, 20,
+                          monthIndex , yearProvider, 0.5, 20,
+                          
                           dayCallback: (day) => widget.dayCallback(day));
                     },
                   ),
@@ -117,7 +119,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
                     1,
                   )),
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: FancyFontColor.primaryColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
                   ),

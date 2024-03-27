@@ -38,6 +38,7 @@ Widget buildMonthPage(int monthIndex, YearProvider yearProvider,  double childAs
 
         return GestureDetector(
           onTap: () {
+              print("Day tapped: $day");
             dayCallback(day);
           },
           child: AspectRatio(

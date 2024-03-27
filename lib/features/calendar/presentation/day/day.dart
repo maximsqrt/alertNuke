@@ -33,6 +33,7 @@ class _DayCalendarState extends State<DayCalendar> {
     currentDate =
         DateTime(currentDate.year, widget.monthNumber, widget.selectedDay);
     super.initState();
+    print("Init monthNumber: ${widget.monthNumber}");
     selectedDate =
         DateTime(DateTime.now().year, widget.monthNumber, widget.selectedDay);
     weekNames = ['Time', widget.selectedDay.toString()];
