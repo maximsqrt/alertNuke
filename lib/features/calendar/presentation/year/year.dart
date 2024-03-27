@@ -1,3 +1,5 @@
+import 'package:alertnukeapp/common/datetimeriverpod.dart';
+import 'package:alertnukeapp/config/colors.dart';
 import 'package:alertnukeapp/features/calendar/application/year.provider.dart';
 import 'package:alertnukeapp/features/calendar/presentation/components/buildyear.dart';
 import 'package:alertnukeapp/screens/views/timecolumn.dart';
@@ -27,8 +29,16 @@ class _YearCalendar extends State<YearCalendar> {
 
   Key key = UniqueKey();
   void _updateYear(int yearToAdd) {
-    Provider.of<YearProvider>(context,listen:false).changeYear(yearToAdd);
-  }
+  // Zugriff auf den YearProvider
+  YearProvider yearProvider = Provider.of<YearProvider>(context, listen: false);
+  
+  // Berechnung des neuen Jahres basierend auf dem aktuellen Jahr und yearToAdd
+  int newYear = yearProvider.year + yearToAdd;
+  
+  // Aktualisierung des Jahres im YearProvider
+  yearProvider.changeYear(newYear);
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +47,16 @@ class _YearCalendar extends State<YearCalendar> {
     return Scaffold( 
       appBar:
 AppBar(
-  title: Text(yearProvider.year.toString()),
+  title: Text(yearProvider.year.toString(), style: 
+  TextStyle(fontWeight: FontWeight.bold, color: FancyFontColor.primaryColor, fontSize: 50)),
   leading: IconButton(
-    icon:  Icon(UniconsLine.arrow_down),
+    icon:  Icon(UniconsLine.arrow_down, color: Colors.white, size: 50.0),
     onPressed: () => _updateYear(-1), // Jahr verringern
   ),
   backgroundColor: Colors.transparent,
   actions: <Widget>[
     IconButton(
-      icon:  Icon(UniconsLine.arrow_up),
+      icon:  Icon(UniconsLine.arrow_up, color: Colors.white, size: 50.0),
       onPressed: () => _updateYear(1), // Jahr erhöhen
     ),
   ],

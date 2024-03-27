@@ -1,6 +1,5 @@
 import 'package:alertnukeapp/common/savediconsprovider.dart';
 import 'package:alertnukeapp/config/colors.dart';
-import 'package:alertnukeapp/config/colors.dart';
 import 'package:alertnukeapp/features/calendar/domain/icon_appointment.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/appointments.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/displayappointment.dart';
@@ -8,7 +7,6 @@ import 'package:alertnukeapp/features/calendar/presentation/day/symboltap.dart';
 import 'package:alertnukeapp/features/calendar/presentation/day/timecontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:unicons/unicons.dart';
 
 class DayCalendar extends StatefulWidget {
@@ -178,7 +176,6 @@ class DayContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final icons = Provider.of<SavedIconsNotifier>(context).icons;
     return Container(
       decoration: BoxDecoration(
         gradient: MonthColor.fancyLinearGradient(),

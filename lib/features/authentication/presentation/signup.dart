@@ -125,7 +125,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   },
                   style: const TextStyle(
                       color: Colors.white), // Textfarbe der Eingabefelder
-                  obscureText: true, //versteckte Eingabe für Passwort
+                  obscureText: false, //versteckte Eingabe für Passwort
                   decoration: const InputDecoration(
                     labelText: 'E-Mail',
                     labelStyle:

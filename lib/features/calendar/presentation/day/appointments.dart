@@ -1,9 +1,6 @@
-import 'package:alertnukeapp/common/savediconsprovider.dart';
 import 'package:alertnukeapp/features/calendar/domain/icon_appointment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 
 
@@ -35,7 +32,6 @@ class FirebaseIconAppointmentRepository implements IconRepository {
   if (iconAppointment.iconPosition != null) {
     data['iconPosition'] = iconAppointment.iconPosition;
   }
-  print( iconAppointment.iconPosition.toString());
    await _firestore
       .collection('users')
       .doc(userId)

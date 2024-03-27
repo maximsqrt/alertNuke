@@ -5,7 +5,7 @@ class YearProvider extends ChangeNotifier {
     int get year => _year;
 
 void incrementYear() {
-  _year += 1;
+  _year += 1 ;
   notifyListeners(); // If YearProvider extends ChangeNotifier
 }
 
