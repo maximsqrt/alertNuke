@@ -1,6 +1,8 @@
+import 'package:alertnukeapp/features/calendar/application/calendarstateprovider.dart';
 import 'package:alertnukeapp/features/overview/application/overview_service.dart';
 import 'package:alertnukeapp/features/overview/presentation/logo.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Overview extends StatefulWidget {
   const Overview({Key? key}) : super(key: key);
@@ -10,15 +12,19 @@ class Overview extends StatefulWidget {
 }
 
 class _OverviewState extends State<Overview> {
+  
   void _onItemTapped(int index) {
     setState(() {
       OverviewService.selectedIndex = index;
-      // CalenderStatus = CalenderStatus.year; //Provider erstellen 
+     //final calendarProvider =  Provider.of<CalendarStateProvider>(context, listen: false).changeStateToYear();
+      //CalenderStatus = CalenderStatus.year; //Provider erstellen 
+      Provider.of<CalendarStateProvider>(context, listen: false).changeStateToYear();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
     body: OverviewService.widgetOptions [ 
         OverviewService.selectedIndex

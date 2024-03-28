@@ -14,7 +14,7 @@ void decrementYear() {
   notifyListeners(); // If YearProvider extends ChangeNotifier
 }
 
-    void changeYear(int newYear) {
+void changeYear(int newYear) {
     _year = newYear; // Set _year to newYear instead of adding
     notifyListeners();
 }
