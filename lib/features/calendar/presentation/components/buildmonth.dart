@@ -14,10 +14,10 @@ Widget buildMonthPage(int monthIndex, YearProvider yearProvider,  double childAs
   int correctedMonthIndex = monthIndex + 1;
  
   
-  
+  DateTime now = DateTime.now();
   // Erstelle eine Instanz von DateTimeCalc mit dem gegebenen Jahr
   DateTimeCalc dateTimeCalc = DateTimeCalc(yearProvider.year);
-
+   bool isCurrentMonth = now.month == correctedMonthIndex && now.year == yearProvider.year;
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(3),
@@ -35,6 +35,7 @@ Widget buildMonthPage(int monthIndex, YearProvider yearProvider,  double childAs
       ),
       itemBuilder: (context, index) {
         int day = index + 1;
+        bool isToday = isCurrentMonth && day == now.day;
 
         return GestureDetector(
           onTap: () {
@@ -50,6 +51,8 @@ Widget buildMonthPage(int monthIndex, YearProvider yearProvider,  double childAs
                   color: const Color.fromARGB(117, 127, 76, 229),
                 ),
                 borderRadius: BorderRadius.circular(9.0),
+                ///Diff Color for today? 
+                color: isToday? Colors.red : Colors.transparent,
               ),
               child: Center(
                 child: Text(
@@ -58,7 +61,9 @@ Widget buildMonthPage(int monthIndex, YearProvider yearProvider,  double childAs
                     fontWeight: FontWeight.bold,
                     fontSize: actualFontSize.toDouble(),
                     color: const Color.fromARGB(187, 233, 220, 220),
+
                   ),
+                  
                 ),
               ),
             ),
