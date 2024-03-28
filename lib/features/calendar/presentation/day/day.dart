@@ -31,11 +31,12 @@ class _DayCalendarState extends State<DayCalendar> {
   @override
   void initState() {
     currentDate =
-        DateTime(currentDate.year, widget.monthNumber, widget.selectedDay);
+    // month is verschoben by 2 months, correct later 
+        DateTime(currentDate.year, widget.monthNumber +2, widget.selectedDay);
     super.initState();
     print("Init monthNumber: ${widget.monthNumber}");
     selectedDate =
-        DateTime(DateTime.now().year, widget.monthNumber, widget.selectedDay);
+        DateTime(DateTime.now().year, widget.monthNumber +2 , widget.selectedDay);
     weekNames = ['Time', widget.selectedDay.toString()];
 
 
