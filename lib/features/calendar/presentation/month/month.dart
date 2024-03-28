@@ -100,7 +100,7 @@ class _MonthCalendarState extends State<MonthCalendar> {
                     itemCount: 120, // Number of months
                     itemBuilder: (BuildContext context, int index) {
                       // Calculate the month for the current page
-                      int monthIndex = index + 2;
+                      int monthIndex = index ;
 
                       // Build a month page using a custom function
                       return buildMonthPage(
