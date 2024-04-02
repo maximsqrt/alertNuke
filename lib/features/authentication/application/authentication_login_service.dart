@@ -1,4 +1,5 @@
 import 'package:alertnukeapp/application/FirebaseUserData.dart';
+import 'package:alertnukeapp/common/loginstate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -37,10 +38,16 @@ Future<bool> signIn(String email, String password) async {
     );
     
     if(userCredential.user != null){
+
+       // User logged in successfully
+  await setLoginState(true); // Mark the user as logged in
       FirebaseUserData.userId = userCredential.user!.uid;
       final data = await _firestore.collection("users").doc(userCredential.user!.uid).get();
       FirebaseUserData.email = data.data()!["email"];
       FirebaseUserData.username = data.data()!["username"];
+
+      await setLoginState(true); // Assuming setLoginState is implemented as suggested
+
       return true;
     }
     return false;
@@ -79,6 +86,7 @@ Future<bool> signIn(String email, String password) async {
 
   // Method to sign out
   Future<void> signOut() async {
+      await setLoginState(false); // Mark the user as logged out
     await _auth.signOut();
   }
 

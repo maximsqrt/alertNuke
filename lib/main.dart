@@ -21,19 +21,3 @@ void main() async {
 
 
 
-
-
-
-/*
-
-Features:
-
-overview
-calendar (Jahr, Monat, Tag)
-authentication
-settings
-social (Social, Chat)
-other
-
-
-*/

@@ -11,10 +11,11 @@ import 'package:unicons/unicons.dart';
 
 class DayCalendar extends StatefulWidget {
   final int selectedDay;
+  final DateTime selectedDate;
   final int monthNumber;
 
   const DayCalendar(
-      {Key? key, required this.selectedDay, required this.monthNumber})
+      {Key? key, required this.selectedDay, required this.monthNumber, required this.selectedDate})
       : super(key: key);
 
   @override
@@ -49,16 +50,27 @@ class _DayCalendarState extends State<DayCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    return 
+
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+
+    
+     selectedDate = DateTime(selectedDate.year, widget.selectedDate.month  );
+      bool isToday = selectedDate.year == today.year &&
+      selectedDate.month == today.month &&
+      selectedDate.day == today.day;
+  
     
 
     
-    Scaffold(
+  return  Scaffold(
       backgroundColor: BackgroundColor.primaryColor,
       appBar: AppBar(
         title: Text(
           '${DateFormat('EEEE').format(selectedDate)}, ${selectedDate.day.toString()} ${DateFormat('MMMM y').format(currentDate)}',
-          style: const TextStyle(fontSize: 18, color: FancyFontColor.primaryColor)
+          style: TextStyle(fontSize: 18, 
+          color: isToday ? Colors.red : FancyFontColor.primaryColor),
           
         
         ),

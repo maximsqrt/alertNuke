@@ -56,13 +56,13 @@ final calenderProvider = Provider.of<CalendarStateProvider>(context);
       return YearCalendar(
         changeMonthStatus: changeMonthStatus,
         changeDayStatus: changeDayStatus,
-        selectedYear: selectedYearIndex,
+        selectedYear: selectedYearIndex, ///DateTime(selectedDate.year, widget.selectedDate.month  );
         changeYearStatus: changeYearStatus, // Übergabe der Funktion an YearCalendar
       );
   } else if (calenderProvider.getState() == CalendarState.month) {
     return MonthCalendar(monthIndex: selectedMonthIndex, selectedYear: selectedYearIndex, dayCallback: (day) => changeDayStatus(day));
   } else if (calenderProvider.getState() == CalendarState.day) {
-    return DayCalendar(selectedDay: selectedDayIndex, monthNumber: selectedMonthIndex);
+    return DayCalendar(selectedDay: selectedDayIndex, monthNumber: selectedMonthIndex, selectedDate: DateTime(selectedYearIndex, selectedMonthIndex  ),);
   } else { throw Error();       }
 }
  
